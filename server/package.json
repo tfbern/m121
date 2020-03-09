@@ -4,15 +4,17 @@
   "description": "Websocket server",
   "main": "server.js",
   "scripts": {
+    "server": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "a.b.c"
+    "url": "https://github.com/tfbern/m121.git"
   },
   "author": "Samuel Hess",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
     "serialport": "^8.0.7",
     "ws": "^7.2.2"
   }

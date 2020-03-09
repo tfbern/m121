@@ -1,4 +1,4 @@
-// serial port
+// serial gateway
 const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
 const port = new SerialPort('COM3', { baudRate: 9600 })
@@ -13,6 +13,7 @@ parser.on('data', function (line) {
   }
 })
 
+// WebSocket server
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({ port: 8080 });
 wss.on('connection', function connection(ws) {
@@ -26,3 +27,11 @@ wss.on('connection', function connection(ws) {
     ws.send(line);
   })
 });
+
+
+// Web server
+const express = require('express')
+const app = express()
+const webroot = __dirname + '/../client'
+app.use(express.static(webroot))
+app.listen(80, console.log("Serving GUI on port 80"))
