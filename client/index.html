@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebSocket Playground</title>
+  <link href="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script src="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+<body>
+<div class="mdc-layout-grid">
+  <div id="container" style="width: 50%;">
+    <h2>Analogue Inputs</h2>
+    <canvas id="myChart"></canvas>
+  </div>
+  <div id="container" style="width: 50%;">
+    <h2>Digital Inputs</h2>
+    <canvas id="myChart2"></canvas>
+  </div>
+  <div id="container" style="width: 50%;">
+    <h2>Temperatur</h2>
+    <canvas id="myChart3"></canvas>
+  </div>
+</div>
+</body>
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var ctx2 = document.getElementById('myChart2').getContext('2d');
+var ctx3 = document.getElementById('myChart3').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Analog Inputs',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: []
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    min: 0,
+                    max: 1024,
+                    stepSize: 128
+                }
+            }]
+        }
+    }
+});
+var chart2 = new Chart(ctx2, {
+    // The type of chart we want to create
+    type: 'horizontalBar',
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Digital Inputs',
+            backgroundColor: 'rgb(99, 255, 132)',
+            borderColor: 'rgb(99, 255, 132)',
+            data: []
+        }]
+    },
+    options: {
+        scales: {
+            xAxes: [{
+                ticks: {
+                    min: 0,
+                    max: 1,
+                    stepSize: 1
+                }
+            }]
+        }
+    }
+});
+var chart3 = new Chart(ctx3, {
+    // The type of chart we want to create
+    type: 'line',
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Temperatur',
+            fill: false,
+            backgroundColor: 'rgb(99, 132, 255)',
+            borderColor: 'rgb(99, 132, 255)',
+            data: []
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    suggestedMin: -50,
+                    suggestedMax: 150,
+                }
+            }]
+        }
+    }
+});
+
+const ws = new WebSocket('ws://localhost:8080/');
+ws.onopen = function() {
+    console.log('WebSocket Client Connected');
+    ws.send('Hi');
+};
+
+var temps = []
+var times = []
+ws.onmessage = function(e) {
+  try {
+      var ioStates = JSON.parse(e.data)
+      console.log(ioStates);
+      var xValues = Object.keys(ioStates).slice(0,6)
+      var yValues = Object.values(ioStates).slice(0,6)
+      if (xValues && yValues) {
+        chart.data.labels = xValues
+        chart.data.datasets[0].data = yValues
+        chart.update();
+      }
+      xValues = Object.keys(ioStates).slice(6,20)
+      yValues = Object.values(ioStates).slice(6,20)
+      if (xValues && yValues) {
+        chart2.data.labels = xValues
+        chart2.data.datasets[0].data = yValues
+        chart2.update();
+      }
+      
+      temps.push(ioStates.A0*5/1023*100-50)
+      times.push(temps.length)
+      if (temps) {
+        chart3.data.labels = times
+        chart3.data.datasets[0].data = temps
+        chart3.update();
+      }
+  } catch(e) {
+      console.log(e); // error in the above string (in this case, yes)!
+  }
+};
+</script>
+</html>
