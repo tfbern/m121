@@ -1,30 +1,32 @@
 // serial gateway
 const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
-const port = new SerialPort('COM3', { baudRate: 9600 })
+const serial = new SerialPort('COM3', { baudRate: 115200 })
 const parser = new Readline()
-port.pipe(parser)
-port.write('SERVER READY\n')
+serial.pipe(parser)
+// debug serial traffic
 parser.on('data', function (line) {
-  // console.log(JSON.parse(line))
-  if (line != -1) {
-    console.log(`Arduino> ${line}`)
-    // port.write("Hallo Arduino\r")
-  }
+  // console.log(line)
 })
 
 // WebSocket server
 const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({ port: 81 });
 wss.on('connection', function connection(ws) {
+  // on receive client message
   ws.on('message', function incoming(message) {
-    console.log('received: %s', message);
-    port.write(message + "\r")
+    // console.log('Forwarding command to Arduino: %s', message);
+    serial.write(message + "\r")
   });  
-  ws.send('something');
-  // serial events
+  // on serial event
   parser.on('data', function (line) {
-    ws.send(line);
+    try {
+      var obj = JSON.parse(line)
+      ws.send(JSON.stringify(obj));
+    } catch(err) {
+      // console.log(err)
+      console.log('parse error: skipping malformed data')
+    }
   })
 });
 

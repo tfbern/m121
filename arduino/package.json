@@ -1,0 +1,13 @@
+{
+  "name": "iotdemo",
+  "version": "1.0.0",
+  "description": "Arduino firmware for IoT demo application",
+  "scripts": {
+    "compile": "arduino-cli compile --fqbn arduino:avr:uno genericReadWrite.ino -o latest",
+    "upload": "arduino-cli upload -p COM3 --fqbn arduino:avr:uno -i latest",
+    "cu": "arduino-cli compile --fqbn arduino:avr:uno genericReadWrite.ino -o latest -u -p COM3",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Samuel Hess",
+  "license": "ISC"
+}
