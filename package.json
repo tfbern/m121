@@ -1,0 +1,10 @@
+{
+  "name": "iotdemo",
+  "version": "1.0.0",
+  "description": "Arduino firmware for IoT demo application",
+  "scripts": {
+    "start": "nodemon ./server/server.js"
+  },
+  "author": "Samuel Hess",
+  "license": "ISC"
+}

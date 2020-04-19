@@ -4,19 +4,14 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "compile and upload Arduino sketch",
+            "label": "compile sketch and upload Arduino firmware",
             "type": "shell",
             "command": "./arduino/arduino-cli compile --fqbn arduino:avr:uno ./arduino/genericReadWrite.ino -o ./arduino/latest -u -p COM3",
+            "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
             }
-        },
-        {
-            "type": "npm",
-            "script": "upload",
-            "path": "arduino/",
-            "problemMatcher": []
         }
     ]
 }
