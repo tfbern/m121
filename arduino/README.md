@@ -14,10 +14,12 @@
     This will compile the sketch *genericReadWrite.ino* for Arduino Uno. Three files will be generated.
 7.  Compile and upload in one step: ```./arduino/arduino-cli compile --fqbn arduino:avr:uno ./arduino/genericReadWrite.ino -o ./arduino/latest -u -p COM3```<br>
     In order to upload the firmware directly after compilation we have to add the option ```-u``` and specify the serial line to be used for upload ```-p COM3```. In order to avoid problem with the file names, we rename the output file to *latest* especially avoiding the extension *.ino* in the name.
-8.  Configure the default build task (*Terminal > Configure Default Build Task...*) in Visual Studio Code so that **Ctrl+Shift+B** builds and uploads the firmware.
+8.  Make sure the file *./.vstudio/tasks.json* is present. If not, you would have to define a shell task that calls the above mentioned build command. (*Terminal > Configure Tasks... > Create tasks.json from template > Others*)
+9.  Configure the default build task (*Terminal > Configure Default Build Task...*) in Visual Studio Code so that **Ctrl+Shift+B** builds and uploads the firmware.
 
 # Links
 *  [Arduino CLI download and installation](https://arduino.github.io/arduino-cli/installation)
+* [Integrate with External Tools via Tasks](https://code.visualstudio.com/docs/editor/tasks#vscode)
 *  [Efficient Arduino Programming with Arduino CLI and Visual Studio Code](https://learn.sparkfun.com/tutorials/efficient-arduino-programming-with-arduino-cli-and-visual-studio-code/all)
 
 
