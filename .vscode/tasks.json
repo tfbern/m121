@@ -1,12 +1,25 @@
+// compiles the sketch and uploads the firmware to Arduino
+// arduino/arduino-cli compile arduino/genericReadWrite.ino -b arduino:avr:uno -o arduino/latest -p COM3 -u
 {
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "compile sketch and upload Arduino firmware",
+            "label": "compile sketch and upload firmware to Arduino",
             "type": "shell",
-            "command": "./arduino/arduino-cli compile --fqbn arduino:avr:uno ./arduino/genericReadWrite.ino -o ./arduino/latest -u -p COM3",
+            "command": "arduino/arduino-cli",
+            "args": [
+                "compile", 
+                {"value":"arduino/genericReadWrite.ino", "quoting":"escape"},
+                "-b", // --fqbn
+                {"value":"arduino:avr:uno", "quoting":"escape"},
+                "-o", // --output
+                {"value":"arduino/latest", "quoting":"escape"},
+                "-p", // --port
+                {"value":"COM3", "quoting":"escape"},
+                "-u" // --upload
+            ],
             "problemMatcher": [],
             "group": {
                 "kind": "build",

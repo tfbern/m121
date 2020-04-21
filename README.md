@@ -3,18 +3,15 @@ This is a tutorial to get started with Arduino Uno. We will measure the temparat
 
 ## Setup the Environment
 1. Get an Arduino Kit. We are working with [learning set #8 from Funduino](https://www.funduinoshop.com/epages/78096195.sf/de_DE/?ObjectPath=/Shops/78096195/Products/01-U8)
-1. Install Arduino IDE from [www.arduino.cc](https://www.arduino.cc/en/main/software).
-    This is just for driver installation, we won't use this IDE it later as we use Visual Studio Code.
 2. Install Visual Studio Code if you haven't already.
 3. [Setup Visual Studio Code for Arduino](./arduino/README.md)
 
 ## Run the Project
 1. Attach Arduino Uno to the Computer via USB
-    * Attach the temperature sensor TMP35 to analog input A0
-    * Attach the photoresistor to analog input A1
+    * Attach the temperature sensor TMP36 to analog input A0 (make attention to the polarization)
 2. Open this project with Visual Studio Code (File > Open Folder...)
 2. Compile the sketch *genericReadWrite.ino* and upload it to Arduino <br>
-  After [setting up Visual Studio Code for Arduino](./arduino/README.md) this can be achieved via the keyboard shortcut **Ctrl+Shift+B**. This will run the default build task which will execute the shell command ```./arduino/arduino-cli compile --fqbn arduino:avr:uno ./arduino/genericReadWrite.ino -o ./arduino/latest -u -p COM3```
+  After [setting up Visual Studio Code for Arduino](./arduino/README.md) this can be achieved via the keyboard shortcut **Ctrl+Shift+B**. This will run the default build task which will execute the shell command ```arduino/arduino-cli compile arduino/genericReadWrite.ino -b arduino:avr:uno -o arduino/latest -u -p COM3```
 3. Start the server by running ```npm run start``` or ```nodemon ./server/server.js```
 4. Open the GUI on [http://localhost](http://localhost)
 
@@ -27,6 +24,12 @@ This is a tutorial to get started with Arduino Uno. We will measure the temparat
 * [Visual Studio Code](https://code.visualstudio.com/)
 * [Arduino command line interface](https://github.com/arduino/arduino-cli)
 * [Better Processing](https://vimeo.com/showcase/2801639/video/97524853)
+
+
+<!--
+2. Install Arduino IDE from [www.arduino.cc](https://www.arduino.cc/en/main/software).
+    This is just for driver installation, we won't use this IDE it later as we use Visual Studio Code.
+-->
 
 
 
