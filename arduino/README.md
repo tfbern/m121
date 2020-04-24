@@ -1,21 +1,37 @@
 # Setup Visual Studio Code for Arduino on Windows
 
+
+
 1. Download Arduino CLI from [arduino.github.io/arduino-cli](https://arduino.github.io/arduino-cli/installation)<br>
-    Place this executable in a subfolder *arduino* of your project folder
-2. Generate CLI config: ```./arduino-cli.exe config init```<br>
+    Install this executable in a folder that belongs to your PATH variable. Let's put it, where the global npm tools are located. Here the PowerShell commands:
+
+        $link = 'https://github.com/arduino/arduino-cli/releases/download/0.10.0/arduino-cli_0.10.0_Windows_64bit.zip'
+        $tmp = 'arduino-cli.zip'
+        Invoke-WebRequest $link -OutFile $tmp
+        Expand-Archive -Path $tmp -DestinationPath  $($env:APPDATA + '\npm')
+        $tmp | Remove-Item
+
+2. Generate CLI config: 
+    ```arduino-cli config init```<br>
     This will create a config file and place it in *%AppData%/Local/Arduino15/arduino-cli.yaml*
-3. Update board library: ```./arduino-cli core update-index```<br>
+3. Update board library: 
+    ```arduino-cli core update-index```<br>
     This will download hardware information and store it in a file called *package_index.json* in the above mentioned directory
-4. Show board info: ```./arduino-cli board list```<br>
+4. Show board info: 
+    ```arduino-cli board list```<br>
     If the Arduino board is well connected via USB this will display the board information. The Arduino Uno board is referenced by **arduino:avr**
-5. Install compiler for Arduino Uno: ```./arduino-cli core install arduino:avr```<br>
+5. Install compiler for Arduino Uno: 
+    ```arduino-cli core install arduino:avr```<br>
     This will install the corresponing compiler.
-6. Compile sketch: ```./arduino-cli compile --fqbn arduino:avr:uno ./genericReadWrite.ino```<br>
-    This will compile the sketch *genericReadWrite.ino* for Arduino Uno. Three files will be generated.
-7.  Compile and upload in one step: ```./arduino/arduino-cli compile --fqbn arduino:avr:uno ./arduino/genericReadWrite.ino -o ./arduino/latest -u -p COM3```<br>
-    In order to upload the firmware directly after compilation we have to add the option ```-u``` and specify the serial line to be used for upload ```-p COM3```. In order to avoid problem with the file names, we rename the output file to *latest* especially avoiding the extension *.ino* in the name.
-8.  Make sure the file *./.vstudio/tasks.json* is present. If not, you would have to define a shell task that calls the above mentioned build command. (*Terminal > Configure Tasks... > Create tasks.json from template > Others*)
-9.  Configure the default build task (*Terminal > Configure Default Build Task...*) in Visual Studio Code so that **Ctrl+Shift+B** builds and uploads the firmware.
+6. Check the content of the file *sketch.json* and adjust it with the values gained unter point 4.
+7. Compile sketch:
+    ```arduino-cli compile genericReadWrite```<br>
+    This will compile the sketch *genericReadWrite.ino* within the folder *genericReadWrite*. Three files will be generated.
+8.  Compile and upload in one step: 
+    ```arduino-cli compile genericReadWrite -u```<br>
+    In order to upload the firmware directly after compilation we have to add the option ```-u```.
+9.  Make sure the file *./.vstudio/tasks.json* is present. If not, you would have to define a shell task that calls the above mentioned build command. (*Terminal > Configure Tasks... > Create tasks.json from template > Others*)
+10.  Configure the default build task (*Terminal > Configure Default Build Task...*) in Visual Studio Code so that **Ctrl+Shift+B** builds and uploads the firmware.
 
 # Links
 *  [Arduino CLI download and installation](https://arduino.github.io/arduino-cli/installation)

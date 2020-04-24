@@ -1,24 +1,27 @@
 // compiles the sketch and uploads the firmware to Arduino
-// arduino/arduino-cli compile arduino/genericReadWrite.ino -b arduino:avr:uno -o arduino/latest -p COM3 -u
+// arduino/arduino-cli compile -u
+// arduino-cli will take the arguments -b (board) and -p (serial port) from arduino/genericReadWrite/sketch.json
 {
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "compile sketch and upload firmware to Arduino",
+            "label": "compile sketch genericReadWrite and upload firmware to Arduino",
             "type": "shell",
-            "command": "arduino/arduino-cli",
+            "command": "arduino-cli",
             "args": [
                 "compile", 
-                {"value":"arduino/genericReadWrite.ino", "quoting":"escape"},
+                {"value":"arduino/genericReadWrite", "quoting":"escape"},
+                "-u" // --upload
+                /*
                 "-b", // --fqbn
                 {"value":"arduino:avr:uno", "quoting":"escape"},
                 "-o", // --output
                 {"value":"arduino/latest", "quoting":"escape"},
                 "-p", // --port
                 {"value":"COM3", "quoting":"escape"},
-                "-u" // --upload
+                */
             ],
             "problemMatcher": [],
             "group": {
