@@ -12,12 +12,14 @@ This is a tutorial to get started with Arduino Uno. We will measure the temparat
 2. Open this project with Visual Studio Code (File > Open Folder...)
 2. Compile the sketch *genericReadWrite.ino* and upload it to Arduino <br>
   After [setting up Visual Studio Code for Arduino](./arduino/README.md) this can be achieved via the keyboard shortcut **Ctrl+Shift+B**. This will run the default build task which will execute the shell command ```arduino-cli compile arduino/genericReadWrite -u```
-3. Start the server by running ```npm run start``` or ```nodemon ./server/server.js```
+3. Start the server by running ```nodemon``` or ```npm run start```
 4. Open the GUI on [http://localhost](http://localhost)
 
 ## Links
 * [www.arduino.cc](https://www.arduino.cc/)
     * [Sprach-Referenz](https://www.arduino.cc/reference/de/)
+* [Built-In Examples](https://www.arduino.cc/en/Tutorial/BuiltInExamples)
+    * [Blink Without Delay](https://www.arduino.cc/en/tutorial/BlinkWithoutDelay)
 * [www.funduino.de](https://funduino.de)
     * [Lernset Nr.8 mit UNO Controller - Kit für Arduino](https://www.funduinoshop.com/epages/78096195.sf/de_DE/?ObjectPath=/Shops/78096195/Products/01-U8)
     * [Temperatur messen](https://funduino.de/nr-9-temperatur-messen)
@@ -26,13 +28,7 @@ This is a tutorial to get started with Arduino Uno. We will measure the temparat
 * [Arduino command line interface](https://github.com/arduino/arduino-cli)
 * [Arduino Programming Cheat Sheet](https://github.com/liffiton/Arduino-Cheat-Sheet)
 * [Arduino Befehlsübersicht](https://www.arduinoforum.de/code-referenz)
-* [Better Processing](https://vimeo.com/showcase/2801639/video/97524853)
-
-
-<!--
-2. Install Arduino IDE from [www.arduino.cc](https://www.arduino.cc/en/main/software).
-    This is just for driver installation, we won't use this IDE it later as we use Visual Studio Code.
--->
-
+* [The Evils of Arduino Strings](https://hackingmajenkoblog.wordpress.com/2016/02/04/the-evils-of-arduino-strings/)
+* [Simple to use, blazing fast and thoroughly tested WebSocket client and server for Node.js](https://github.com/websockets/ws)
 
 

@@ -2,12 +2,12 @@
 
 
 
-1. Download Arduino CLI from [arduino.github.io/arduino-cli](https://arduino.github.io/arduino-cli/installation)<br>
-    Install this executable in a folder that belongs to your PATH variable. Let's put it, where the global npm tools are located. Here the PowerShell commands:
+1. Download the latest version (currently 0.10.0) of Arduino CLI from [arduino.github.io/arduino-cli](https://arduino.github.io/arduino-cli/installation)<br>
+    Install this command line program in a folder that is part of your PATH environment variable. Let's put it, where the global npm tools are located. Here the PowerShell commands for the installation:
 
-        $link = 'https://github.com/arduino/arduino-cli/releases/download/0.10.0/arduino-cli_0.10.0_Windows_64bit.zip'
+        $url = 'https://github.com/arduino/arduino-cli/releases/download/0.10.0/arduino-cli_0.10.0_Windows_64bit.zip'
         $tmp = 'arduino-cli.zip'
-        Invoke-WebRequest $link -OutFile $tmp
+        Invoke-WebRequest $url -OutFile $tmp
         Expand-Archive -Path $tmp -DestinationPath  $($env:APPDATA + '\npm')
         $tmp | Remove-Item
 

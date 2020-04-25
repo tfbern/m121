@@ -2,12 +2,12 @@
   "name": "iotdemo",
   "version": "1.0.0",
   "description": "Arduino firmware for IoT demo application",
+  "main": "server/server.js",
   "scripts": {
-    "start": "nodemon ./server/server.js"
+     "start": "nodemon server/server.js"
   },
   "author": "Samuel Hess",
   "license": "ISC",
-  "dependencies": {
-    "arduino-cli": "^0.32.0"
-  }
+  "dependencies": {}
 }
+
