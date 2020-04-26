@@ -1,6 +1,7 @@
 // serial gateway
+const url = 'ws://websocksrv.herokuapp.com'
 const WebSocket = require('ws');
-const ws = new WebSocket('ws://localhost:81');
+const ws = new WebSocket(url);
 const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
 const serial = new SerialPort('COM3', { baudRate: 9600 })
@@ -17,9 +18,12 @@ parser.on('data', function (line) {
   }
 })
 // forwarding messages from websocket to serial
+ws.on('open', function() {
+  console.log('Connected to ' + url)
+})
 ws.on('message', function(message) {
   console.log('gateway forwarding command to Arduino: ' + message)
-  serial.write(message + "\r")
+  serial.write(message)
 })
 
 
