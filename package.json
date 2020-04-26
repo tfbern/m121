@@ -1,13 +1,14 @@
 {
-  "name": "iotdemo",
+  "name": "websocketserver",
   "version": "1.0.0",
-  "description": "Arduino firmware for IoT demo application",
-  "main": "server/server.js",
+  "description": "NPM package for hosting at Heroku",
+  "main": "websocketserver/websocketserver.js",
   "scripts": {
-     "start": "nodemon server/server.js"
+    "start": "node websocketserver/websocketserver.js"
   },
   "author": "Samuel Hess",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "ws": "^7.2.5"
+  }
 }
-
