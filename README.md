@@ -27,20 +27,32 @@ In this setup the WebSocket sever will run on *localhost:81* and the webserver o
 ## Links
 ### Hardware Setup
 * [www.funduino.de](https://funduino.de)
-    * [Lernset Nr.8 mit UNO Controller - Kit für Arduino](https://www.funduinoshop.com/epages/78096195.sf/de_DE/?ObjectPath=/Shops/78096195/Products/01-U8)
-    * [Temperatur messen](https://funduino.de/nr-9-temperatur-messen)
-    * [Fotowiderstand](https://funduino.de/nr-6-fotowiderstand)
+* [Lernset Nr.8 mit UNO Controller - Kit für Arduino](https://www.funduinoshop.com/epages/78096195.sf/de_DE/?ObjectPath=/Shops/78096195/Products/01-U8)
+* [Temperatur messen](https://funduino.de/nr-9-temperatur-messen)
+* [Fotowiderstand](https://funduino.de/nr-6-fotowiderstand)
+
+
 ### Tools
 * [Visual Studio Code](https://code.visualstudio.com/)
 * [Arduino command line interface](https://github.com/arduino/arduino-cli)
+* [Git for Windows](https://gitforwindows.org)
+* [TortoiseGit](https://tortoisegit.org/) 
+* [Beyond Compare](https://www.scootersoftware.com/download.php)
+
 ### Sketch Programming
 * [www.arduino.cc](https://www.arduino.cc/)
-    * [Sprach-Referenz](https://www.arduino.cc/reference/de/)
-    * [Built-In Examples](https://www.arduino.cc/en/Tutorial/BuiltInExamples)
-    * [Blink Without Delay](https://www.arduino.cc/en/tutorial/BlinkWithoutDelay)
-    * [Arduino Programming Cheat Sheet](https://github.com/liffiton/Arduino-Cheat-Sheet)
-    * [Arduino Befehlsübersicht](https://www.arduinoforum.de/code-referenz)
-    * [The Evils of Arduino Strings](https://hackingmajenkoblog.wordpress.com/2016/02/04/the-evils-of-arduino-strings/)
+* [Sprach-Referenz](https://www.arduino.cc/reference/de/)
+* [Built-In Examples](https://www.arduino.cc/en/Tutorial/BuiltInExamples)
+* [Blink Without Delay](https://www.arduino.cc/en/tutorial/BlinkWithoutDelay)
+* [Arduino Programming Cheat Sheet](https://github.com/liffiton/Arduino-Cheat-Sheet)
+* [Arduino Befehlsübersicht](https://www.arduinoforum.de/code-referenz)
+* [The Evils of Arduino Strings](https://hackingmajenkoblog.wordpress.com/2016/02/04/the-evils-of-arduino-strings/)
+* [What is Heap Fragmentation?](https://cpp4arduino.com/2018/11/06/what-is-heap-fragmentation.html)
+* [Dynamic Memory Allocation and Fragmentation in C and C++](https://www.design-reuse.com/articles/25090/dynamic-memory-allocation-fragmentation-c.html)
+* [Speicher in Embedded Systems](http://dodo.fb06.fh-muenchen.de/hermann/esII/es2-vl123-v12.pdf)
+* [AVR Libc](https://www.nongnu.org/avr-libc/)
+* [C++ vs. The Arduino Language?](https://arduino.stackexchange.com/questions/816/c-vs-the-arduino-language)
+* [How C Program Stored in RAM?](http://www.vishalchovatiya.com/how-c-program-stored-in-ram-memory/)
 
 ### Dependencies / Libraries
 * [Simple to use, blazing fast and thoroughly tested WebSocket client and server for Node.js](https://github.com/websockets/ws)
