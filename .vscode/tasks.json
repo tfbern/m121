@@ -6,28 +6,16 @@
     // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
-        {
-            "label": "compile sketch genericReadWrite and upload firmware to Arduino",
-            "type": "shell",
-            "command": "arduino-cli",
-            "args": [
-                "compile", 
-                {"value":"arduino/genericReadWrite", "quoting":"escape"},
-                "-u" // --upload
-                /*
-                "-b", // --fqbn
-                {"value":"arduino:avr:uno", "quoting":"escape"},
-                "-o", // --output
-                {"value":"arduino/latest", "quoting":"escape"},
-                "-p", // --port
-                {"value":"COM3", "quoting":"escape"},
-                */
-            ],
-            "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        }
+      {
+          "label": "compile and upload sketch",
+          "type": "shell",
+          "command": "arduino-cli",
+          "args": ["compile", "${fileDirname}", "-u"],
+          "problemMatcher": [],
+          "group": {
+            "kind": "build",
+            "isDefault": true
+          }
+      }
     ]
 }

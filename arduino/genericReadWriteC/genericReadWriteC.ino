@@ -14,6 +14,9 @@
   However, the implementation is not finished yet. There is still some use of String objects
   in processSerialInput() and processCommand()
 */
+#include <Arduino.h>
+#include "status.h"
+#include "control.h"
 
 // global variables
 unsigned long previousMillis = 0;   // count loops
@@ -30,62 +33,6 @@ void setup(){
   }
 }
 
-// get status of all pin ans make JSON object, e.g. {"D0":1, ... , "A0":1023}
-char *readPins(char* out, int len) {                        // *readPins means return the string content, not just the pointer
-  strcat(out, "{");                                         // start JSON object with {
-  for (int i = 0; i <= 19; i++) {                           // loop from 0 to 19
-    char sType[3];                                          // string with max 2 char e.g. "D
-    char sPort[3];                                          // string with max 2 char e.g. 1 or 14
-    char sValue[5];                                         // string with max 4 char e.g. 0 or 1 or 1023
-    strcpy(sType, (i <= 13) ? "\"D" : "\"A");               // copy literal "D or "A into string
-    strcat(out, sType);                                     // add it to JSON object
-    int port = (i <= 13) ? i : i-14;                        // get port number
-    itoa(port, sPort, 10);                                  // convert int to string
-    strcat(out, sPort);                                     // add it to JSON object
-    strcat(out, "\":");                                     // add ": to JSON object
-    int value = (i <= 13) ? digitalRead(i) : analogRead(i); // read value from digital/analog port
-    itoa(value, sValue, 10);                                // convert value into string
-    strcat(out, sValue);                                    // add it to JSON object
-    if (i < 19) strcat(out, ",");                           // add , except last time
-  }
-  strcat(out, "}");                                         // close JSON object with }
-  return out;                                               // return the JSON object as string
-}
-
-// process incoming messages
-void processSerialInput() {
-  String incomingMessage;                 // e.g. 0=1&2=0&3=1
-  String keyValuePair;                    // splitted at &
-  incomingMessage = Serial.readString();  // read the whole String in the serial buffer
-  while (true) {
-    // get the next key-value pair to process
-    int pos = incomingMessage.indexOf('&');
-    if (pos != -1) { 
-      // '&' is present, we have multiple key-value pairs
-      keyValuePair = incomingMessage.substring(0,pos); // get the first key-value pair
-      processCommand(keyValuePair); // process it
-      incomingMessage = incomingMessage.substring(pos+1); // and remove it from incomingMessage
-    } else {
-      // just one command or last command
-      processCommand(incomingMessage); // process it
-      break;
-    }
-  }
-}
-
-// process key-value pair 
-void processCommand(String &command) {  // &command makes receiving the String object by reference, hence avoid copies and save resources
-  int pos = command.indexOf('=');
-  if (command.length() > 2 && pos > 0 ) { // min 3 characters with '=' present at minimum second position
-    int pin = command.substring(0,pos).toInt(); // characters before '='
-    int state = command.substring(pos+1).toInt(); // characters after '='
-    if (pin >= 0 && pin <= 19 && ( state == 0 || state == 1 )) {
-      // Serial.println("Setting input " + key + " to " + value);
-      digitalWrite(pin, state);
-    }
-  }
-}
-
 // main
 void loop() {
   // ckeck if we have incoming message, i.e. check if something is in the serial buffer
@@ -95,7 +42,7 @@ void loop() {
     // receive messages on serial line, parse and handle the messages
     processSerialInput();
     // send updated IO states to host
-    Serial.println(readPins(states, sizeof(states)-1)); // skip the \0 of the c string
+    Serial.println(readPins(states)); 
   } else {
     // get the milliseconds since start
     unsigned long currentMillis = millis();
@@ -104,7 +51,7 @@ void loop() {
       // save the last time we sent the IO states
       previousMillis = currentMillis;
       // send IO states to host
-      Serial.println(readPins(states, sizeof(states)-1)); // skip the \0 of the c string
+      Serial.println(readPins(states));
     } 
   }
 } 
