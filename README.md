@@ -5,15 +5,16 @@ This is a tutorial to get started with Arduino Uno. We will measure the temparat
 1. Get an Arduino Kit. We are working with [learning set #8 from Funduino](https://www.funduinoshop.com/epages/78096195.sf/de_DE/?ObjectPath=/Shops/78096195/Products/01-U8)
 2. Install Visual Studio Code if you haven't already.
 3. Make sure Node.js and NPM are installed on your machine.
-4. [Setup Visual Studio Code for Arduino](./arduino/README.md)
+4. [Install the Arduino CLI](./arduino/README.md)
 
 ## Run the Project via Internet
 In this setup the WebSocket sever will run on *websocksrv.herokuapp.com* and the webserver on *tfbern.github.io*.
 1. Attach the temperature sensor TMP36 to analog input A0 (make attention to the polarization)
 2. Attach Arduino Uno to the Computer via USB
-3. Compile the sketch *genericReadWrite* and upload it to Arduino<br> ```arduino-cli compile arduino/genericReadWrite -u```
-4. Run the serial-to-websocket gatway by running<br>
-```nodemon``` in the folder *gateway*
+3. Compile the sketch *genericReadWrite* and upload it to Arduino<br> ```arduino-cli compile arduino/genericReadWrite -u``` or use **Ctrl+Shift+B**
+4. In the   in the *gateway* folder.
+    * Run ```npm i``` to install the dependencies
+    * Run ```nodemon``` to start the serial-to-websocket gatway
 5. Open the GUI from http://tfbern.github.io.samhess.ch/m121/index.html
 
 ## Run the Project Locally
@@ -21,8 +22,10 @@ In this setup the WebSocket sever will run on *localhost:81* and the webserver o
 1. Attach the temperature sensor TMP36 to analog input A0 (make attention to the polarization)
 2. Attach Arduino Uno to the Computer via USB
 3. Compile the sketch *genericReadWrite* and upload it to Arduino <br>
-  After [setting up Visual Studio Code for Arduino](./arduino/README.md) this can be achieved via the keyboard shortcut **Ctrl+Shift+B**. This will run the default build task which will execute the shell command ```arduino-cli compile arduino/genericReadWrite -u```
-4. Start the server by running ```nodemon``` in the folder *server*.
+   ```arduino-cli compile arduino/genericReadWrite -u``` or use **Ctrl+Shift+B**
+4. In the   in the *server* folder.
+    * Run ```npm i``` to install the dependencies
+    * Run ```nodemon``` to start the server
 5. Open the GUI on [http://localhost](http://localhost)
 
 ## Links
