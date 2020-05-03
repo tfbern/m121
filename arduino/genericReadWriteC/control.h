@@ -1,5 +1,3 @@
-#include <Arduino.h>
-
 // process incoming messages
 void processSerialInput();
 

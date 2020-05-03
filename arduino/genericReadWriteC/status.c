@@ -1,9 +1,8 @@
 #include <Arduino.h>
 #include "status.h"
 
-// get status of all pin ans make JSON object, e.g. {"D0":1, ... , "A0":1023}
-char * readPins(char *states) {                        // *readPins means return the string content, not just the pointer
-  // max size of a JSON object is 14*6 (digital states) + 6*9 (analog states) + 19 (commas) + 2 (brackets) = 159 
+// get status of all pin and make JSON object, e.g. {"D0":1, ... , "A0":1023}
+char *readPins(char *states) {                             // *readPins returns the string, not just the pointer
   strcat(states, "{");                                      // start JSON object with {
   for (int i = 0; i <= 19; i++) {                           // loop from 0 to 19
     char sType[3];                                          // string with max 2 char e.g. "D
@@ -18,8 +17,8 @@ char * readPins(char *states) {                        // *readPins means return
     int value = (i <= 13) ? digitalRead(i) : analogRead(i); // read value from digital/analog port
     itoa(value, sValue, 10);                                // convert value into string
     strcat(states, sValue);                                 // add it to JSON object
-    if (i < 19) strcat(states, ",");                           // add , except last time
+    if (i < 19) strcat(states, ",");                        // add , except last time
   }
-  strcat(states, "}");                                         // close JSON object with }
-  return states;                                               // return the JSON object as string
+  strcat(states, "}");                                      // close JSON object with }
+  return states;                                            // return the JSON object as string
 }
