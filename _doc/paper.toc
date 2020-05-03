@@ -1,0 +1,58 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {ngerman}{}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1}Abstract}{3}{section.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2}Einleitung}{3}{section.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1}Fragestellung}{3}{subsection.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2}Motivation}{3}{subsection.2.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.3}Literatur-Review}{3}{subsection.2.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3}Experimenteller Teil}{3}{section.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.1}Informationsquellen}{3}{subsection.3.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.2}Werkzeuge}{3}{subsection.3.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {3.2.1}Hardware}{3}{subsubsection.3.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {3.2.2}Software}{4}{subsubsection.3.2.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.3}Methoden}{4}{subsection.3.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4}Resultate}{4}{section.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5}Diskussion}{4}{section.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {6}Zusammenfassung}{4}{section.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {7}Danksagung}{4}{section.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {8}Interessenskonflikte}{5}{section.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {9}Literatur}{6}{section.9}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A}Quellcode}{7}{appendix.A}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.1}Arduino Sketch}{7}{subsection.A.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {A.1.1}Funktionen zur Statusausgabe}{8}{subsubsection.A.1.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {A.1.2}Funktionen zur Steuerung}{8}{subsubsection.A.1.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.2}Serial Gateway}{10}{subsection.A.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.3}WebSocket Server}{11}{subsection.A.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.4}Web Client}{12}{subsection.A.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {B}Erstellung dieses Dokuments}{16}{appendix.B}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {B.1}LaTeX Umgebung}{16}{subsection.B.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {B.2}LaTeX Editor}{16}{subsection.B.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {B.3}LaTeX Pakete}{16}{subsection.B.3}%

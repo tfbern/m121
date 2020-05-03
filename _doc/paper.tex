@@ -1,0 +1,139 @@
+\input{setup.tex}
+\subject{ICT Modul 121 -- Steuerungsaufgaben bearbeiten}
+\title{Steuerung eines Arduino Uno Mikrokontrollers via WebSocket}
+\subtitle{}
+\author{Samuel Hess \\ 
+\href{mailto:samuel.hess@tfbern.ch}{samuel.hess@tfbern.ch} \\ 
+Technische Fachschule Bern}
+
+\begin{document}
+\maketitle
+
+\newpage
+% Inhaltsverzeichnis
+\tableofcontents
+\newpage
+
+\section{Abstract}
+In der vorliegenden Arbeit wurde untersucht, wie ein Arduino Uno über eine WebSocket-Verbindung
+gesteuert werden kann, während dieser im Sekundentakt Statusmeldungen versendet.
+
+Der verwendete Funduino Uno R3 \cite{lernset} verfügt über keine WLAN-Schnittstelle. Daher erfolgt
+die WebSocket-Kommunikation extern auf einem Gateway. Als Gateway wird ein Windows-PC verwendet.
+Arduino und Gateway sind per USB verbunden und kommunizieren über eine virtuelle serielle
+Schnittstelle.
+
+Das Ergebnis zeigt, dass eine Steuerung eines Arduinos per WebSocket problemlos möglich ist. 
+Die eingehenden Nachrichten müssen auf dem Arduino geparst werden. Dieses Parding ist einfacher, 
+wenn das verwendete Austauschformt schlank gehalten wird. Deshalb wurde anstelle von JSON das URL Format verwendet.
+
+\section{Einleitung}
+In diesem Kapitel wird die Motivation erläutert und genaue Fragesellung definiert. Dann folgt eine kleine Übersichtsarbeit mit dazugehöriger Literaturrecherche.  
+\subsection{Fragestellung}
+Welche Möglichkeiten gibt es, einen Arduino Uno via Websocket zu steuern?
+
+Während einer explorativen Online-Suche wurden einzelne Lösungen gefunden. Eine systematische Zusammenstellung der Möglichkeiten fehlt jedoch.
+\subsection{Motivation}
+Die Motivation für die vorliegende Arbeit ist die Beantwortung der nachfolgenden Fragestellung.
+Weiter soll der Artikel interessierten Lesern als Einstiegslektüre diesen.
+\subsection{Literatur-Review}
+Temperature Dashboard Using Arduino UNO, ESP8266 And MQTT \cite{ESP8266}
+\cite{websocketcommunication}
+
+
+
+\section{Experimenteller Teil}
+\subsection{Informationsquellen}
+\subsection{Werkzeuge}
+\subsubsection{Hardware}
+Verwendet wurde das Lernset Nr. 8 von Funduino \cite{lernset}.
+\subsubsection{Software}
+Zur Entwicklung wurde folgende Software eingesetzt.
+\begin{itemize}
+    \item Visual Studio Code \cite{vscode} mit der Erweiterung C/C++ IntelliSense, debugging, and code browsing \cite{intellisense}
+    \item Arduino CLI \cite{arduinoCli}
+    \item Git for Windows \cite{gitForWindows}
+    \item Tortoise Git \cite{tortoiseGit} 
+    \item Beyond Compare \cite{beyondCompare}
+  \end{itemize}
+Nicht verwendet wurde die Arduino IDE.
+\subsection{Methoden}
+
+\section{Resultate}
+Was ist das Ergebnis der Bemühungen? Darstellung der gewonnenen Daten, gegebenenfalls mit 
+statistischen Auswertungen.  
+
+\section{Diskussion}
+Interpretation der Ergebnisse. Welche weiteren Fragestellungen ergeben sich daraus? 
+Was bedeuten die Ergebnisse für das Forschungsgebiet? Stehen die Ergebnisse im Widerspruch 
+zu oder Einklang mit anderen, früheren Publikationen? Da während der Forschungsarbeit nicht 
+selten Probleme auftreten (zum Beispiel schlechtes Wetter, das eine Forschungsexpedition 
+erschwert und verkürzt), wird im Diskussions-Teil selbstkritisch beschrieben, ob und mit 
+welchen Einschränkungen die Ergebnisse gültig sind.
+
+\section{Zusammenfassung}
+Ähnlich wie das Abstract, jedoch eher zukunftsorientiert in Bezug auf weitergehende 
+Fragestellungen. Wo und wie liesse sich das jetzt gewonnene Wissen weiterverwenden?
+
+\section{Danksagung}
+Ich danke den Lernenden der Klasse BINF2017A für die Durchführung der Benutzertests.
+
+\section{Interessenskonflikte}
+Das Projekt wurde im Rahmen des Beruffachschulunterrichts durchgeführt und erhielt
+keine externde Finanzierung. Demnach bestehen keien Interessenkonflikte.
+
+% Literaturverzeichnis
+\newpage
+\printbibliography
+
+% Anhang
+\newpage
+\appendix{}
+\section{Quellcode}
+
+\subsection{Arduino Sketch}
+\lstinputlisting[language=c++]{../arduino/genericReadWrite/genericReadWrite.ino}
+\subsubsection{Funktionen zur Statusausgabe}
+\lstinputlisting[language=c++]{../arduino/genericReadWrite/status.cpp}
+\subsubsection{Funktionen zur Steuerung}
+\lstinputlisting[language=c++]{../arduino/genericReadWrite/control.cpp}
+
+\newpage
+\subsection{Serial Gateway}
+\lstinputlisting[language=js]{../gateway/gateway.js}
+
+\newpage
+\subsection{WebSocket Server}
+\lstinputlisting[language=js]{../websocketserver/websocketserver.js}
+
+\newpage
+\subsection{Web Client}
+\lstinputlisting[language=js]{../client/index.html}
+
+\newpage
+\section{Erstellung dieses Dokuments}
+Dieses Dokument wurde mit LaTeX erstellt. Der Quellcode befindet sich in der Datei
+\verb|_doc/paper.tex|. Die Quellensammlung befindet sich in der Datei \verb|_doc/quellen.tex| klk
+
+\subsection{LaTeX Umgebung}
+Dazu wurde TeX Live \cite{texlive} installiert. Dieses
+Paket stellt zahlreiche Tools zur Verfügung, darunter  \verb|pdflatex|
+
+\subsection{LaTeX Editor}
+Als Editor wurde Visual Studio Code \cite{vscode} mit der Erweiterung LaTeX Workshop \cite{latexWorkshop} verwendet.
+
+Das automatische Speichern kann in Visual Studio Code unter \verb|File -> Auto save| aktiviert werden. Mit \verb|Ctrl+Alt+V| wird die Vorschau des generierten PDFs aktiviert. 
+
+Vorteile gegenüber Microsoft Word sind die automatische Vervollständigung beim Schreiben, sowie die einfache Einbindung von Quellcode Listings wie in Anhang A.
+
+\subsection{LaTeX Pakete}
+Wie in \verb|_doc/setup.tex| zu sehen, werden folgende Pakete verwendet.
+\begin{itemize}
+    \item babel -- Multilingual support for Plain TeX or LaTeX
+    \item xcolor -- Driver-independent color extensions for LaTeX and pdfLaTeX
+    \item listings -- Typeset source code listings using LaTeX
+    \item biblatex -- Sophisticated Bibliographies in LaTeX
+    \item csquotes -- Context sensitive quotation facilities
+\end{itemize}
+Diese Pakete sind im Lieferumfang von TeX Live dabei und müssen nicht speziell installiert werden.
+\end{document}

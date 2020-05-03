@@ -1,0 +1,173 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{ESP8266}{online}{}
+      \name{author}{1}{}{%
+        {{hash=e8e4c587f5ae10c5445a2bf8746dc2bb}{%
+           family={Andrew\bibnamedelima Shvayka},
+           familyi={A\bibinitperiod\bibinitdelim S\bibinitperiod},
+           given={Igor\bibnamedelima Khanenko},
+           giveni={I\bibinitperiod\bibinitdelim K\bibinitperiod},
+           suffix={Igor\bibnamedelima Kulikov},
+           suffixi={I\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+      }
+      \strng{namehash}{e8e4c587f5ae10c5445a2bf8746dc2bb}
+      \strng{fullhash}{e8e4c587f5ae10c5445a2bf8746dc2bb}
+      \strng{bibnamehash}{e8e4c587f5ae10c5445a2bf8746dc2bb}
+      \strng{authorbibnamehash}{e8e4c587f5ae10c5445a2bf8746dc2bb}
+      \strng{authornamehash}{e8e4c587f5ae10c5445a2bf8746dc2bb}
+      \strng{authorfullhash}{e8e4c587f5ae10c5445a2bf8746dc2bb}
+      \field{sortinit}{A}
+      \field{sortinithash}{a3dcedd53b04d1adfd5ac303ecd5e6fa}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Temperature Dashboard Using Arduino UNO, ESP8266 And MQTT}
+      \verb{urlraw}
+      \verb https://www.hackster.io/thingsboard/temperature-dashboard-using-arduino-uno-esp8266-and-mqtt-5e26eb
+      \endverb
+      \verb{url}
+      \verb https://www.hackster.io/thingsboard/temperature-dashboard-using-arduino-uno-esp8266-and-mqtt-5e26eb
+      \endverb
+    \endentry
+    \entry{arduinoCli}{online}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{a3dcedd53b04d1adfd5ac303ecd5e6fa}
+      \field{labeltitlesource}{title}
+      \field{title}{Arduino command line interface}
+      \verb{urlraw}
+      \verb https://github.com/arduino/arduino-cli
+      \endverb
+      \verb{url}
+      \verb https://github.com/arduino/arduino-cli
+      \endverb
+    \endentry
+    \entry{beyondCompare}{online}{}
+      \field{sortinit}{B}
+      \field{sortinithash}{8de16967003c7207dae369d874f1456e}
+      \field{labeltitlesource}{title}
+      \field{title}{Beyond Compare}
+      \verb{urlraw}
+      \verb https://www.scootersoftware.com/download.php
+      \endverb
+      \verb{url}
+      \verb https://www.scootersoftware.com/download.php
+      \endverb
+    \endentry
+    \entry{intellisense}{online}{}
+      \field{sortinit}{C}
+      \field{sortinithash}{4c244ceae61406cdc0cc2ce1cb1ff703}
+      \field{labeltitlesource}{title}
+      \field{title}{C/C++ IntelliSense, debugging, and code browsing.}
+      \verb{urlraw}
+      \verb https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools
+      \endverb
+      \verb{url}
+      \verb https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools
+      \endverb
+    \endentry
+    \entry{gitForWindows}{online}{}
+      \field{sortinit}{G}
+      \field{sortinithash}{62eb2aa29549e4fdbd3cb154ec5711cb}
+      \field{labeltitlesource}{title}
+      \field{title}{Git for Windows}
+      \verb{urlraw}
+      \verb https://gitforwindows.org
+      \endverb
+      \verb{url}
+      \verb https://gitforwindows.org
+      \endverb
+    \endentry
+    \entry{latexWorkshop}{online}{}
+      \field{sortinit}{L}
+      \field{sortinithash}{dad3efd0836470093a7b4a7bb756eb8c}
+      \field{labeltitlesource}{title}
+      \field{title}{LaTeX Workshop}
+      \verb{urlraw}
+      \verb https://github.com/James-Yu/LaTeX-Workshop
+      \endverb
+      \verb{url}
+      \verb https://github.com/James-Yu/LaTeX-Workshop
+      \endverb
+    \endentry
+    \entry{lernset}{online}{}
+      \field{sortinit}{L}
+      \field{sortinithash}{dad3efd0836470093a7b4a7bb756eb8c}
+      \field{labeltitlesource}{title}
+      \field{title}{Lernset Nr.8 mit UNO Controller - Kit für Arduino}
+      \verb{urlraw}
+      \verb https://www.funduinoshop.com/epages/78096195.sf/de_DE/?ObjectPath=/Shops/78096195/Products/01-U8
+      \endverb
+      \verb{url}
+      \verb https://www.funduinoshop.com/epages/78096195.sf/de_DE/?ObjectPath=/Shops/78096195/Products/01-U8
+      \endverb
+    \endentry
+    \entry{texlive}{online}{}
+      \field{sortinit}{T}
+      \field{sortinithash}{51f9faf24c60c62ca764a77f78cf5666}
+      \field{labeltitlesource}{title}
+      \field{title}{TeX Users Group}
+      \verb{urlraw}
+      \verb https://www.tug.org/texlive/
+      \endverb
+      \verb{url}
+      \verb https://www.tug.org/texlive/
+      \endverb
+    \endentry
+    \entry{tortoiseGit}{online}{}
+      \field{sortinit}{T}
+      \field{sortinithash}{51f9faf24c60c62ca764a77f78cf5666}
+      \field{labeltitlesource}{title}
+      \field{title}{TortoiseGit}
+      \verb{urlraw}
+      \verb https://tortoisegit.org/
+      \endverb
+      \verb{url}
+      \verb https://tortoisegit.org/
+      \endverb
+    \endentry
+    \entry{vscode}{online}{}
+      \field{sortinit}{V}
+      \field{sortinithash}{02432525618c08e2b03cac47c19764af}
+      \field{labeltitlesource}{title}
+      \field{title}{Visual Studio Code}
+      \verb{urlraw}
+      \verb https://code.visualstudio.com/
+      \endverb
+      \verb{url}
+      \verb https://code.visualstudio.com/
+      \endverb
+    \endentry
+    \entry{websocketcommunication}{online}{}
+      \field{sortinit}{W}
+      \field{sortinithash}{1af34bd8c148ffb32de1494636b49713}
+      \field{labeltitlesource}{title}
+      \field{title}{WebSocket communication with an ESP8266 or Arduino in Python. Test with the ws4py library on Raspberry Pi}
+      \verb{urlraw}
+      \verb https://diyprojects.io/websocket-communication-esp8266-arduino-python-test-ws4py-library-raspberry-pi/#.Xq6bKagzaUk
+      \endverb
+      \verb{url}
+      \verb https://diyprojects.io/websocket-communication-esp8266-arduino-python-test-ws4py-library-raspberry-pi/#.Xq6bKagzaUk
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
