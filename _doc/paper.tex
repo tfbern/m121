@@ -15,17 +15,12 @@ Technische Fachschule Bern}
 \newpage
 
 \section{Abstract}
-In der vorliegenden Arbeit wurde untersucht, wie ein Arduino Uno über eine WebSocket-Verbindung
-gesteuert werden kann, während dieser im Sekundentakt Statusmeldungen versendet.
+In der vorliegenden Arbeit wurde untersucht, wie ein Arduino Uno über eine WebSocket-Verbindung gesteuert werden kann, während dieser im Sekundentakt Statusmeldungen versendet.
 
-Der verwendete Funduino Uno R3 \cite{lernset} verfügt über keine WLAN-Schnittstelle. Daher erfolgt
-die WebSocket-Kommunikation extern auf einem Gateway. Als Gateway wird ein Windows-PC verwendet.
-Arduino und Gateway sind per USB verbunden und kommunizieren über eine virtuelle serielle
+Der verwendete Funduino Uno R3 \cite{lernset} verfügt über keine WLAN-Schnittstelle. Daher erfolgt die WebSocket-Kommunikation extern auf einem Gateway. Als Gateway wird ein Windows-PC verwendet. Arduino und Gateway sind per USB verbunden und kommunizieren über eine virtuelle serielle
 Schnittstelle.
 
-Das Ergebnis zeigt, dass eine Steuerung eines Arduinos per WebSocket problemlos möglich ist. 
-Die eingehenden Nachrichten müssen auf dem Arduino geparst werden. Dieses Parding ist einfacher, 
-wenn das verwendete Austauschformt schlank gehalten wird. Deshalb wurde anstelle von JSON das URL Format verwendet.
+Das Ergebnis zeigt, dass eine Steuerung eines Arduinos per WebSocket problemlos möglich ist.  Die eingehenden Nachrichten müssen auf dem Arduino geparst werden. Dieses Parding ist einfacher, wenn das verwendete Austauschformt schlank gehalten wird. Deshalb wurde anstelle von JSON das URL Format verwendet.
 
 \section{Einleitung}
 In diesem Kapitel wird die Motivation erläutert und genaue Fragesellung definiert. Dann folgt eine kleine Übersichtsarbeit mit dazugehöriger Literaturrecherche.  
@@ -38,6 +33,8 @@ Die Motivation für die vorliegende Arbeit ist die Beantwortung der nachfolgende
 Weiter soll der Artikel interessierten Lesern als Einstiegslektüre diesen.
 \subsection{Literatur-Review}
 Temperature Dashboard Using Arduino UNO, ESP8266 And MQTT \cite{ESP8266}
+
+WebSocket communication with an ESP8266 or Arduino in Python. Test with the ws4py library on Raspberry Pi
 \cite{websocketcommunication}
 
 
@@ -50,7 +47,7 @@ Verwendet wurde das Lernset Nr. 8 von Funduino \cite{lernset}.
 \subsubsection{Software}
 Zur Entwicklung wurde folgende Software eingesetzt.
 \begin{itemize}
-    \item Visual Studio Code \cite{vscode} mit der Erweiterung C/C++ IntelliSense, debugging, and code browsing \cite{intellisense}
+    \item Visual Studio Code \cite{vscode} mit der Erweiterung C/C++ IntelliSense \cite{intellisense}
     \item Arduino CLI \cite{arduinoCli}
     \item Git for Windows \cite{gitForWindows}
     \item Tortoise Git \cite{tortoiseGit} 
@@ -60,8 +57,7 @@ Nicht verwendet wurde die Arduino IDE.
 \subsection{Methoden}
 
 \section{Resultate}
-Was ist das Ergebnis der Bemühungen? Darstellung der gewonnenen Daten, gegebenenfalls mit 
-statistischen Auswertungen.  
+Was ist das Ergebnis der Bemühungen? Darstellung der gewonnenen Daten, gegebenenfalls mit statistischen Auswertungen.  
 
 \section{Diskussion}
 Interpretation der Ergebnisse. Welche weiteren Fragestellungen ergeben sich daraus? 
@@ -76,7 +72,7 @@ welchen Einschränkungen die Ergebnisse gültig sind.
 Fragestellungen. Wo und wie liesse sich das jetzt gewonnene Wissen weiterverwenden?
 
 \section{Danksagung}
-Ich danke den Lernenden der Klasse BINF2017A für die Durchführung der Benutzertests.
+Ich danke den Lernenden der Klasse BINF2017A für die Zusammenarbeit.
 
 \section{Interessenskonflikte}
 Das Projekt wurde im Rahmen des Beruffachschulunterrichts durchgeführt und erhielt
@@ -122,9 +118,11 @@ Paket stellt zahlreiche Tools zur Verfügung, darunter  \verb|pdflatex|
 \subsection{LaTeX Editor}
 Als Editor wurde Visual Studio Code \cite{vscode} mit der Erweiterung LaTeX Workshop \cite{latexWorkshop} verwendet.
 
-Das automatische Speichern kann in Visual Studio Code unter \verb|File -> Auto save| aktiviert werden. Mit \verb|Ctrl+Alt+V| wird die Vorschau des generierten PDFs aktiviert. 
+Das automatische Speichern kann in Visual Studio Code unter \verb|File -> Auto save| aktiviert werden. Mit \verb|Ctrl+Alt+V| wird die Vorschau des generierten PDFs aktiviert. Mit \verb|Alt+Z| kann der automatische Zeilenumbruch eingeschalten werden.
 
 Vorteile gegenüber Microsoft Word sind die automatische Vervollständigung beim Schreiben, sowie die einfache Einbindung von Quellcode Listings wie in Anhang A.
+
+Weitere Informationen zum Erstellen des Inhaltsverzeichnis und des Literaturverzeichnis finden sich unter \cite{inhaltsverzeichnis} und \cite{literaturverzeichnis}.
 
 \subsection{LaTeX Pakete}
 Wie in \verb|_doc/setup.tex| zu sehen, werden folgende Pakete verwendet.

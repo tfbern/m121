@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <SPI.h> // SPI-Bibiothek hinzufügen
+#include <SPI.h>     // SPI-Bibiothek hinzufügen
 #include <MFRC522.h> // RFID-Bibiothek hinzufügen
 
 #define SS_PIN 10 // SDA an Pin 10 (bei MEGA anders)
@@ -7,14 +7,13 @@
 
 MFRC522 mfrc522(SS_PIN, RST_PIN); // RFID-Empfänger benennen
 
-void setup() // Beginn des Setups:
-{
+void setup() {          // Beginn des Setups:
     Serial.begin(9600); // Serielle Verbindung starten (Monitor)
-    SPI.begin(); // SPI-Verbindung aufbauen
+    SPI.begin();        // SPI-Verbindung aufbauen
     mfrc522.PCD_Init(); // Initialisierung des RFID-Empfängers
 }
 
-void loop() // Hier beginnt der Loop-Teil {
+void loop() { // Hier beginnt der Loop-Teil 
   if (!mfrc522.PICC_IsNewCardPresent()) { // Wenn keine Karte in Reichweite ist... 
       return; // ...springt das Programm zurück vor die if-Schleife, womit sich die Abfrage wiederholt.
   }
