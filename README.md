@@ -4,7 +4,8 @@ This is a tutorial to get started with Arduino Uno. We will measure the temparat
 ## Setup the Environment
 1. Get an Arduino Kit. We are working with [learning set #8 from Funduino](https://www.funduinoshop.com/epages/78096195.sf/de_DE/?ObjectPath=/Shops/78096195/Products/01-U8)
 2. Install Visual Studio Code if you haven't already.
-3. [Setup Visual Studio Code for Arduino](./arduino/README.md)
+3. Make sure Node.js and NPM are installed on your machine.
+4. [Setup Visual Studio Code for Arduino](./arduino/README.md)
 
 ## Run the Project via Internet
 In this setup the WebSocket sever will run on *websocksrv.herokuapp.com* and the webserver on *tfbern.github.io*.
