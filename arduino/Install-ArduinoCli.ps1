@@ -1,9 +1,12 @@
 <#
 .DESCRIPTION
-A longer description of your script.
+Install Arduino CLI
 
 .PARAMETER url
-URL of the current Arduino CLI Release
+From where the latest release shall be downloaded
+
+.PARAMETER installPath
+Where the arduino-cli shall be install
 
 .EXAMPLE
 PS> Install-ArduinoCli
@@ -18,7 +21,7 @@ $file = $Env:TEMP + '\arduino-cli.zip'
 Invoke-WebRequest $url -OutFile $file
 if (Test-Path $file) {
   Expand-Archive -Path $file -DestinationPath $installPath
-  $file | Remove-Itemget
+  $file | Remove-Item
 }
 
 try {
