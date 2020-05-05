@@ -1,11 +1,18 @@
 {
     "configurations": [
         {
-            "name": "Arduino",
+            "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:/Users/Samuel/Documents/Arduino/libraries/**",
-                "C:/Users/Samuel/AppData/Local/Arduino15/packages/arduino/**"
+                "${env:USERPROFILE}/Documents/Arduino/libraries/**",
+                "${env:LOCALAPPDATA}/Arduino15/packages/arduino/hardware/avr/1.8.2/cores/arduino",
+                "${env:LOCALAPPDATA}/Arduino15/packages/arduino/hardware/avr/1.8.2/variants/standard",
+                "${env:LOCALAPPDATA}/Arduino15/packages/arduino/hardware/avr/1.8.2/libraries/EEPROM/src",
+                "${env:LOCALAPPDATA}/Arduino15/packages/arduino/hardware/avr/1.8.2/libraries/HID/src",
+                "${env:LOCALAPPDATA}/Arduino15/packages/arduino/hardware/avr/1.8.2/libraries/SoftwareSerial/src",
+                "${env:LOCALAPPDATA}/Arduino15/packages/arduino/hardware/avr/1.8.2/libraries/SPI/src",
+                "${env:LOCALAPPDATA}/Arduino15/packages/arduino/hardware/avr/1.8.2/libraries/Wire/src",
+                "${env:LOCALAPPDATA}/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/**"
             ],
             "defines": [
                 "_DEBUG",
@@ -15,12 +22,13 @@
                 "ARDUINO=10607",
                 "ARDUINO_AVR_UNO",
                 "ARDUINO_ARCH_AVR",
-                "F_CPU=16000000L"
+                "F_CPU=16000000L",
+                "__AVR_ATmega328P__"
             ],
             "cStandard": "c11",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "${default}",
-            "compilerPath": "C:/Users/Samuel/AppData/Local/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin/avr-g++.exe",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "clang-x64",
+            "compilerPath": "${env:LOCALAPPDATA}/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5/bin/avr-g++.exe",
             "compilerArgs": [
                 "-c",
                 "-g",
