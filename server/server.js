@@ -19,7 +19,7 @@ wss.on('connection', function connection(ws) {
   });
 });
 
-// test comment
+// test comment 1
 // serial gateway
 const ws = new WebSocket('ws://localhost:81');
 const SerialPort = require('serialport')
