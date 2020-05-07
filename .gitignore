@@ -3,4 +3,5 @@ node_modules
 # binaries of Arduino sketches
 *.elf
 *.hex
+# disassembled files
 *.s
