@@ -1,0 +1,54 @@
+\section{Experimenteller Teil}
+
+\subsection{Informationsquellen}
+Als Informationsquellen sind die Datenblätter zur jweiligen Hardware sowie die Manuals zu den einsesetzten Softwarekomponenten zu nennen.
+
+\subsection{Prinzipskizze}
+
+\subsection{Hardware}
+Verwendet wurde das Lernset Nr. 8 von Funduino\cite{lernset}. Darin enthalten ist ein Funduino Uno. Weiter benötigen wir den Temparatursensor TMP36 und den Fotowiderstand.
+
+\subsubsection{Anschluss der Sensoren}
+
+\subsection{Software}
+
+\subsubsection{Entwicklungsumgebung}
+Zur Entwicklung wurde folgende Software eingesetzt.
+\begin{itemize}
+    \item Visual Studio Code\cite{vscode} mit der Erweiterung C/C++ IntelliSense\cite{intellisense}
+    \item Arduino CLI\cite{arduinoCli}
+    \item Git for Windows\cite{gitForWindows} und TortoiseGit\cite{tortoiseGit} 
+  \end{itemize}
+Nicht verwendet wurde die Arduino IDE. Windows verwendet den Standardtreiber \textit {usbser.sys} für den virtuellen COM Port. 
+
+\subsubsection{Node Libraries}
+Weiter wurde folgende NPM Packages eingesetzt:
+\begin{itemize}
+  \item WebSockets \cite{websockets}
+  \item Express \cite{express}
+  \item Chart.js \cite{chartjs}
+  \item SerialPort \cite{serialPort}
+\end{itemize}
+
+\subsubsection{Arduino Libraries}
+Weiter wurde folgende Arduino Libraries eingesetzt:
+\begin{itemize}
+  \item Arduino Library (Arduino.h) \cite{sprachreferenz}\cite{codeReferenz}\cite{arduinoCheatSheet}
+  \item AVR Libc \cite{avrlibc}
+\end{itemize}
+
+\subsubsection{Arduino Sketch}
+Zunächst müssen wir klären, in welcher Programmiersprache die Arduino Sketches geschrieben werden. Nachdem man sich die Build-Umgebung genauer unter die Lupe genommen hat, wird klar, dass keine eigene Arduino-Sprache existert\cite{arduinoLanguage}. Im Hintergrund wird aus dem Sketch eine C++ Datei erstellt und mit \textit{avr-g++} kompiliert.
+
+Die Problematik der Heap-Fragmentierung wird von mehreren Autoren aufgeworfen und diskutiert \cite{heapFragmentation}\cite{heapFragmentation2}. Matt ist der Meinung, dass man deshalb auf die String Klasse in der Arduino Library gänzlich verzichten soll\cite{arduinoStrings}. In der Konsequenz müsste man die Stringfunktion aus der Standard C Library\cite{avrlibc} verwerden und in C programmieren. Ich sehe dies nicht ganz so eng und setze die Arduino String Klasse trotzdem, jedoch mit Zurückhaltung ein. Ich befolge Matt's Rat, die Variablen by Reference zu übergeben\cite{arduinoStrings}.
+
+Der Quellcode befindet sich im Kapitel \ref{Arduino Sketch}.
+
+\subsubsection{Serial Gateway}
+Der Quellcode befindet sich im Kapitel \ref{Serial Gateway}.
+
+\subsubsection{WebSocket Server}
+Der Quellcode befindet sich im Kapitel \ref{WebSocket Server}.
+
+\subsubsection{Web GUI}
+Der Quellcode befindet sich im Kapitel \ref{Web Client}.

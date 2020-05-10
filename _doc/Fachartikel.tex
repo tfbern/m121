@@ -1,0 +1,81 @@
+\input{setup.tex}
+\subject{ICT Modul 121 -- Steuerungsaufgaben bearbeiten}
+\title{Steuerung eines Arduino Uno Mikrokontrollers via WebSocket}
+\subtitle{}
+\author{Samuel Hess \\ 
+\href{mailto:samuel.hess@tfbern.ch}{samuel.hess@tfbern.ch} \\ 
+Technische Fachschule Bern}
+
+\begin{document}
+\maketitle
+
+\newpage
+% Inhaltsverzeichnis
+\tableofcontents
+\newpage
+
+\section{Abstract}
+In der vorliegenden Arbeit wurde untersucht, wie ein Arduino Uno über eine WebSocket-Verbindung gesteuert werden kann, während dieser im Sekundentakt Statusmeldungen versendet.
+
+Der verwendete Funduino Uno R3\cite{lernset} verfügt über keine WLAN-Schnittstelle. Daher erfolgt die WebSocket-Kommunikation extern auf einem Gateway. Als Gateway wird ein Windows-PC verwendet. Arduino und Gateway sind per USB verbunden und kommunizieren über eine virtuelle serielle
+Schnittstelle.
+
+Das Ergebnis zeigt, dass eine Steuerung eines Arduinos per WebSocket problemlos möglich ist.  Die eingehenden Nachrichten müssen auf dem Arduino geparst werden. Dieses Parding ist einfacher, wenn das verwendete Austauschformt schlank gehalten wird. Deshalb wurde anstelle von JSON das URL Format verwendet.
+
+\section{Einleitung}
+In diesem Kapitel wird die Motivation erläutert und genaue Fragesellung definiert. Dann folgt eine kleine Übersichtsarbeit mit dazugehöriger Literaturrecherche.  
+
+\subsection{Fragestellung}
+Welche Möglichkeiten gibt es, einen Arduino Uno via Websocket zu steuern?
+
+Während einer explorativen Online-Suche wurden einzelne Lösungen gefunden. Eine systematische Zusammenstellung der Möglichkeiten fehlt jedoch.
+
+\subsection{Motivation}
+Die Motivation für die vorliegende Arbeit ist die Beantwortung der nachfolgenden Fragestellung.
+Weiter soll der Artikel interessierten Lesern als Einstiegslektüre diesen.
+
+\subsection{Literatur-Review}
+Zum Thema existiert diverse Fachliteratur unter anderem von Erik Bartmann\cite{bartmannArduino}\cite{bartmannESP8266}\cite{bartmannESP32}.
+
+\subsubsection{Arduino mit integriertem WLAN}
+Der Arduino Uno hat keine eingebaute WLAN Schnittstelle. Es gibt jedoch andere Arduino Modelle mit integriertem WLAN, wie z.B. der Arduino MKR1000.
+
+\subsubsection{WLAN Erweiterung}
+Mehrere Autoren berichten\cite{temperatureDashboard}\cite{websocketcommunication}, wie der Arduino mit dem dem WLAN Modul ESP8266 erweitert werden kann. 
+
+\subsubsection{Serial Gateway}
+Eine weitere Möglichkeit, ist behelfsweise einen PC als Serial Gateway einzusetzen.
+Mangels kurzfristig verfügbarer Hardware wollen wir diese Option verfolgen.
+
+\input{experimentellerTeil.tex}
+
+\section{Resultate}
+Es hat sich gezeigt, dass ein Seriell-zu-Websocket-Gatway unter Node.js einfach zu implementieren ist. Über diesen Umweg kann der Arduino Uno ans Internet angebunden werden.
+
+\section{Diskussion}
+
+\section{Zusammenfassung}
+Statt des Arduino Uno könnte ein Arduino MKR1000 verwendet werden. Dieser könnte kann auch an die Arduino Clound angebunden werden.
+Ein weitere Option ist die Beschaffung einer WLAN Erweiterung wie das Modul ESP8266.
+
+\section{Danksagung}
+Ich danke den Lernenden der Klasse BINF2017A für die Zusammenarbeit.
+
+\section{Interessenskonflikte}
+Das Projekt wurde im Rahmen des Beruffachschulunterrichts durchgeführt und erhielt
+keine externde Finanzierung. Demnach bestehen keien Interessenkonflikte.
+
+% Quellenverzeichnis
+\newpage
+\section{Quellenverzeichnis}
+\printbibliography[heading=subbibliography,title={Bücher},type=book]
+\printbibliography[heading=subbibliography,title={Web},type=online]
+\printbibliography[heading=subbibliography,title={Manuals},type=manual]
+\printbibliography[heading=subbibliography,title={Software},type=misc]
+
+% Anhang
+\newpage
+\appendix{}
+\section{Quellcode}
+\input{anhang.tex}
+
