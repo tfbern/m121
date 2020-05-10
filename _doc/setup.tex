@@ -1,8 +1,20 @@
-\documentclass[12pt, a4paper, bibliography=totocnumbered]{scrartcl}
+\documentclass[12pt, a4paper, bibliography=totoc]{scrartcl}
 \usepackage[ngerman]{babel}
 \usepackage{xcolor}
 \usepackage{listings}
-\usepackage[backend=biber,style=numeric,citestyle=numeric]{biblatex}
+\usepackage[backend=biber,style=numeric,citestyle=numeric,sorting=none]{biblatex}
+\DeclareCiteCommand{\supercite}[\mkbibsuperscript]
+  {\iffieldundef{prenote}
+     {}
+     {\BibliographyWarning{Ignoring prenote argument}}%
+   \iffieldundef{postnote}
+     {}
+     {\BibliographyWarning{Ignoring postnote argument}}}
+  {\usebibmacro{citeindex}%
+   \bibopenbracket\usebibmacro{cite}\bibclosebracket}
+  {\supercitedelim}
+  {}
+\let\cite=\supercite
 \usepackage{csquotes}             % recommended by biblatex
 \usepackage[colorlinks=true,linkcolor=black,linktoc=all,citecolor=blue,urlcolor=blue]{hyperref}
 \addbibresource{quellen.bib}
