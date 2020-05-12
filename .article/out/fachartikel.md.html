@@ -69,37 +69,21 @@ SOFTWARE.
 <li><a href="#fragestellung"><span class="toc-section-number">2</span> Fragestellung</a>
 <ul>
 <li><a href="#motivation"><span class="toc-section-number">2.1</span> Motivation</a></li>
-<li><a href="#literatur-review"><span class="toc-section-number">2.2</span> Literatur-Review</a>
-<ul>
-<li><a href="#arduino-mit-integriertem-wlan"><span class="toc-section-number">2.2.1</span> Arduino mit integriertem WLAN</a></li>
-<li><a href="#wlan-erweiterung"><span class="toc-section-number">2.2.2</span> WLAN Erweiterung</a></li>
-<li><a href="#serial-gateway"><span class="toc-section-number">2.2.3</span> Serial Gateway</a></li>
-</ul></li>
+<li><a href="#literatur-review"><span class="toc-section-number">2.2</span> Literatur-Review</a></li>
 </ul></li>
 <li><a href="#experimenteller-teil"><span class="toc-section-number">3</span> Experimenteller Teil</a>
 <ul>
 <li><a href="#informationsquellen"><span class="toc-section-number">3.1</span> Informationsquellen</a></li>
 <li><a href="#prinzipskizze"><span class="toc-section-number">3.2</span> Prinzipskizze</a></li>
-<li><a href="#hardware"><span class="toc-section-number">3.3</span> Hardware</a>
-<ul>
-<li><a href="#anschluss-der-sensoren"><span class="toc-section-number">3.3.1</span> Anschluss der Sensoren</a></li>
-</ul></li>
-<li><a href="#software"><span class="toc-section-number">3.4</span> Software</a>
-<ul>
-<li><a href="#entwicklungsumgebung"><span class="toc-section-number">3.4.1</span> Entwicklungsumgebung</a></li>
-<li><a href="#node-libraries"><span class="toc-section-number">3.4.2</span> Node Libraries</a></li>
-<li><a href="#arduino-libraries"><span class="toc-section-number">3.4.3</span> Arduino Libraries</a></li>
-<li><a href="#arduino-sketch"><span class="toc-section-number">3.4.4</span> Arduino Sketch</a></li>
-<li><a href="#serial-gateway-1"><span class="toc-section-number">3.4.5</span> Serial Gateway</a></li>
-<li><a href="#websocket-server"><span class="toc-section-number">3.4.6</span> WebSocket Server</a></li>
-<li><a href="#web-gui"><span class="toc-section-number">3.4.7</span> Web GUI</a></li>
-</ul></li>
+<li><a href="#hardware"><span class="toc-section-number">3.3</span> Hardware</a></li>
+<li><a href="#software"><span class="toc-section-number">3.4</span> Software</a></li>
 </ul></li>
 <li><a href="#resultate"><span class="toc-section-number">4</span> Resultate</a></li>
 <li><a href="#diskussion"><span class="toc-section-number">5</span> Diskussion</a></li>
 <li><a href="#zusammenfassung"><span class="toc-section-number">6</span> Zusammenfassung</a></li>
 <li><a href="#danksagung"><span class="toc-section-number">7</span> Danksagung</a></li>
 <li><a href="#interessenskonflikte"><span class="toc-section-number">8</span> Interessenskonflikte</a></li>
+<li><a href="#quellenverzeichnis">Quellenverzeichnis</a></li>
 </ul>
 </nav>
 <hr>
@@ -126,9 +110,15 @@ SOFTWARE.
 <h2 data-number="3.1" id="informationsquellen"><span class="header-section-number">3.1</span> Informationsquellen</h2>
 <p>Als Informationsquellen sind die Datenblätter zur jweiligen Hardware sowie die Manuals zu den einsesetzten Softwarekomponenten zu nennen.</p>
 <h2 data-number="3.2" id="prinzipskizze"><span class="header-section-number">3.2</span> Prinzipskizze</h2>
+<figure>
+<img src="img/prinzipskizze.png" alt="" /><figcaption>Prinzipskizze</figcaption>
+</figure>
 <h2 data-number="3.3" id="hardware"><span class="header-section-number">3.3</span> Hardware</h2>
 <p>Verwendet wurde das Lernset Nr. 8 von Funduino <span class="citation" data-cites="lernset">[<a href="#ref-lernset" role="doc-biblioref">1</a>]</span>. Darin enthalten ist ein Funduino Uno. Weiter benötigen wir den Temparatursensor TMP36 und den Fotowiderstand.</p>
 <h3 data-number="3.3.1" id="anschluss-der-sensoren"><span class="header-section-number">3.3.1</span> Anschluss der Sensoren</h3>
+<figure>
+<img src="img/anschluss.png" alt="" /><figcaption>Anschluss der Sensoren</figcaption>
+</figure>
 <h2 data-number="3.4" id="software"><span class="header-section-number">3.4</span> Software</h2>
 <h3 data-number="3.4.1" id="entwicklungsumgebung"><span class="header-section-number">3.4.1</span> Entwicklungsumgebung</h3>
 <p>Zur Entwicklung wurde folgende Software eingesetzt.</p>
@@ -172,6 +162,7 @@ SOFTWARE.
 <p>Ich danke den Lernenden der Klasse BINF2017A für die Zusammenarbeit.</p>
 <h1 data-number="8" id="interessenskonflikte"><span class="header-section-number">8</span> Interessenskonflikte</h1>
 <p>Das Projekt wurde im Rahmen des Beruffachschulunterrichts durchgeführt und erhielt keine externde Finanzierung. Demnach bestehen keien Interessenkonflikte.</p>
+<h1 class="unnumbered" data-number="" id="quellenverzeichnis">Quellenverzeichnis</h1>
 <div id="refs" class="references hanging-indent" role="doc-bibliography">
 <div id="ref-lernset">
 <p>[1] <em>Lernset Nr.8 mit UNO Controller - Kit für Arduino</em>. URL <a href="https://www.funduinoshop.com/epages/78096195.sf/de_DE/?ObjectPath=/Shops/78096195/Products/01-U8">https://www.funduinoshop.com/epages/78096195.sf/de_DE/?ObjectPath=/Shops/78096195/Products/01-U8</a></p>

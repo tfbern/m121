@@ -3,7 +3,7 @@
 Convert document with pandoc
 
 .EXAMPLE
-PS> Convert.ps1
+PS> Convert-Document -outFormat gfm
 #>
 
 Param(
@@ -27,6 +27,7 @@ if ($outFormat -eq 'gfm') {
   -V toc-title:"Inhaltsverzeichnis" `
   --csl din-1505-2-numeric.csl `
   --toc `
+  --toc-depth=2 `
   --metadata link-citations=true `
   -s `
   --from markdown `
@@ -44,6 +45,7 @@ if ($outFormat -eq 'html') {
   --csl din-1505-2-numeric.csl `
   --template github.html `
   --toc `
+  --toc-depth=2 `
   --metadata link-citations=true `
   -s `
   --from markdown `
@@ -59,6 +61,7 @@ if ($outFormat -eq 'docx') {
   -F pandoc-citeproc `
   --csl din-1505-2-numeric.csl `
   --toc `
+  --toc-depth=2 `
   --metadata link-citations=true `
   -s `
   --from markdown `
@@ -75,6 +78,7 @@ if ($outFormat -eq 'latex') {
   -V toc-title:"Inhaltsverzeichnis" `
   --csl din-1505-2-numeric.csl `
   --toc `
+  --toc-depth=2 `
   --metadata link-citations=true `
   -s `
   --from markdown `
@@ -90,6 +94,7 @@ if ($outFormat -eq 'pdf') {
   --biblatex `
   --pdf-engine latexmk `
   --toc `
+  --toc-depth=2 `
   -s `
   --from markdown `
   --to $outFormat `

@@ -73,6 +73,7 @@ Als Informationsquellen sind die Datenblätter zur jweiligen Hardware
 sowie die Manuals zu den einsesetzten Softwarekomponenten zu nennen.
 
 ## Prinzipskizze
+![Prinzipskizze](img/prinzipskizze.png)
 
 ## Hardware
 Verwendet wurde das Lernset Nr. 8 von Funduino [@lernset]. Darin
@@ -80,6 +81,7 @@ enthalten ist ein Funduino Uno. Weiter benötigen wir den
 Temparatursensor TMP36 und den Fotowiderstand.
 
 ### Anschluss der Sensoren
+![Anschluss der Sensoren](img/anschluss.png)
 
 ## Software
 
@@ -159,3 +161,5 @@ Ich danke den Lernenden der Klasse BINF2017A für die Zusammenarbeit.
 Das Projekt wurde im Rahmen des Beruffachschulunterrichts durchgeführt
 und erhielt keine externde Finanzierung. Demnach bestehen keien
 Interessenkonflikte.
+
+# Quellenverzeichnis

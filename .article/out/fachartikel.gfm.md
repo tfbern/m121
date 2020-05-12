@@ -7,12 +7,6 @@
         Motivation](#motivation)
       - [<span class="toc-section-number">2.2</span>
         Literatur-Review](#literatur-review)
-          - [<span class="toc-section-number">2.2.1</span> Arduino mit
-            integriertem WLAN](#arduino-mit-integriertem-wlan)
-          - [<span class="toc-section-number">2.2.2</span> WLAN
-            Erweiterung](#wlan-erweiterung)
-          - [<span class="toc-section-number">2.2.3</span> Serial
-            Gateway](#serial-gateway)
   - [<span class="toc-section-number">3</span> Experimenteller
     Teil](#experimenteller-teil)
       - [<span class="toc-section-number">3.1</span>
@@ -21,24 +15,8 @@
         Prinzipskizze](#prinzipskizze)
       - [<span class="toc-section-number">3.3</span>
         Hardware](#hardware)
-          - [<span class="toc-section-number">3.3.1</span> Anschluss der
-            Sensoren](#anschluss-der-sensoren)
       - [<span class="toc-section-number">3.4</span>
         Software](#software)
-          - [<span class="toc-section-number">3.4.1</span>
-            Entwicklungsumgebung](#entwicklungsumgebung)
-          - [<span class="toc-section-number">3.4.2</span> Node
-            Libraries](#node-libraries)
-          - [<span class="toc-section-number">3.4.3</span> Arduino
-            Libraries](#arduino-libraries)
-          - [<span class="toc-section-number">3.4.4</span> Arduino
-            Sketch](#arduino-sketch)
-          - [<span class="toc-section-number">3.4.5</span> Serial
-            Gateway](#serial-gateway-1)
-          - [<span class="toc-section-number">3.4.6</span> WebSocket
-            Server](#websocket-server)
-          - [<span class="toc-section-number">3.4.7</span> Web
-            GUI](#web-gui)
   - [<span class="toc-section-number">4</span> Resultate](#resultate)
   - [<span class="toc-section-number">5</span> Diskussion](#diskussion)
   - [<span class="toc-section-number">6</span>
@@ -46,6 +24,7 @@
   - [<span class="toc-section-number">7</span> Danksagung](#danksagung)
   - [<span class="toc-section-number">8</span>
     Interessenskonflikte](#interessenskonflikte)
+  - [Quellenverzeichnis](#quellenverzeichnis)
 
 # Abstract
 
@@ -53,7 +32,7 @@ In der vorliegenden Arbeit wurde untersucht, wie ein Arduino Uno über
 eine WebSocket-Verbindung gesteuert werden kann, während dieser im
 Sekundentakt Statusmeldungen versendet.
 
-Der verwendete Funduino Uno R3\[[1](#ref-lernset)\] verfügt über keine
+Der verwendete Funduino Uno R3 \[[1](#ref-lernset)\] verfügt über keine
 WLAN-Schnittstelle. Daher erfolgt die WebSocket-Kommunikation extern auf
 einem Gateway. Als Gateway wird ein Windows-PC verwendet. Arduino und
 Gateway sind per USB verbunden und kommunizieren über eine virtuelle
@@ -89,7 +68,8 @@ Lesern als Einstiegslektüre diesen.
 ## Literatur-Review
 
 Zum Thema existiert diverse Fachliteratur unter anderem von Erik
-Bartmann\[[2](#ref-bartmannArduino)\]\[[3](#ref-bartmannESP8266)\]\[[4](#ref-bartmannESP32)\].
+Bartmann \[[2](#ref-bartmannArduino)\] \[[3](#ref-bartmannESP8266)\]
+\[[4](#ref-bartmannESP32)\].
 
 ### Arduino mit integriertem WLAN
 
@@ -99,9 +79,9 @@ MKR1000.
 
 ### WLAN Erweiterung
 
-Mehrere Autoren
-berichten\[[5](#ref-temperatureDashboard)\]\[[6](#ref-websocketcommunication)\],
-wie der Arduino mit dem dem WLAN Modul ESP8266 erweitert werden kann.
+Mehrere Autoren berichten \[[5](#ref-temperatureDashboard)\]
+\[[6](#ref-websocketcommunication)\], wie der Arduino mit dem dem WLAN
+Modul ESP8266 erweitert werden kann.
 
 ### Serial Gateway
 
@@ -118,13 +98,17 @@ sowie die Manuals zu den einsesetzten Softwarekomponenten zu nennen.
 
 ## Prinzipskizze
 
+![Prinzipskizze](img/prinzipskizze.png)
+
 ## Hardware
 
-Verwendet wurde das Lernset Nr. 8 von Funduino\[[1](#ref-lernset)\].
+Verwendet wurde das Lernset Nr. 8 von Funduino \[[1](#ref-lernset)\].
 Darin enthalten ist ein Funduino Uno. Weiter benötigen wir den
 Temparatursensor TMP36 und den Fotowiderstand.
 
 ### Anschluss der Sensoren
+
+![Anschluss der Sensoren](img/anschluss.png)
 
 ## Software
 
@@ -132,11 +116,11 @@ Temparatursensor TMP36 und den Fotowiderstand.
 
 Zur Entwicklung wurde folgende Software eingesetzt.
 
-  - Visual Studio Code\[[7](#ref-vscode)\] mit der Erweiterung C/C++
-    IntelliSense\[[8](#ref-intellisense)\]
-  - Arduino CLI\[[9](#ref-arduinoCli)\]
-  - Git for Windows\[[10](#ref-gitForWindows)\] und
-    TortoiseGit\[[11](#ref-tortoiseGit)\]
+  - Visual Studio Code \[[7](#ref-vscode)\] mit der Erweiterung C/C++
+    IntelliSense \[[8](#ref-intellisense)\]
+  - Arduino CLI \[[9](#ref-arduinoCli)\]
+  - Git for Windows \[[10](#ref-gitForWindows)\] und TortoiseGit
+    \[[11](#ref-tortoiseGit)\]
 
 Nicht verwendet wurde die Arduino IDE. Windows verwendet den
 Standardtreiber *usbser.sys* für den virtuellen COM Port.
@@ -145,52 +129,55 @@ Standardtreiber *usbser.sys* für den virtuellen COM Port.
 
 Weiter wurde folgende NPM Packages eingesetzt:
 
-  - WebSockets\[[12](#ref-websockets)\]
-  - Express\[[13](#ref-express)\]
-  - Chart.js\[[14](#ref-chartjs)\]
-  - SerialPort\[[15](#ref-serialPort)\]
+  - WebSockets \[[12](#ref-websockets)\]
+  - Express \[[13](#ref-express)\]
+  - Chart.js \[[14](#ref-chartjs)\]
+  - SerialPort \[[15](#ref-serialPort)\]
 
 ### Arduino Libraries
 
 Weiter wurde folgende Arduino Libraries eingesetzt:
 
-  - Arduino Library (Arduino.h)
-    \[[16](#ref-sprachreferenz)\]\[[17](#ref-codeReferenz)\]\[[18](#ref-arduinoCheatSheet)\]  
-  - AVR Libc\[[19](#ref-avrlibc)\]
+  - Arduino Library (Arduino.h) \[[16](#ref-sprachreferenz)\]
+    \[[17](#ref-codeReferenz)\] \[[18](#ref-arduinoCheatSheet)\]  
+  - AVR Libc \[[19](#ref-avrlibc)\]
 
 ### Arduino Sketch
 
 Zunächst müssen wir klären, in welcher Programmiersprache die Arduino
 Sketches geschrieben werden. Nachdem man sich die Build-Umgebung genauer
 unter die Lupe genommen hat, wird klar, dass keine eigene
-Arduino-Sprache existert\[[20](#ref-arduinoLanguage)\]. Im Hintergrund
+Arduino-Sprache existiert\[[20](#ref-arduinoLanguage)\]. Im Hintergrund
 wird aus dem Sketch eine C++ Datei erstellt und mit *avr-g++*
 kompiliert.
 
 Die Problematik der Heap-Fragmentierung wird von mehreren Autoren
-aufgeworfen und
-diskutiert\[[21](#ref-heapFragmentation)\]\[[22](#ref-heapFragmentation2)\].
-Matt ist der Meinung, dass man deshalb auf die String Klasse in der
-Arduino Library gänzlich verzichten soll\[[23](#ref-arduinoStrings)\].
-In der Konsequenz müsste man die Stringfunktion aus der Standard C
-Library\[[19](#ref-avrlibc)\] verwerden und in C programmieren. Ich sehe
-dies nicht ganz so eng und setze die Arduino String Klasse trotzdem,
-jedoch mit Zurückhaltung ein. Ich befolge Matt’s Rat, die Variablen by
-Reference zu übergeben\[[23](#ref-arduinoStrings)\].
+aufgeworfen und diskutiert
+\[[21](#ref-heapFragmentation)\]\[[22](#ref-heapFragmentation2)\]. Matt
+ist der Meinung, dass man deshalb auf die String Klasse in der Arduino
+Library gänzlich verzichten soll \[[23](#ref-arduinoStrings)\]. In der
+Konsequenz müsste man die Stringfunktion aus der Standard C Library
+\[[19](#ref-avrlibc)\] verwenden und in C programmieren. Ich sehe dies
+nicht ganz so eng und setze die Arduino String Klasse trotzdem, jedoch
+mit Zurückhaltung ein. Ich befolge Matt’s Rat, die Variablen by
+Reference zu übergeben \[[23](#ref-arduinoStrings)\].
 
-Der Quellcode befindet sich im Anhang.
+Der Quellcode befindet sich im Ordner Arduino. Darin befinden sich
+verschiedene Sketech, darunter
+[genericReadWrte](../arduino/genericReadWrite/genericReadWrite.ino)
 
 ### Serial Gateway
 
-Der Quellcode befindet sich im Anhang.
+Der Quellcode befindet sich im Ordner [Gateway](../gateway/gateway.js).
 
 ### WebSocket Server
 
-Der Quellcode befindet sich im Anhang.
+Der Quellcode befindet sich im Ordner
+[WebSocketServer](../websocketserver/websocketserver.js).
 
 ### Web GUI
 
-Der Quellcode befindet sich im Anhang.
+Der Quellcode befindet sich im Ordner [Client](../client/index.html).
 
 # Resultate
 
@@ -216,6 +203,8 @@ Ich danke den Lernenden der Klasse BINF2017A für die Zusammenarbeit.
 Das Projekt wurde im Rahmen des Beruffachschulunterrichts durchgeführt
 und erhielt keine externde Finanzierung. Demnach bestehen keien
 Interessenkonflikte.
+
+# Quellenverzeichnis
 
 <div id="refs" class="references hanging-indent">
 
@@ -378,80 +367,6 @@ Allocation and Fragmentation in C and C++*. URL
 
 \[23\] *The Evils of Arduino Strings*. URL
 <https://majenko.co.uk/blog/evils-arduino-strings>
-
-</div>
-
-<div id="ref-literaturverzeichnis">
-
-\[24\] *LaTeX: Literaturverzeichnis erstellen - so klappt’s*. URL
-<https://www.heise.de/tipps-tricks/LaTeX-Literaturverzeichnis-erstellen-so-klappt-s-4401420.html#%C3%9Cberschrift_1>
-
-</div>
-
-<div id="ref-inhaltsverzeichnis">
-
-\[25\] *LaTeX: Inhaltsverzeichnis anlegen - so geht’s*. URL
-<https://www.heise.de/tipps-tricks/LaTeX-Inhaltsverzeichnis-anlegen-so-geht-s-4401672.html>
-
-</div>
-
-<div id="ref-arduino">
-
-\[26\] *Arduino*. URL <https://www.arduino.cc/>
-
-</div>
-
-<div id="ref-funduino">
-
-\[27\] *Kits und Anleitungen für Arduino*. URL <https://funduino.de>
-
-</div>
-
-<div id="ref-howtocprogramstoredinram">
-
-\[28\] *How C Program Stored in RAM*. URL
-<https://arduino.stackexchange.com/questions/816/c-vs-the-arduino-language>
-
-</div>
-
-<div id="ref-speicherinembeddedsystems">
-
-\[29\] *Speicher in Embedded Systems*. URL
-<http://dodo.fb06.fh-muenchen.de/hermann/esII/es2-vl123-v12.pdf>
-
-</div>
-
-<div id="ref-buildinexamples">
-
-\[30\] *builtInExamples*. URL
-<https://www.arduino.cc/en/Tutorial/BuiltInExamples>
-
-</div>
-
-<div id="ref-texlive">
-
-\[31\] *TeX Live*. URL <https://www.tug.org/texlive/>
-
-</div>
-
-<div id="ref-latexWorkshop">
-
-\[32\] <span class="smallcaps">Yu, James</span>: *LaTeX Workshop*. URL
-<https://github.com/James-Yu/LaTeX-Workshop>
-
-</div>
-
-<div id="ref-cProgramInRam">
-
-\[33\] *How C Program Stored in RAM?* URL
-<http://www.vishalchovatiya.com/how-c-program-stored-in-ram-memory>
-
-</div>
-
-<div id="ref-noDelay">
-
-\[34\] *Blink Without Delay*. URL
-<https://www.arduino.cc/en/tutorial/BlinkWithoutDelay>
 
 </div>
 

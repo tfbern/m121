@@ -50,6 +50,19 @@
   urlcolor=blue,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -70,7 +83,7 @@
 
 \title{Steuerung eines Arduino Uno Mikrokontrollers via WebSocket}
 \author{Samuel Hess}
-\date{11. Mai 2020}
+\date{12. Mai 2020}
 
 \begin{document}
 \maketitle
@@ -78,7 +91,7 @@
 \renewcommand*\contentsname{Inhaltsverzeichnis}
 {
 \hypersetup{linkcolor=}
-\setcounter{tocdepth}{3}
+\setcounter{tocdepth}{2}
 \tableofcontents
 }
 \hypertarget{abstract}{%
@@ -128,7 +141,9 @@ Lesern als Einstiegslektüre diesen.
 \subsection{Literatur-Review}\label{literatur-review}}
 
 Zum Thema existiert diverse Fachliteratur unter anderem von Erik
-Bartmann{[}\protect\hyperlink{ref-bartmannArduino}{2}{]}{[}\protect\hyperlink{ref-bartmannESP8266}{3}{]}{[}\protect\hyperlink{ref-bartmannESP32}{4}{]}.
+Bartmann {[}\protect\hyperlink{ref-bartmannArduino}{2}{]}
+{[}\protect\hyperlink{ref-bartmannESP8266}{3}{]}
+{[}\protect\hyperlink{ref-bartmannESP32}{4}{]}.
 
 \hypertarget{arduino-mit-integriertem-wlan}{%
 \subsubsection{Arduino mit integriertem
@@ -141,9 +156,10 @@ MKR1000.
 \hypertarget{wlan-erweiterung}{%
 \subsubsection{WLAN Erweiterung}\label{wlan-erweiterung}}
 
-Mehrere Autoren
-berichten{[}\protect\hyperlink{ref-temperatureDashboard}{5}{]}{[}\protect\hyperlink{ref-websocketcommunication}{6}{]},
-wie der Arduino mit dem dem WLAN Modul ESP8266 erweitert werden kann.
+Mehrere Autoren berichten
+{[}\protect\hyperlink{ref-temperatureDashboard}{5}{]}
+{[}\protect\hyperlink{ref-websocketcommunication}{6}{]}, wie der Arduino
+mit dem dem WLAN Modul ESP8266 erweitert werden kann.
 
 \hypertarget{serial-gateway}{%
 \subsubsection{Serial Gateway}\label{serial-gateway}}
@@ -164,16 +180,28 @@ sowie die Manuals zu den einsesetzten Softwarekomponenten zu nennen.
 \hypertarget{prinzipskizze}{%
 \subsection{Prinzipskizze}\label{prinzipskizze}}
 
+\begin{figure}
+\centering
+\includegraphics{img/prinzipskizze.png}
+\caption{Prinzipskizze}
+\end{figure}
+
 \hypertarget{hardware}{%
 \subsection{Hardware}\label{hardware}}
 
-Verwendet wurde das Lernset Nr. 8 von
-Funduino{[}\protect\hyperlink{ref-lernset}{1}{]}. Darin enthalten ist
-ein Funduino Uno. Weiter benötigen wir den Temparatursensor TMP36 und
-den Fotowiderstand.
+Verwendet wurde das Lernset Nr. 8 von Funduino
+{[}\protect\hyperlink{ref-lernset}{1}{]}. Darin enthalten ist ein
+Funduino Uno. Weiter benötigen wir den Temparatursensor TMP36 und den
+Fotowiderstand.
 
 \hypertarget{anschluss-der-sensoren}{%
 \subsubsection{Anschluss der Sensoren}\label{anschluss-der-sensoren}}
+
+\begin{figure}
+\centering
+\includegraphics{img/anschluss.png}
+\caption{Anschluss der Sensoren}
+\end{figure}
 
 \hypertarget{software}{%
 \subsection{Software}\label{software}}
@@ -184,15 +212,16 @@ den Fotowiderstand.
 Zur Entwicklung wurde folgende Software eingesetzt.
 
 \begin{itemize}
+\tightlist
 \item
-  Visual Studio Code{[}\protect\hyperlink{ref-vscode}{7}{]} mit der
-  Erweiterung C/C++
-  IntelliSense{[}\protect\hyperlink{ref-intellisense}{8}{]}
+  Visual Studio Code {[}\protect\hyperlink{ref-vscode}{7}{]} mit der
+  Erweiterung C/C++ IntelliSense
+  {[}\protect\hyperlink{ref-intellisense}{8}{]}
 \item
-  Arduino CLI{[}\protect\hyperlink{ref-arduinoCli}{9}{]}
+  Arduino CLI {[}\protect\hyperlink{ref-arduinoCli}{9}{]}
 \item
-  Git for Windows{[}\protect\hyperlink{ref-gitForWindows}{10}{]} und
-  TortoiseGit{[}\protect\hyperlink{ref-tortoiseGit}{11}{]}
+  Git for Windows {[}\protect\hyperlink{ref-gitForWindows}{10}{]} und
+  TortoiseGit {[}\protect\hyperlink{ref-tortoiseGit}{11}{]}
 \end{itemize}
 
 Nicht verwendet wurde die Arduino IDE. Windows verwendet den
@@ -204,6 +233,7 @@ Standardtreiber \emph{usbser.sys} für den virtuellen COM Port.
 Weiter wurde folgende NPM Packages eingesetzt:
 
 \begin{itemize}
+\tightlist
 \item
   WebSockets {[}\protect\hyperlink{ref-websockets}{12}{]}
 \item
@@ -220,9 +250,12 @@ Weiter wurde folgende NPM Packages eingesetzt:
 Weiter wurde folgende Arduino Libraries eingesetzt:
 
 \begin{itemize}
+\tightlist
 \item
   Arduino Library (Arduino.h)
-  {[}\protect\hyperlink{ref-sprachreferenz}{16}{]}{[}\protect\hyperlink{ref-codeReferenz}{17}{]}{[}\protect\hyperlink{ref-arduinoCheatSheet}{18}{]}
+  {[}\protect\hyperlink{ref-sprachreferenz}{16}{]}
+  {[}\protect\hyperlink{ref-codeReferenz}{17}{]}
+  {[}\protect\hyperlink{ref-arduinoCheatSheet}{18}{]}\\
 \item
   AVR Libc {[}\protect\hyperlink{ref-avrlibc}{19}{]}
 \end{itemize}
@@ -234,40 +267,44 @@ Zunächst müssen wir klären, in welcher Programmiersprache die Arduino
 Sketches geschrieben werden. Nachdem man sich die Build-Umgebung genauer
 unter die Lupe genommen hat, wird klar, dass keine eigene
 Arduino-Sprache
-existert{[}\protect\hyperlink{ref-arduinoLanguage}{20}{]}. Im
+existiert{[}\protect\hyperlink{ref-arduinoLanguage}{20}{]}. Im
 Hintergrund wird aus dem Sketch eine C++ Datei erstellt und mit
 \emph{avr-g++} kompiliert.
 
 Die Problematik der Heap-Fragmentierung wird von mehreren Autoren
 aufgeworfen und diskutiert
-{[}\protect\hyperlink{ref-heapFragmentation}{21}{]}
-{[}\protect\hyperlink{ref-heapFragmentation2}{22}{]}. Matt ist der
-Meinung, dass man deshalb auf die String Klasse in der Arduino Library
-gänzlich verzichten
-soll{[}\protect\hyperlink{ref-arduinoStrings}{23}{]}. In der Konsequenz
-müsste man die Stringfunktion aus der Standard C
-Library{[}\protect\hyperlink{ref-avrlibc}{19}{]} verwerden und in C
+{[}\protect\hyperlink{ref-heapFragmentation}{21}{]}{[}\protect\hyperlink{ref-heapFragmentation2}{22}{]}.
+Matt ist der Meinung, dass man deshalb auf die String Klasse in der
+Arduino Library gänzlich verzichten soll
+{[}\protect\hyperlink{ref-arduinoStrings}{23}{]}. In der Konsequenz
+müsste man die Stringfunktion aus der Standard C Library
+{[}\protect\hyperlink{ref-avrlibc}{19}{]} verwenden und in C
 programmieren. Ich sehe dies nicht ganz so eng und setze die Arduino
 String Klasse trotzdem, jedoch mit Zurückhaltung ein. Ich befolge Matt's
-Rat, die Variablen by Reference zu
-übergeben{[}\protect\hyperlink{ref-arduinoStrings}{23}{]}.
+Rat, die Variablen by Reference zu übergeben
+{[}\protect\hyperlink{ref-arduinoStrings}{23}{]}.
 
-Der Quellcode befindet sich im Anhang \ref{Arduino Sketch}.
+Der Quellcode befindet sich im Ordner Arduino. Darin befinden sich
+verschiedene Sketech, darunter
+\href{../arduino/genericReadWrite/genericReadWrite.ino}{genericReadWrte}
 
 \hypertarget{serial-gateway-1}{%
 \subsubsection{Serial Gateway}\label{serial-gateway-1}}
 
-Der Quellcode befindet sich im Anhang \ref{Serial Gateway}.
+Der Quellcode befindet sich im Ordner
+\href{../gateway/gateway.js}{Gateway}.
 
 \hypertarget{websocket-server}{%
 \subsubsection{WebSocket Server}\label{websocket-server}}
 
-Der Quellcode befindet sich im Anhang \ref{WebSocket Server}.
+Der Quellcode befindet sich im Ordner
+\href{../websocketserver/websocketserver.js}{WebSocketServer}.
 
 \hypertarget{web-gui}{%
 \subsubsection{Web GUI}\label{web-gui}}
 
-Der Quellcode befindet sich im Anhang \ref{Web Client}.
+Der Quellcode befindet sich im Ordner
+\href{../client/index.html}{Client}.
 
 \hypertarget{resultate}{%
 \section{Resultate}\label{resultate}}
@@ -298,6 +335,10 @@ Ich danke den Lernenden der Klasse BINF2017A für die Zusammenarbeit.
 Das Projekt wurde im Rahmen des Beruffachschulunterrichts durchgeführt
 und erhielt keine externde Finanzierung. Demnach bestehen keien
 Interessenkonflikte.
+
+\hypertarget{quellenverzeichnis}{%
+\section*{Quellenverzeichnis}\label{quellenverzeichnis}}
+\addcontentsline{toc}{section}{Quellenverzeichnis}
 
 \hypertarget{refs}{}
 \begin{cslreferences}
@@ -332,46 +373,53 @@ Python. Test with the ws4py library on Raspberry Pi}. URL
 \url{https://diyprojects.io/websocket-communication-esp8266-arduino-python-test-ws4py-library-raspberry-pi/\#.Xq6bKagzaUk}
 
 \leavevmode\hypertarget{ref-vscode}{}%
-{[}7{]} Visual Studio Code.
+{[}7{]} \emph{Visual Studio Code}. URL
+\url{https://code.visualstudio.com/}
 
 \leavevmode\hypertarget{ref-intellisense}{}%
-{[}8{]} C/C++ IntelliSense, debugging, and code browsing.
+{[}8{]} \emph{C/C++ IntelliSense, debugging, and code browsing.} URL
+\url{https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools}
 
 \leavevmode\hypertarget{ref-arduinoCli}{}%
-{[}9{]} Arduino CLI.
+{[}9{]} \emph{Arduino CLI}. URL
+\url{https://github.com/arduino/arduino-cli}
 
 \leavevmode\hypertarget{ref-gitForWindows}{}%
-{[}10{]} Git for Windows.
+{[}10{]} \emph{Git for Windows}. URL \url{https://gitforwindows.org}
 
 \leavevmode\hypertarget{ref-tortoiseGit}{}%
-{[}11{]} TortoiseGit.
+{[}11{]} \emph{TortoiseGit}. URL \url{https://tortoisegit.org}
 
 \leavevmode\hypertarget{ref-websockets}{}%
-{[}12{]} Simple to use, blazing fast and thoroughly tested WebSocket
-client and server for Node.js.
+{[}12{]} \emph{Simple to use, blazing fast and thoroughly tested
+WebSocket client and server for Node.js}. URL
+\url{https://github.com/websockets/ws}
 
 \leavevmode\hypertarget{ref-express}{}%
-{[}13{]} Express Schnelles, offenes, unkompliziertes Web-Framework für
-Node.js.
+{[}13{]} \emph{Express Schnelles, offenes, unkompliziertes Web-Framework
+für Node.js}. URL \url{https://expressjs.com}
 
 \leavevmode\hypertarget{ref-chartjs}{}%
-{[}14{]} Simple yet flexible JavaScript charting for designers \&
-developers.
+{[}14{]} \emph{Simple yet flexible JavaScript charting for designers \&
+developers}. URL \url{https://www.chartjs.org}
 
 \leavevmode\hypertarget{ref-serialPort}{}%
-{[}15{]} Node SerialPort.
+{[}15{]} \emph{Node SerialPort}. URL \url{https://serialport.io}
 
 \leavevmode\hypertarget{ref-sprachreferenz}{}%
-{[}16{]} \emph{Sprach-Referenz}
+{[}16{]} \emph{Sprach-Referenz}. URL
+\url{https://www.arduino.cc/reference/de/}
 
 \leavevmode\hypertarget{ref-codeReferenz}{}%
-{[}17{]} \emph{Arduino Befehlsübersicht}
+{[}17{]} \emph{Arduino Befehlsübersicht}. URL
+\url{https://www.arduinoforum.de/code-referenz}
 
 \leavevmode\hypertarget{ref-arduinoCheatSheet}{}%
-{[}18{]} \emph{Arduino Programming Cheat Sheet}
+{[}18{]} \emph{Arduino Programming Cheat Sheet}. URL
+\url{https://github.com/liffiton/Arduino-Cheat-Sheet}
 
 \leavevmode\hypertarget{ref-avrlibc}{}%
-{[}19{]} \emph{AVR Libc}
+{[}19{]} \emph{AVR Libc}. URL \url{https://www.nongnu.org/avr-libc/}
 
 \leavevmode\hypertarget{ref-arduinoLanguage}{}%
 {[}20{]} \emph{C++ vs. The Arduino Language?} URL
@@ -389,46 +437,6 @@ Fragmentation in C and C++}. URL
 \leavevmode\hypertarget{ref-arduinoStrings}{}%
 {[}23{]} \emph{The Evils of Arduino Strings}. URL
 \url{https://majenko.co.uk/blog/evils-arduino-strings}
-
-\leavevmode\hypertarget{ref-literaturverzeichnis}{}%
-{[}24{]} \emph{LaTeX: Literaturverzeichnis erstellen - so klappt's}. URL
-\url{https://www.heise.de/tipps-tricks/LaTeX-Literaturverzeichnis-erstellen-so-klappt-s-4401420.html\#\%C3\%9Cberschrift_1}
-
-\leavevmode\hypertarget{ref-inhaltsverzeichnis}{}%
-{[}25{]} \emph{LaTeX: Inhaltsverzeichnis anlegen - so geht's}. URL
-\url{https://www.heise.de/tipps-tricks/LaTeX-Inhaltsverzeichnis-anlegen-so-geht-s-4401672.html}
-
-\leavevmode\hypertarget{ref-arduino}{}%
-{[}26{]} \emph{Arduino}. URL \url{https://www.arduino.cc/}
-
-\leavevmode\hypertarget{ref-funduino}{}%
-{[}27{]} \emph{Kits und Anleitungen für Arduino}~: Funduino Anleitungen
-
-\leavevmode\hypertarget{ref-howtocprogramstoredinram}{}%
-{[}28{]} \emph{How C Program Stored in RAM}. URL
-\url{https://arduino.stackexchange.com/questions/816/c-vs-the-arduino-language}
-
-\leavevmode\hypertarget{ref-speicherinembeddedsystems}{}%
-{[}29{]} \emph{Speicher in Embedded Systems}. URL
-\url{http://dodo.fb06.fh-muenchen.de/hermann/esII/es2-vl123-v12.pdf}
-
-\leavevmode\hypertarget{ref-buildinexamples}{}%
-{[}30{]} \emph{builtInExamples}. URL
-\url{https://www.arduino.cc/en/Tutorial/BuiltInExamples}
-
-\leavevmode\hypertarget{ref-texlive}{}%
-{[}31{]} TeX Live.
-
-\leavevmode\hypertarget{ref-latexWorkshop}{}%
-{[}32{]} \textsc{Yu, James}: LaTeX Workshop.
-
-\leavevmode\hypertarget{ref-cProgramInRam}{}%
-{[}33{]} \emph{How C Program Stored in RAM?} URL
-\url{http://www.vishalchovatiya.com/how-c-program-stored-in-ram-memory}
-
-\leavevmode\hypertarget{ref-noDelay}{}%
-{[}34{]} \emph{Blink Without Delay}. URL
-\url{https://www.arduino.cc/en/tutorial/BlinkWithoutDelay}
 \end{cslreferences}
 
 \end{document}
