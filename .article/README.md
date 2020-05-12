@@ -1,7 +1,8 @@
 # Fachartikel
 - [Fachartikel als Markdown](out/fachartikel.md)
-- [Fachartikel als HTML](http://htmlpreview.github.io/?https://github.com/tfbern/m121/blob/master/.article/out/fachartikel.html)
-- [Fachartikel als PDF](fachartikel.pdf)
+- [Fachartikel als HTML](http://htmlpreview.github.io/?https://github.com/tfbern/m121/blob/master/.article/out/fachartikel.md.html)
+- [Fachartikel als PDF](out/fachartikel.docx)
+- [Fachartikel als PDF](out/fachartikel.pdf)
 
 # Erstellung
 ## Schreiben
