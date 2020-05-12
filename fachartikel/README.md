@@ -9,10 +9,10 @@
 3. Body mit `pandoc` in LaTex konvertieren[^1]
 4. Body wird eingebunden in das LaTex Template *fachartikel.tex*
 4. PDF erstllen mit `latexmk`[^2]
-5. Weitere Dokumente erstellen mit `pandoc`.[^3] Für Publikation auf GitHub und GitLab das Format *gfm* wählen.
+5. Weitere Dokumente erstellen mit `pandoc`.[^3] Für Publikation auf GitHub und GitLab das Format *gfm* wählen.  
+\
+\
 
-<br>
-<br>
 -------------  
 [^1]: `pandoc --biblatex -t latex -o body.tex body.md`
 [^2]: `latexmk -pdf fachartikel.tex`
