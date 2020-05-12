@@ -1,3 +1,20 @@
+---
+documentclass: scrartcl
+classoption:
+- a4paper
+- 12pt
+lang: de
+subject: "ICT Modul 121 - Steuerungsaufgaben bearbeiten"
+title: "Steuerung eines Arduino Uno Mikrokontrollers via WebSocket"
+author: "Samuel Hess"
+date: "11. Mai 2020"
+toc: true
+urlcolor: blue
+bibliography: quellen.bib
+nocite: '@*'
+---
+
+
 Abstract
 ========
 
@@ -95,7 +112,9 @@ Zur Entwicklung wurde folgende Software eingesetzt.
 
 -   Visual Studio Code[@vscode] mit der Erweiterung C/C++
     IntelliSense[@intellisense]
+    
 -   Arduino CLI[@arduinoCli]
+
 -   Git for Windows[@gitForWindows] und TortoiseGit[@tortoiseGit]
 
 Nicht verwendet wurde die Arduino IDE. Windows verwendet den
@@ -106,8 +125,11 @@ Standardtreiber *usbser.sys* für den virtuellen COM Port.
 Weiter wurde folgende NPM Packages eingesetzt:
 
 -   WebSockets [@websockets]
+
 -   Express [@express]
+
 -   Chart.js [@chartjs]
+
 -   SerialPort [@serialPort]
 
 ### Arduino Libraries
@@ -116,6 +138,7 @@ Weiter wurde folgende Arduino Libraries eingesetzt:
 
 -   Arduino Library (Arduino.h)
     [@sprachreferenz][@codeReferenz][@arduinoCheatSheet]
+    
 -   AVR Libc [@avrlibc]
 
 ### Arduino Sketch
@@ -136,19 +159,19 @@ ganz so eng und setze die Arduino String Klasse trotzdem, jedoch mit
 Zurückhaltung ein. Ich befolge Matt's Rat, die Variablen by Reference zu
 übergeben[@arduinoStrings].
 
-Der Quellcode befindet sich im Anhang.
+Der Quellcode befindet sich im Anhang \ref{Arduino Sketch}.
 
 ### Serial Gateway
 
-Der Quellcode befindet sich im Anhang.
+Der Quellcode befindet sich im Anhang \ref{Serial Gateway}.
 
 ### WebSocket Server
 
-Der Quellcode befindet sich im Anhang.
+Der Quellcode befindet sich im Anhang \ref{WebSocket Server}.
 
 ### Web GUI
 
-Der Quellcode befindet sich im Anhang.
+Der Quellcode befindet sich im Anhang \ref{Web Client}.
 
 Resultate
 =========

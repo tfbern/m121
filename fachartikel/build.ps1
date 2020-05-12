@@ -1,3 +1,3 @@
-pandoc --biblatex content.md -t latex -o content.tex
-latexmk fachartikel.tex -pdf
+pandoc --biblatex -t latex -o body.tex body.md
+latexmk -pdf fachartikel.tex
 latexmk -c

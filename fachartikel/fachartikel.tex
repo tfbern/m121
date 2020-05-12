@@ -14,7 +14,9 @@
    \bibopenbracket\usebibmacro{cite}\bibclosebracket}
   {\supercitedelim}
   {}
-\let\cite=\supercite
+\let\autocite=\supercite
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \usepackage{csquotes}             % recommended by biblatex
 \usepackage[colorlinks=true,linkcolor=black,linktoc=all,citecolor=blue,urlcolor=blue]{hyperref}
 \addbibresource{quellen.bib}
@@ -63,8 +65,13 @@ Technische Fachschule Bern }
 \tableofcontents
 \newpage
 
-\input{content.tex}
-\printbibliography
+\input{body.tex}
+%\printbibliography
+\section{Quellenverzeichnis}
+\printbibliography[heading=subbibliography,title={Bücher},type=book]
+\printbibliography[heading=subbibliography,title={Web},type=online]
+\printbibliography[heading=subbibliography,title={Manuals},type=manual]
+\printbibliography[heading=subbibliography,title={Software},type=misc]
 
 % Anhang
 \newpage
