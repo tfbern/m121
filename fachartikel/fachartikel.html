@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Samuel Hess samuel.hess@tfbern.ch Technische Fachschule Bern" />
+  <title>Steuerung eines Arduino Uno Mikrokontrollers via WebSocket</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Steuerung eines Arduino Uno Mikrokontrollers via WebSocket</h1>
+<p class="author">Samuel Hess<br />
+<a href="mailto:samuel.hess@tfbern.ch">samuel.hess@tfbern.ch</a><br />
+Technische Fachschule Bern</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<h2 id="toc-title">Inhaltsverzeichnis</h2>
+<ul>
+<li><a href="#abstract">Abstract</a></li>
+<li><a href="#einleitung">Einleitung</a>
+<ul>
+<li><a href="#fragestellung">Fragestellung</a></li>
+<li><a href="#motivation">Motivation</a></li>
+<li><a href="#literatur-review">Literatur-Review</a></li>
+<li><a href="#arduino-mit-integriertem-wlan">Arduino mit integriertem WLAN</a></li>
+<li><a href="#wlan-erweiterung">WLAN Erweiterung</a></li>
+<li><a href="#serial-gateway">Serial Gateway</a></li>
+</ul></li>
+<li><a href="#experimenteller-teil">Experimenteller Teil</a>
+<ul>
+<li><a href="#informationsquellen">Informationsquellen</a></li>
+<li><a href="#prinzipskizze">Prinzipskizze</a></li>
+<li><a href="#hardware">Hardware</a></li>
+<li><a href="#anschluss-der-sensoren">Anschluss der Sensoren</a></li>
+<li><a href="#software">Software</a></li>
+<li><a href="#entwicklungsumgebung">Entwicklungsumgebung</a></li>
+<li><a href="#node-libraries">Node Libraries</a></li>
+<li><a href="#arduino-libraries">Arduino Libraries</a></li>
+<li><a href="#arduino-sketch">Arduino Sketch</a></li>
+<li><a href="#serial-gateway-1">Serial Gateway</a></li>
+<li><a href="#websocket-server">WebSocket Server</a></li>
+<li><a href="#web-gui">Web GUI</a></li>
+</ul></li>
+<li><a href="#resultate">Resultate</a></li>
+<li><a href="#diskussion">Diskussion</a></li>
+<li><a href="#zusammenfassung">Zusammenfassung</a></li>
+<li><a href="#danksagung">Danksagung</a></li>
+<li><a href="#interessenskonflikte">Interessenskonflikte</a></li>
+<li><a href="#quellcode">Quellcode</a>
+<ul>
+<li><a href="#Arduino Sketch">Arduino Sketch</a>
+<ul>
+<li><a href="#funktionen-zur-statusausgabe">Funktionen zur Statusausgabe</a></li>
+<li><a href="#funktionen-zur-steuerung">Funktionen zur Steuerung</a></li>
+</ul></li>
+<li><a href="#Serial Gateway">Serial Gateway</a></li>
+<li><a href="#WebSocket Server">WebSocket Server</a></li>
+<li><a href="#Web Client">Web Client</a></li>
+</ul></li>
+<li><a href="#quellenverzeichnis">Quellenverzeichnis</a></li>
+</ul>
+</nav>
+<h1 id="abstract">Abstract</h1>
+<p>In der vorliegenden Arbeit wurde untersucht, wie ein Arduino Uno über eine WebSocket-Verbindung gesteuert werden kann, während dieser im Sekundentakt Statusmeldungen versendet.</p>
+<p>Der verwendete Funduino Uno R3 <span class="citation" data-cites="lernset">[1]</span> verfügt über keine WLAN-Schnittstelle. Daher erfolgt die WebSocket-Kommunikation extern auf einem Gateway. Als Gateway wird ein Windows-PC verwendet. Arduino und Gateway sind per USB verbunden und kommunizieren über eine virtuelle serielle Schnittstelle.</p>
+<p>Das Ergebnis zeigt, dass eine Steuerung eines Arduinos per WebSocket problemlos möglich ist. Die eingehenden Nachrichten müssen auf dem Arduino geparst werden. Dieses Parding ist einfacher, wenn das verwendete Austauschformt schlank gehalten wird. Deshalb wurde anstelle von JSON das URL Format verwendet.</p>
+<h1 id="einleitung">Einleitung</h1>
+<p>In diesem Kapitel wird die Motivation erläutert und genaue Fragesellung definiert. Dann folgt eine kleine Übersichtsarbeit mit dazugehöriger Literaturrecherche.</p>
+<h2 id="fragestellung">Fragestellung</h2>
+<p>Welche Möglichkeiten gibt es, einen Arduino Uno via Websocket zu steuern?</p>
+<p>Während einer explorativen Online-Suche wurden einzelne Lösungen gefunden. Eine systematische Zusammenstellung der Möglichkeiten fehlt jedoch.</p>
+<h2 id="motivation">Motivation</h2>
+<p>Die Motivation für die vorliegende Arbeit ist die Beantwortung der nachfolgenden Fragestellung. Weiter soll der Artikel interessierten Lesern als Einstiegslektüre diesen.</p>
+<h2 id="literatur-review">Literatur-Review</h2>
+<p>Zum Thema existiert diverse Fachliteratur unter anderem von Erik Bartmann<span class="citation" data-cites="bartmannArduino">[2]</span><span class="citation" data-cites="bartmannESP8266">[3]</span><span class="citation" data-cites="bartmannESP32">[4]</span>.</p>
+<h3 id="arduino-mit-integriertem-wlan">Arduino mit integriertem WLAN</h3>
+<p>Der Arduino Uno hat keine eingebaute WLAN Schnittstelle. Es gibt jedoch andere Arduino Modelle mit integriertem WLAN, wie z.B. der Arduino MKR1000.</p>
+<h3 id="wlan-erweiterung">WLAN Erweiterung</h3>
+<p>Mehrere Autoren berichten<span class="citation" data-cites="temperatureDashboard">[5]</span><span class="citation" data-cites="websocketcommunication">[6]</span>, wie der Arduino mit dem dem WLAN Modul ESP8266 erweitert werden kann.</p>
+<h3 id="serial-gateway">Serial Gateway</h3>
+<p>Eine weitere Möglichkeit, ist behelfsweise einen PC als Serial Gateway einzusetzen. Mangels kurzfristig verfügbarer Hardware wollen wir diese Option verfolgen.</p>
+<h1 id="experimenteller-teil">Experimenteller Teil</h1>
+<h2 id="informationsquellen">Informationsquellen</h2>
+<p>Als Informationsquellen sind die Datenblätter zur jweiligen Hardware sowie die Manuals zu den einsesetzten Softwarekomponenten zu nennen.</p>
+<h2 id="prinzipskizze">Prinzipskizze</h2>
+<h2 id="hardware">Hardware</h2>
+<p>Verwendet wurde das Lernset Nr. 8 von Funduino<span class="citation" data-cites="lernset">[1]</span>. Darin enthalten ist ein Funduino Uno. Weiter benötigen wir den Temparatursensor TMP36 und den Fotowiderstand.</p>
+<h3 id="anschluss-der-sensoren">Anschluss der Sensoren</h3>
+<h2 id="software">Software</h2>
+<h3 id="entwicklungsumgebung">Entwicklungsumgebung</h3>
+<p>Zur Entwicklung wurde folgende Software eingesetzt.</p>
+<ul>
+<li><p>Visual Studio Code<span class="citation" data-cites="vscode">[7]</span> mit der Erweiterung C/C++ IntelliSense<span class="citation" data-cites="intellisense">[8]</span></p></li>
+<li><p>Arduino CLI<span class="citation" data-cites="arduinoCli">[9]</span></p></li>
+<li><p>Git for Windows<span class="citation" data-cites="gitForWindows">[10]</span> und TortoiseGit<span class="citation" data-cites="tortoiseGit">[11]</span></p></li>
+</ul>
+<p>Nicht verwendet wurde die Arduino IDE. Windows verwendet den Standardtreiber <em>usbser.sys</em> für den virtuellen COM Port.</p>
+<h3 id="node-libraries">Node Libraries</h3>
+<p>Weiter wurde folgende NPM Packages eingesetzt:</p>
+<ul>
+<li><p>WebSockets <span class="citation" data-cites="websockets">[12]</span></p></li>
+<li><p>Express <span class="citation" data-cites="express">[13]</span></p></li>
+<li><p>Chart.js <span class="citation" data-cites="chartjs">[14]</span></p></li>
+<li><p>SerialPort <span class="citation" data-cites="serialPort">[15]</span></p></li>
+</ul>
+<h3 id="arduino-libraries">Arduino Libraries</h3>
+<p>Weiter wurde folgende Arduino Libraries eingesetzt:</p>
+<ul>
+<li><p>Arduino Library (Arduino.h) <span class="citation" data-cites="sprachreferenz">[16]</span><span class="citation" data-cites="codeReferenz">[17]</span><span class="citation" data-cites="arduinoCheatSheet">[18]</span></p></li>
+<li><p>AVR Libc <span class="citation" data-cites="avrlibc">[19]</span></p></li>
+</ul>
+<h3 id="arduino-sketch">Arduino Sketch</h3>
+<p>Zunächst müssen wir klären, in welcher Programmiersprache die Arduino Sketches geschrieben werden. Nachdem man sich die Build-Umgebung genauer unter die Lupe genommen hat, wird klar, dass keine eigene Arduino-Sprache existert<span class="citation" data-cites="arduinoLanguage">[20]</span>. Im Hintergrund wird aus dem Sketch eine C++ Datei erstellt und mit <em>avr-g++</em> kompiliert.</p>
+<p>Die Problematik der Heap-Fragmentierung wird von mehreren Autoren aufgeworfen und diskutiert <span class="citation" data-cites="heapFragmentation">[21]</span> <span class="citation" data-cites="heapFragmentation2">[22]</span>. Matt ist der Meinung, dass man deshalb auf die String Klasse in der Arduino Library gänzlich verzichten soll<span class="citation" data-cites="arduinoStrings">[23]</span>. In der Konsequenz müsste man die Stringfunktion aus der Standard C Library<span class="citation" data-cites="avrlibc">[19]</span> verwerden und in C programmieren. Ich sehe dies nicht ganz so eng und setze die Arduino String Klasse trotzdem, jedoch mit Zurückhaltung ein. Ich befolge Matt’s Rat, die Variablen by Reference zu übergeben<span class="citation" data-cites="arduinoStrings">[23]</span>.</p>
+<p>Der Quellcode befindet sich im Anhang <a href="#Arduino Sketch" data-reference-type="ref" data-reference="Arduino Sketch">9.1</a>.</p>
+<h3 id="serial-gateway-1">Serial Gateway</h3>
+<p>Der Quellcode befindet sich im Anhang <a href="#Serial Gateway" data-reference-type="ref" data-reference="Serial Gateway">9.2</a>.</p>
+<h3 id="websocket-server">WebSocket Server</h3>
+<p>Der Quellcode befindet sich im Anhang <a href="#WebSocket Server" data-reference-type="ref" data-reference="WebSocket Server">9.3</a>.</p>
+<h3 id="web-gui">Web GUI</h3>
+<p>Der Quellcode befindet sich im Anhang <a href="#Web Client" data-reference-type="ref" data-reference="Web Client">9.4</a>.</p>
+<h1 id="resultate">Resultate</h1>
+<p>Es hat sich gezeigt, dass ein Seriell-zu-Websocket-Gatway unter Node.js einfach zu implementieren ist. Über diesen Umweg kann der Arduino Uno ans Internet angebunden werden.</p>
+<h1 id="diskussion">Diskussion</h1>
+<h1 id="zusammenfassung">Zusammenfassung</h1>
+<p>Statt des Arduino Uno könnte ein Arduino MKR1000 verwendet werden. Dieser könnte kann auch an die Arduino Clound angebunden werden. Ein weitere Option ist die Beschaffung einer WLAN Erweiterung wie das Modul ESP8266.</p>
+<h1 id="danksagung">Danksagung</h1>
+<p>Ich danke den Lernenden der Klasse BINF2017A für die Zusammenarbeit.</p>
+<h1 id="interessenskonflikte">Interessenskonflikte</h1>
+<p>Das Projekt wurde im Rahmen des Beruffachschulunterrichts durchgeführt und erhielt keine externde Finanzierung. Demnach bestehen keien Interessenkonflikte.</p>
+<h1 id="quellcode">Quellcode</h1>
+<h2 id="Arduino Sketch">Arduino Sketch</h2>
+<div class="sourceCode" id="cb1" data-language="c++"><pre class="sourceCode c++"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">/*</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co">  This sketch periodically reads all analog inputs and logs the values in JSON format to the serial line.</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co">  In addition it will listen to the serial line and process any incoming messages.</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co">  To compile and upload this sketch from the arduino folder execute &#39;arduino-cli compile genericReadWrite -u&#39; </span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">  The options -b and -p will be taken automatically from sketch.json</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co">  Upload is not possible while server.js is running because it uses the serial line also.</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co">  The digital pins are named from 0 to 13. DIO 13 and the built-in LED are connected.</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co">  Digital pins 0 and 1 should be avoided as they are internally conneted to the serial line.</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="co">  The analog pins A0 to A5 habe the IDs 14 to 19. </span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co">  Hence, in order to query all IO states (digital and analog) we can make a loop from 0 to 19</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="co">*/</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="pp">#include </span><span class="im">&lt;Arduino.h&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="pp">#include </span><span class="im">&quot;status.h&quot;</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="pp">#include </span><span class="im">&quot;control.h&quot;</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="co">// global variables</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="dt">unsigned</span> <span class="dt">long</span> previousMillis = <span class="dv">0</span>;   <span class="co">// count loops</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="at">const</span> <span class="dt">long</span> interval = <span class="dv">1000</span>;         <span class="co">// interval at which to send IO status updates (milliseconds)</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a></span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="co">// initialisation</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="dt">void</span> setup(){</span>
+<span id="cb1-23"><a href="#cb1-23"></a>  <span class="co">// init serial line with 9600 baud</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a>  Serial.begin(<span class="dv">9600</span>);</span>
+<span id="cb1-25"><a href="#cb1-25"></a>  <span class="co">// init all digital pins</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt;= <span class="dv">13</span>; i++) {</span>
+<span id="cb1-27"><a href="#cb1-27"></a>    pinMode(i, OUTPUT);</span>
+<span id="cb1-28"><a href="#cb1-28"></a>    digitalWrite(i, LOW);</span>
+<span id="cb1-29"><a href="#cb1-29"></a>  }</span>
+<span id="cb1-30"><a href="#cb1-30"></a>}</span>
+<span id="cb1-31"><a href="#cb1-31"></a></span>
+<span id="cb1-32"><a href="#cb1-32"></a><span class="co">// main</span></span>
+<span id="cb1-33"><a href="#cb1-33"></a><span class="dt">void</span> loop() {</span>
+<span id="cb1-34"><a href="#cb1-34"></a>  <span class="co">// ckeck if we have incoming message, i.e. check if something is in the serial buffer</span></span>
+<span id="cb1-35"><a href="#cb1-35"></a>  <span class="cf">if</span> (Serial.available() &gt; <span class="dv">0</span>) {</span>
+<span id="cb1-36"><a href="#cb1-36"></a>    <span class="co">// receive messages on serial line, parse and handle the messages</span></span>
+<span id="cb1-37"><a href="#cb1-37"></a>    processSerialInput();</span>
+<span id="cb1-38"><a href="#cb1-38"></a>    <span class="co">// send updated IO states to host</span></span>
+<span id="cb1-39"><a href="#cb1-39"></a>    Serial.println(readPins());</span>
+<span id="cb1-40"><a href="#cb1-40"></a>  } <span class="cf">else</span> {</span>
+<span id="cb1-41"><a href="#cb1-41"></a>    <span class="co">// get the milliseconds since start</span></span>
+<span id="cb1-42"><a href="#cb1-42"></a>    <span class="dt">unsigned</span> <span class="dt">long</span> currentMillis = millis();</span>
+<span id="cb1-43"><a href="#cb1-43"></a>    <span class="co">// do only something if interval time has passed</span></span>
+<span id="cb1-44"><a href="#cb1-44"></a>    <span class="cf">if</span> (currentMillis - previousMillis &gt;= interval)  { </span>
+<span id="cb1-45"><a href="#cb1-45"></a>      <span class="co">// save the last time we sent the IO states</span></span>
+<span id="cb1-46"><a href="#cb1-46"></a>      previousMillis = currentMillis;</span>
+<span id="cb1-47"><a href="#cb1-47"></a>      <span class="co">// send IO states to host</span></span>
+<span id="cb1-48"><a href="#cb1-48"></a>      Serial.println(readPins());</span>
+<span id="cb1-49"><a href="#cb1-49"></a>    } </span>
+<span id="cb1-50"><a href="#cb1-50"></a>  }</span>
+<span id="cb1-51"><a href="#cb1-51"></a>} </span></code></pre></div>
+<h3 id="funktionen-zur-statusausgabe">Funktionen zur Statusausgabe</h3>
+<div class="sourceCode" id="cb2" data-language="c++"><pre class="sourceCode c++"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1"></a><span class="pp">#include </span><span class="im">&lt;Arduino.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="pp">#include </span><span class="im">&quot;status.h&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">// get status of all pin ans make JSON object, e.g. {&quot;D0&quot;:1, ... , &quot;A0&quot;:1023}</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>String readPins() {</span>
+<span id="cb2-6"><a href="#cb2-6"></a>  String ioStates = <span class="st">&quot;{&quot;</span>;</span>
+<span id="cb2-7"><a href="#cb2-7"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt;= <span class="dv">19</span>; i++) {</span>
+<span id="cb2-8"><a href="#cb2-8"></a>    ioStates += (i &lt;= <span class="dv">13</span>) ? <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">D&quot;</span> : <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">A&quot;</span>;</span>
+<span id="cb2-9"><a href="#cb2-9"></a>    ioStates += (i &lt;= <span class="dv">13</span>) ? i : i-<span class="dv">14</span>;</span>
+<span id="cb2-10"><a href="#cb2-10"></a>    ioStates += <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">:&quot;</span>;</span>
+<span id="cb2-11"><a href="#cb2-11"></a>    ioStates += (i &lt;= <span class="dv">13</span>) ? digitalRead(i) : analogRead(i); </span>
+<span id="cb2-12"><a href="#cb2-12"></a>    ioStates += (i == <span class="dv">19</span>) ? <span class="st">&quot;&quot;</span> : <span class="st">&quot;,&quot;</span>;</span>
+<span id="cb2-13"><a href="#cb2-13"></a>  }</span>
+<span id="cb2-14"><a href="#cb2-14"></a>  ioStates += <span class="st">&quot;}&quot;</span>;</span>
+<span id="cb2-15"><a href="#cb2-15"></a>  <span class="cf">return</span> ioStates;</span>
+<span id="cb2-16"><a href="#cb2-16"></a>}</span></code></pre></div>
+<h3 id="funktionen-zur-steuerung">Funktionen zur Steuerung</h3>
+<div class="sourceCode" id="cb3" data-language="c++"><pre class="sourceCode c++"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1"></a><span class="pp">#include </span><span class="im">&lt;Arduino.h&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="pp">#include </span><span class="im">&quot;control.h&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co">// process incoming messages</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="dt">void</span> processSerialInput() {</span>
+<span id="cb3-6"><a href="#cb3-6"></a>  String incomingMessage;                 <span class="co">// e.g. 0=1&amp;2=0&amp;3=1</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>  String keyValuePair;                    <span class="co">// splitted at &amp;</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>  incomingMessage = Serial.readString();  <span class="co">// read the whole String in the serial buffer</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>  <span class="cf">while</span> (<span class="kw">true</span>) {</span>
+<span id="cb3-10"><a href="#cb3-10"></a>    <span class="co">// get the next key-value pair to process</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>    <span class="dt">int</span> pos = incomingMessage.indexOf(<span class="ch">&#39;&amp;&#39;</span>);</span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="cf">if</span> (pos != -<span class="dv">1</span>) { </span>
+<span id="cb3-13"><a href="#cb3-13"></a>      <span class="co">// &#39;&amp;&#39; is present, we have multiple key-value pairs</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a>      keyValuePair = incomingMessage.substring(<span class="dv">0</span>,pos); <span class="co">// get the first key-value pair</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a>      processCommand(keyValuePair); <span class="co">// process it</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>      incomingMessage = incomingMessage.substring(pos+<span class="dv">1</span>); <span class="co">// and remove it from incomingMessage</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a>    } <span class="cf">else</span> {</span>
+<span id="cb3-18"><a href="#cb3-18"></a>      <span class="co">// just one command or last command</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a>      processCommand(incomingMessage); <span class="co">// process it</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a>      <span class="cf">break</span>;</span>
+<span id="cb3-21"><a href="#cb3-21"></a>    }</span>
+<span id="cb3-22"><a href="#cb3-22"></a>  }</span>
+<span id="cb3-23"><a href="#cb3-23"></a>}</span>
+<span id="cb3-24"><a href="#cb3-24"></a></span>
+<span id="cb3-25"><a href="#cb3-25"></a><span class="co">// process key-value pair </span></span>
+<span id="cb3-26"><a href="#cb3-26"></a><span class="dt">void</span> processCommand(String &amp;command) {  <span class="co">// &amp;command makes receiving the String object by reference, hence avoid copies and save resources</span></span>
+<span id="cb3-27"><a href="#cb3-27"></a>  <span class="dt">int</span> pos = command.indexOf(<span class="ch">&#39;=&#39;</span>);</span>
+<span id="cb3-28"><a href="#cb3-28"></a>  <span class="cf">if</span> (command.length() &gt; <span class="dv">2</span> &amp;&amp; pos &gt; <span class="dv">0</span> ) { <span class="co">// min 3 characters with &#39;=&#39; present at minimum second position</span></span>
+<span id="cb3-29"><a href="#cb3-29"></a>    <span class="dt">int</span> pin = command.substring(<span class="dv">0</span>,pos).toInt(); <span class="co">// characters before &#39;=&#39;</span></span>
+<span id="cb3-30"><a href="#cb3-30"></a>    <span class="dt">int</span> state = command.substring(pos+<span class="dv">1</span>).toInt(); <span class="co">// characters after &#39;=&#39;</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a>    <span class="cf">if</span> (pin &gt;= <span class="dv">0</span> &amp;&amp; pin &lt;= <span class="dv">19</span> &amp;&amp; ( state == <span class="dv">0</span> || state == <span class="dv">1</span> )) {</span>
+<span id="cb3-32"><a href="#cb3-32"></a>      <span class="co">// Serial.println(&quot;Setting input &quot; + key + &quot; to &quot; + value);</span></span>
+<span id="cb3-33"><a href="#cb3-33"></a>      digitalWrite(pin, state);</span>
+<span id="cb3-34"><a href="#cb3-34"></a>    }</span>
+<span id="cb3-35"><a href="#cb3-35"></a>  }</span>
+<span id="cb3-36"><a href="#cb3-36"></a>}</span></code></pre></div>
+<h2 id="Serial Gateway">Serial Gateway</h2>
+<div class="sourceCode" id="cb4" data-language="js"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">// serial gateway</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="kw">const</span> url <span class="op">=</span> <span class="st">&#39;ws://websocksrv.herokuapp.com&#39;</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="kw">const</span> <span class="bu">WebSocket</span> <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;ws&#39;</span>)<span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="kw">const</span> ws <span class="op">=</span> <span class="kw">new</span> <span class="bu">WebSocket</span>(url)<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="kw">const</span> SerialPort <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;serialport&#39;</span>)</span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="kw">const</span> Readline <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;@serialport/parser-readline&#39;</span>)</span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="kw">const</span> serial <span class="op">=</span> <span class="kw">new</span> SerialPort(<span class="st">&#39;COM3&#39;</span><span class="op">,</span> { <span class="dt">baudRate</span><span class="op">:</span> <span class="dv">9600</span> })</span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="kw">const</span> parser <span class="op">=</span> <span class="kw">new</span> Readline()</span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">// forwarding messages from serial to websocket</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a>serial<span class="op">.</span><span class="fu">pipe</span>(parser)</span>
+<span id="cb4-11"><a href="#cb4-11"></a>parser<span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;data&#39;</span><span class="op">,</span> <span class="kw">function</span> (line) {</span>
+<span id="cb4-12"><a href="#cb4-12"></a>  <span class="cf">try</span> {</span>
+<span id="cb4-13"><a href="#cb4-13"></a>    <span class="kw">var</span> obj <span class="op">=</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">parse</span>(line)</span>
+<span id="cb4-14"><a href="#cb4-14"></a>    ws<span class="op">.</span><span class="fu">send</span>(line)<span class="op">;</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a>  } <span class="cf">catch</span>(err) {</span>
+<span id="cb4-16"><a href="#cb4-16"></a>    <span class="co">// console.log(err)</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;gateway parse error: skipping malformed data&#39;</span>)</span>
+<span id="cb4-18"><a href="#cb4-18"></a>  }</span>
+<span id="cb4-19"><a href="#cb4-19"></a>})</span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">// forwarding messages from websocket to serial</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a>ws<span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;open&#39;</span><span class="op">,</span> <span class="kw">function</span>() {</span>
+<span id="cb4-22"><a href="#cb4-22"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;Connected to &#39;</span> <span class="op">+</span> url)</span>
+<span id="cb4-23"><a href="#cb4-23"></a>})</span>
+<span id="cb4-24"><a href="#cb4-24"></a>ws<span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;message&#39;</span><span class="op">,</span> <span class="kw">function</span>(message) {</span>
+<span id="cb4-25"><a href="#cb4-25"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;gateway forwarding command to Arduino: &#39;</span> <span class="op">+</span> message)</span>
+<span id="cb4-26"><a href="#cb4-26"></a>  serial<span class="op">.</span><span class="fu">write</span>(message)</span>
+<span id="cb4-27"><a href="#cb4-27"></a>})</span>
+<span id="cb4-28"><a href="#cb4-28"></a></span>
+<span id="cb4-29"><a href="#cb4-29"></a></span></code></pre></div>
+<h2 id="WebSocket Server">WebSocket Server</h2>
+<div class="sourceCode" id="cb5" data-language="js"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">// WebSocket server</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">const</span> port <span class="op">=</span> <span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">PORT</span> <span class="op">||</span> <span class="dv">81</span> </span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="kw">const</span> <span class="bu">WebSocket</span> <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;ws&#39;</span>)<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="kw">const</span> wss <span class="op">=</span> <span class="kw">new</span> <span class="bu">WebSocket</span><span class="op">.</span><span class="fu">Server</span>({ <span class="dt">port</span><span class="op">:</span> port })<span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>wss<span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;connection&#39;</span><span class="op">,</span> <span class="kw">function</span> <span class="fu">connection</span>(ws) {</span>
+<span id="cb5-6"><a href="#cb5-6"></a>  ws<span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;message&#39;</span><span class="op">,</span> <span class="kw">function</span> incoming(data) {</span>
+<span id="cb5-7"><a href="#cb5-7"></a>    wss<span class="op">.</span><span class="at">clients</span><span class="op">.</span><span class="fu">forEach</span>(<span class="kw">function</span> each(client) {</span>
+<span id="cb5-8"><a href="#cb5-8"></a>      <span class="cf">if</span> (client <span class="op">!==</span> ws <span class="op">&amp;&amp;</span> client<span class="op">.</span><span class="at">readyState</span> <span class="op">===</span> <span class="bu">WebSocket</span><span class="op">.</span><span class="at">OPEN</span>) {</span>
+<span id="cb5-9"><a href="#cb5-9"></a>        client<span class="op">.</span><span class="fu">send</span>(data)<span class="op">;</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>      }</span>
+<span id="cb5-11"><a href="#cb5-11"></a>    })<span class="op">;</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a>  })<span class="op">;</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a>})<span class="op">;</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a></span>
+<span id="cb5-15"><a href="#cb5-15"></a></span>
+<span id="cb5-16"><a href="#cb5-16"></a></span>
+<span id="cb5-17"><a href="#cb5-17"></a></span>
+<span id="cb5-18"><a href="#cb5-18"></a></span></code></pre></div>
+<h2 id="Web Client">Web Client</h2>
+<div class="sourceCode" id="cb6" data-language="js"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1"></a><span class="op">&lt;!</span>DOCTYPE html<span class="op">&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="op">&lt;</span>html<span class="op">&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="op">&lt;</span>head<span class="op">&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="op">&lt;</span>title<span class="op">&gt;</span>Arduino IoT Demo App<span class="op">&lt;/</span>title<span class="op">&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="op">&lt;</span>link href<span class="op">=</span><span class="st">&quot;https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css&quot;</span> rel<span class="op">=</span><span class="st">&quot;stylesheet&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="op">&lt;</span>link rel<span class="op">=</span><span class="st">&quot;stylesheet&quot;</span> href<span class="op">=</span><span class="st">&quot;https://fonts.googleapis.com/icon?family=Material+Icons&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>  <span class="op">&lt;</span>script src<span class="op">=</span><span class="st">&quot;https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js&quot;</span><span class="op">&gt;&lt;/</span>script<span class="op">&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  <span class="op">&lt;</span>script src<span class="op">=</span><span class="st">&quot;https://cdn.jsdelivr.net/npm/chart.js@2.8.0&quot;</span><span class="op">&gt;&lt;/</span>script<span class="op">&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="op">&lt;/</span>head<span class="op">&gt;</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="op">&lt;</span>body onload<span class="op">=</span><span class="st">&quot;init()&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>  <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;mdc-layout-grid&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>    <span class="op">&lt;</span>h2<span class="op">&gt;</span>Configure <span class="bu">WebSocket</span> <span class="bu">Server</span><span class="op">&lt;/</span>h2<span class="op">&gt;</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>    <span class="op">&lt;</span>input id<span class="op">=</span><span class="st">&quot;wsurl&quot;</span> type<span class="op">=</span><span class="st">&quot;text&quot;</span> size<span class="op">=</span><span class="st">&quot;50&quot;</span> value<span class="op">=</span><span class="st">&quot;ws://websocksrv.herokuapp.com&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>    <span class="op">&lt;</span>input type<span class="op">=</span><span class="st">&quot;button&quot;</span> value<span class="op">=</span><span class="st">&quot;configure&quot;</span> onclick<span class="op">=</span><span class="st">&quot;init()&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>    <span class="op">&lt;</span>p id<span class="op">=</span><span class="st">&quot;help&quot;</span><span class="op">&gt;&lt;/</span>p<span class="op">&gt;</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>    <span class="op">&lt;</span>h2<span class="op">&gt;</span>Switch Arduino Digital Outputs<span class="op">&lt;/</span>h2<span class="op">&gt;</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a>    <span class="op">&lt;</span>select id<span class="op">=</span><span class="st">&quot;pin&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a>      <span class="op">&lt;</span>option value<span class="op">=</span>all<span class="op">&gt;</span>all<span class="op">&lt;/</span>option<span class="op">&gt;</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a>    <span class="op">&lt;/</span>select<span class="op">&gt;&amp;</span>nbsp<span class="op">;</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a>    <span class="op">&lt;</span>select id<span class="op">=</span><span class="st">&quot;state&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a>      <span class="op">&lt;</span>option value<span class="op">=</span><span class="dv">0</span><span class="op">&gt;</span>low<span class="op">&lt;/</span>option<span class="op">&gt;</span></span>
+<span id="cb6-22"><a href="#cb6-22"></a>      <span class="op">&lt;</span>option value<span class="op">=</span><span class="dv">1</span><span class="op">&gt;</span>high<span class="op">&lt;/</span>option<span class="op">&gt;</span></span>
+<span id="cb6-23"><a href="#cb6-23"></a>    <span class="op">&lt;/</span>select<span class="op">&gt;&amp;</span>nbsp<span class="op">;</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a>    <span class="op">&lt;</span>input type<span class="op">=</span><span class="st">&quot;button&quot;</span> value<span class="op">=</span><span class="st">&quot;send&quot;</span> onclick<span class="op">=</span><span class="st">&quot;sendCommand()&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a>    <span class="op">&lt;</span>div id<span class="op">=</span><span class="st">&quot;container&quot;</span> style<span class="op">=</span><span class="st">&quot;width: 80%;&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-26"><a href="#cb6-26"></a>      <span class="op">&lt;</span>h2<span class="op">&gt;</span>Temperatur<span class="op">&lt;/</span>h2<span class="op">&gt;</span></span>
+<span id="cb6-27"><a href="#cb6-27"></a>      <span class="op">&lt;</span>canvas id<span class="op">=</span><span class="st">&quot;myChart1&quot;</span><span class="op">&gt;&lt;/</span>canvas<span class="op">&gt;</span></span>
+<span id="cb6-28"><a href="#cb6-28"></a>    <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
+<span id="cb6-29"><a href="#cb6-29"></a>    <span class="op">&lt;</span>div id<span class="op">=</span><span class="st">&quot;container&quot;</span> style<span class="op">=</span><span class="st">&quot;width: 80%;&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-30"><a href="#cb6-30"></a>      <span class="op">&lt;</span>br<span class="op">&gt;</span></span>
+<span id="cb6-31"><a href="#cb6-31"></a>      <span class="op">&lt;</span>h2<span class="op">&gt;</span>Analogue Inputs<span class="op">&lt;/</span>h2<span class="op">&gt;</span></span>
+<span id="cb6-32"><a href="#cb6-32"></a>      <span class="op">&lt;</span>canvas id<span class="op">=</span><span class="st">&quot;myChart2&quot;</span><span class="op">&gt;&lt;/</span>canvas<span class="op">&gt;</span></span>
+<span id="cb6-33"><a href="#cb6-33"></a>    <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
+<span id="cb6-34"><a href="#cb6-34"></a>    <span class="op">&lt;</span>div id<span class="op">=</span><span class="st">&quot;container&quot;</span> style<span class="op">=</span><span class="st">&quot;width: 80%;&quot;</span><span class="op">&gt;</span></span>
+<span id="cb6-35"><a href="#cb6-35"></a>      <span class="op">&lt;</span>br<span class="op">&gt;</span></span>
+<span id="cb6-36"><a href="#cb6-36"></a>      <span class="op">&lt;</span>h2<span class="op">&gt;</span>Digital Inputs<span class="op">&lt;/</span>h2<span class="op">&gt;</span></span>
+<span id="cb6-37"><a href="#cb6-37"></a>      <span class="op">&lt;</span>canvas id<span class="op">=</span><span class="st">&quot;myChart3&quot;</span><span class="op">&gt;&lt;/</span>canvas<span class="op">&gt;</span></span>
+<span id="cb6-38"><a href="#cb6-38"></a>    <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
+<span id="cb6-39"><a href="#cb6-39"></a>  <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
+<span id="cb6-40"><a href="#cb6-40"></a><span class="op">&lt;/</span>body<span class="op">&gt;</span></span>
+<span id="cb6-41"><a href="#cb6-41"></a></span>
+<span id="cb6-42"><a href="#cb6-42"></a><span class="op">&lt;</span>script<span class="op">&gt;</span></span>
+<span id="cb6-43"><a href="#cb6-43"></a><span class="co">// const url = &#39;ws://localhost:81&#39;</span></span>
+<span id="cb6-44"><a href="#cb6-44"></a><span class="kw">var</span> url <span class="op">=</span> <span class="kw">null</span></span>
+<span id="cb6-45"><a href="#cb6-45"></a><span class="kw">var</span> ws <span class="op">=</span> <span class="kw">null</span></span>
+<span id="cb6-46"><a href="#cb6-46"></a><span class="kw">var</span> temperatures <span class="op">=</span> []</span>
+<span id="cb6-47"><a href="#cb6-47"></a><span class="kw">var</span> timestamps <span class="op">=</span> []</span>
+<span id="cb6-48"><a href="#cb6-48"></a><span class="kw">var</span> log <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb6-49"><a href="#cb6-49"></a></span>
+<span id="cb6-50"><a href="#cb6-50"></a><span class="kw">function</span> <span class="fu">init</span>(){</span>
+<span id="cb6-51"><a href="#cb6-51"></a>  wsurl <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&quot;wsurl&quot;</span>)<span class="op">.</span><span class="at">value</span></span>
+<span id="cb6-52"><a href="#cb6-52"></a>  createWebsocket(wsurl)</span>
+<span id="cb6-53"><a href="#cb6-53"></a></span>
+<span id="cb6-54"><a href="#cb6-54"></a>  <span class="kw">var</span> x <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&quot;pin&quot;</span>)<span class="op">;</span></span>
+<span id="cb6-55"><a href="#cb6-55"></a>  <span class="cf">for</span> (i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i<span class="op">&lt;=</span><span class="dv">13</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb6-56"><a href="#cb6-56"></a>    <span class="kw">var</span> option <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&quot;option&quot;</span>)<span class="op">;</span></span>
+<span id="cb6-57"><a href="#cb6-57"></a>    option<span class="op">.</span><span class="at">text</span> <span class="op">=</span> <span class="st">&quot;Digital Output &quot;</span> <span class="op">+</span> i<span class="op">;</span></span>
+<span id="cb6-58"><a href="#cb6-58"></a>    option<span class="op">.</span><span class="at">value</span> <span class="op">=</span> i<span class="op">;</span></span>
+<span id="cb6-59"><a href="#cb6-59"></a>    x<span class="op">.</span><span class="fu">add</span>(option)<span class="op">;</span></span>
+<span id="cb6-60"><a href="#cb6-60"></a>  }</span>
+<span id="cb6-61"><a href="#cb6-61"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&quot;help&quot;</span>)<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> </span>
+<span id="cb6-62"><a href="#cb6-62"></a>  <span class="st">&#39;This page will open a WebSocket connection to &#39;</span> <span class="op">+</span> wsurl <span class="op">+</span> <span class="st">&#39;. &lt;/br&gt;&#39;</span> <span class="op">+</span></span>
+<span id="cb6-63"><a href="#cb6-63"></a>  <span class="st">&#39;Through the socket we will receive JSON objects with status information. This page displays the received status information with charts.&lt;/br&gt;&#39;</span> <span class="op">+</span></span>
+<span id="cb6-64"><a href="#cb6-64"></a>  <span class="st">&#39;Also, we can send commands to Arduino through the socket, e.g. switch an output. &lt;/br&gt;&#39;</span> <span class="op">+</span></span>
+<span id="cb6-65"><a href="#cb6-65"></a>  <span class="st">&#39;In Chrome press F12 for further details.&#39;</span></span>
+<span id="cb6-66"><a href="#cb6-66"></a>}</span>
+<span id="cb6-67"><a href="#cb6-67"></a><span class="kw">function</span> <span class="fu">sendCommand</span>(){</span>
+<span id="cb6-68"><a href="#cb6-68"></a>  <span class="kw">var</span> pin <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;pin&#39;</span>)<span class="op">.</span><span class="at">value</span></span>
+<span id="cb6-69"><a href="#cb6-69"></a>  <span class="kw">var</span> state <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;state&#39;</span>)<span class="op">.</span><span class="at">value</span></span>
+<span id="cb6-70"><a href="#cb6-70"></a>  <span class="kw">var</span> command <span class="op">=</span> <span class="st">&#39;&#39;</span><span class="op">;</span></span>
+<span id="cb6-71"><a href="#cb6-71"></a>  <span class="cf">if</span> (pin <span class="op">==</span> <span class="st">&#39;all&#39;</span>) {</span>
+<span id="cb6-72"><a href="#cb6-72"></a>    <span class="cf">for</span> (i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;=</span> <span class="dv">13</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb6-73"><a href="#cb6-73"></a>      command<span class="op">+=</span> i <span class="op">+</span> <span class="st">&quot;=&quot;</span> <span class="op">+</span> state</span>
+<span id="cb6-74"><a href="#cb6-74"></a>      command<span class="op">+=</span> ( i <span class="op">==</span> <span class="dv">13</span> ) <span class="op">?</span> <span class="st">&#39;&#39;</span> <span class="op">:</span> <span class="st">&#39;&amp;&#39;</span></span>
+<span id="cb6-75"><a href="#cb6-75"></a>    }</span>
+<span id="cb6-76"><a href="#cb6-76"></a>  } <span class="cf">else</span> {</span>
+<span id="cb6-77"><a href="#cb6-77"></a>    command <span class="op">=</span> pin <span class="op">+</span> <span class="st">&quot;=&quot;</span> <span class="op">+</span> state</span>
+<span id="cb6-78"><a href="#cb6-78"></a>  }</span>
+<span id="cb6-79"><a href="#cb6-79"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(command)</span>
+<span id="cb6-80"><a href="#cb6-80"></a>  ws<span class="op">.</span><span class="fu">send</span>(command)</span>
+<span id="cb6-81"><a href="#cb6-81"></a>}</span>
+<span id="cb6-82"><a href="#cb6-82"></a></span>
+<span id="cb6-83"><a href="#cb6-83"></a><span class="kw">function</span> <span class="fu">calculateTemperature</span>(adcValue) {</span>
+<span id="cb6-84"><a href="#cb6-84"></a>  <span class="cf">return</span> adcValue<span class="op">/</span><span class="dv">1023</span><span class="op">*</span><span class="dv">5</span><span class="op">*</span><span class="dv">100</span> <span class="op">-</span> <span class="dv">50</span></span>
+<span id="cb6-85"><a href="#cb6-85"></a>}</span>
+<span id="cb6-86"><a href="#cb6-86"></a></span>
+<span id="cb6-87"><a href="#cb6-87"></a><span class="kw">function</span> <span class="fu">createTimestamp</span>() {</span>
+<span id="cb6-88"><a href="#cb6-88"></a>  <span class="cf">return</span> <span class="kw">new</span> <span class="bu">Date</span>()<span class="op">.</span><span class="fu">toISOString</span>()<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span><span class="dv">19</span>)<span class="op">.</span><span class="fu">replace</span>(<span class="st">&quot;T&quot;</span><span class="op">,</span><span class="st">&quot; &quot;</span>)</span>
+<span id="cb6-89"><a href="#cb6-89"></a>}</span>
+<span id="cb6-90"><a href="#cb6-90"></a></span>
+<span id="cb6-91"><a href="#cb6-91"></a><span class="kw">function</span> <span class="fu">processIncomingMessages</span>(<span class="bu">event</span>) {</span>
+<span id="cb6-92"><a href="#cb6-92"></a>  <span class="cf">try</span> {</span>
+<span id="cb6-93"><a href="#cb6-93"></a>    <span class="kw">var</span> ioStates <span class="op">=</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">parse</span>(<span class="bu">event</span><span class="op">.</span><span class="at">data</span>)</span>
+<span id="cb6-94"><a href="#cb6-94"></a>    <span class="cf">if</span> (log) {</span>
+<span id="cb6-95"><a href="#cb6-95"></a>      <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(ioStates)<span class="op">;</span></span>
+<span id="cb6-96"><a href="#cb6-96"></a>    }</span>
+<span id="cb6-97"><a href="#cb6-97"></a></span>
+<span id="cb6-98"><a href="#cb6-98"></a>    <span class="co">// update temperature chart</span></span>
+<span id="cb6-99"><a href="#cb6-99"></a>    temperatures<span class="op">.</span><span class="fu">push</span>(calculateTemperature(ioStates<span class="op">.</span><span class="at">A0</span>))</span>
+<span id="cb6-100"><a href="#cb6-100"></a>    timestamps<span class="op">.</span><span class="fu">push</span>(createTimestamp())</span>
+<span id="cb6-101"><a href="#cb6-101"></a>    updateChart(chart1<span class="op">,</span> timestamps<span class="op">,</span> temperatures)</span>
+<span id="cb6-102"><a href="#cb6-102"></a>    </span>
+<span id="cb6-103"><a href="#cb6-103"></a>    <span class="co">// update IO charts</span></span>
+<span id="cb6-104"><a href="#cb6-104"></a>    <span class="kw">var</span> keys <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(ioStates)</span>
+<span id="cb6-105"><a href="#cb6-105"></a>    <span class="kw">var</span> values <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">values</span>(ioStates)</span>
+<span id="cb6-106"><a href="#cb6-106"></a>    updateChart(chart3<span class="op">,</span> keys<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span><span class="dv">14</span>)<span class="op">,</span> values<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span><span class="dv">14</span>))   <span class="co">// digital states</span></span>
+<span id="cb6-107"><a href="#cb6-107"></a>    updateChart(chart2<span class="op">,</span> keys<span class="op">.</span><span class="fu">slice</span>(<span class="dv">14</span><span class="op">,</span><span class="dv">20</span>)<span class="op">,</span> values<span class="op">.</span><span class="fu">slice</span>(<span class="dv">14</span><span class="op">,</span><span class="dv">20</span>)) <span class="co">// analog states</span></span>
+<span id="cb6-108"><a href="#cb6-108"></a>  } <span class="cf">catch</span>(err) {</span>
+<span id="cb6-109"><a href="#cb6-109"></a>      <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;skipping invalid JSON package &quot;&#39;</span> <span class="op">+</span> <span class="bu">event</span><span class="op">.</span><span class="at">data</span> <span class="op">+</span> <span class="st">&#39;&quot; from &#39;</span> <span class="op">+</span> <span class="bu">event</span><span class="op">.</span><span class="at">origin</span> )</span>
+<span id="cb6-110"><a href="#cb6-110"></a>      <span class="co">// console.log(err); // error in the above string (in this case, yes)!</span></span>
+<span id="cb6-111"><a href="#cb6-111"></a>  }</span>
+<span id="cb6-112"><a href="#cb6-112"></a>}</span>
+<span id="cb6-113"><a href="#cb6-113"></a></span>
+<span id="cb6-114"><a href="#cb6-114"></a><span class="kw">function</span> <span class="fu">createWebsocket</span>(url) {</span>
+<span id="cb6-115"><a href="#cb6-115"></a>  temperatures <span class="op">=</span> []</span>
+<span id="cb6-116"><a href="#cb6-116"></a>  timestamps <span class="op">=</span> []</span>
+<span id="cb6-117"><a href="#cb6-117"></a>  ws <span class="op">=</span> <span class="kw">new</span> <span class="bu">WebSocket</span>(url)<span class="op">;</span></span>
+<span id="cb6-118"><a href="#cb6-118"></a>  ws<span class="op">.</span><span class="at">onopen</span> <span class="op">=</span> <span class="kw">function</span>() {</span>
+<span id="cb6-119"><a href="#cb6-119"></a>      <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;WebSocket connection to &#39;</span> <span class="op">+</span> url <span class="op">+</span> <span class="st">&#39; established&#39;</span>)<span class="op">;</span></span>
+<span id="cb6-120"><a href="#cb6-120"></a>      <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;type &quot;log=true&quot; to log incoming JSON objects&#39;</span>)<span class="op">;</span></span>
+<span id="cb6-121"><a href="#cb6-121"></a>      <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;type &quot;ws.send(&quot;13=1&quot;)&quot;&quot; to switch the build-in LED on&#39;</span>)<span class="op">;</span></span>
+<span id="cb6-122"><a href="#cb6-122"></a>  }<span class="op">;</span></span>
+<span id="cb6-123"><a href="#cb6-123"></a>  <span class="co">// handle messages from server</span></span>
+<span id="cb6-124"><a href="#cb6-124"></a>  ws<span class="op">.</span><span class="at">onmessage</span> <span class="op">=</span> processIncomingMessages</span>
+<span id="cb6-125"><a href="#cb6-125"></a>}</span>
+<span id="cb6-126"><a href="#cb6-126"></a></span>
+<span id="cb6-127"><a href="#cb6-127"></a><span class="kw">function</span> <span class="fu">createChart</span>(ctx<span class="op">,</span> type<span class="op">,</span> label)  {</span>
+<span id="cb6-128"><a href="#cb6-128"></a>  <span class="kw">var</span> chart <span class="op">=</span> <span class="kw">new</span> Chart(ctx<span class="op">,</span> {</span>
+<span id="cb6-129"><a href="#cb6-129"></a>      <span class="co">// The type of chart we want to create</span></span>
+<span id="cb6-130"><a href="#cb6-130"></a>      <span class="dt">type</span><span class="op">:</span> type<span class="op">,</span></span>
+<span id="cb6-131"><a href="#cb6-131"></a>      <span class="co">// The data for our dataset</span></span>
+<span id="cb6-132"><a href="#cb6-132"></a>      <span class="dt">data</span><span class="op">:</span> {</span>
+<span id="cb6-133"><a href="#cb6-133"></a>          <span class="dt">labels</span><span class="op">:</span> []<span class="op">,</span></span>
+<span id="cb6-134"><a href="#cb6-134"></a>          <span class="dt">datasets</span><span class="op">:</span> [{</span>
+<span id="cb6-135"><a href="#cb6-135"></a>              <span class="dt">label</span><span class="op">:</span> label<span class="op">,</span></span>
+<span id="cb6-136"><a href="#cb6-136"></a>              <span class="dt">backgroundColor</span><span class="op">:</span> <span class="st">&#39;rgb(255, 99, 132)&#39;</span><span class="op">,</span></span>
+<span id="cb6-137"><a href="#cb6-137"></a>              <span class="dt">borderColor</span><span class="op">:</span> <span class="st">&#39;rgb(255, 99, 132)&#39;</span><span class="op">,</span></span>
+<span id="cb6-138"><a href="#cb6-138"></a>              <span class="dt">data</span><span class="op">:</span> []</span>
+<span id="cb6-139"><a href="#cb6-139"></a>          }]</span>
+<span id="cb6-140"><a href="#cb6-140"></a>      }<span class="op">,</span></span>
+<span id="cb6-141"><a href="#cb6-141"></a>  })<span class="op">;</span></span>
+<span id="cb6-142"><a href="#cb6-142"></a>  <span class="cf">return</span> chart</span>
+<span id="cb6-143"><a href="#cb6-143"></a>}</span>
+<span id="cb6-144"><a href="#cb6-144"></a><span class="kw">function</span> <span class="fu">updateChart</span>(chart<span class="op">,</span> xValues<span class="op">,</span> yValues) {</span>
+<span id="cb6-145"><a href="#cb6-145"></a>  <span class="cf">if</span> (xValues <span class="op">&amp;&amp;</span> yValues) {</span>
+<span id="cb6-146"><a href="#cb6-146"></a>    chart<span class="op">.</span><span class="at">data</span><span class="op">.</span><span class="at">labels</span> <span class="op">=</span> xValues</span>
+<span id="cb6-147"><a href="#cb6-147"></a>    chart<span class="op">.</span><span class="at">data</span><span class="op">.</span><span class="at">datasets</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">data</span> <span class="op">=</span> yValues</span>
+<span id="cb6-148"><a href="#cb6-148"></a>    chart<span class="op">.</span><span class="fu">update</span>()<span class="op">;</span></span>
+<span id="cb6-149"><a href="#cb6-149"></a>  }</span>
+<span id="cb6-150"><a href="#cb6-150"></a>} </span>
+<span id="cb6-151"><a href="#cb6-151"></a></span>
+<span id="cb6-152"><a href="#cb6-152"></a><span class="kw">var</span> ctx1 <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;myChart1&#39;</span>)<span class="op">.</span><span class="fu">getContext</span>(<span class="st">&#39;2d&#39;</span>)<span class="op">;</span></span>
+<span id="cb6-153"><a href="#cb6-153"></a><span class="kw">var</span> ctx2 <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;myChart2&#39;</span>)<span class="op">.</span><span class="fu">getContext</span>(<span class="st">&#39;2d&#39;</span>)<span class="op">;</span></span>
+<span id="cb6-154"><a href="#cb6-154"></a><span class="kw">var</span> ctx3 <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;myChart3&#39;</span>)<span class="op">.</span><span class="fu">getContext</span>(<span class="st">&#39;2d&#39;</span>)<span class="op">;</span></span>
+<span id="cb6-155"><a href="#cb6-155"></a></span>
+<span id="cb6-156"><a href="#cb6-156"></a><span class="kw">var</span> chart1 <span class="op">=</span> createChart(ctx1<span class="op">,</span> <span class="st">&#39;line&#39;</span><span class="op">,</span> <span class="st">&#39;Temperatursensor an A0&#39;</span>)</span>
+<span id="cb6-157"><a href="#cb6-157"></a>chart1<span class="op">.</span><span class="at">options</span><span class="op">.</span><span class="at">scales</span><span class="op">.</span><span class="at">yAxes</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">ticks</span><span class="op">.</span><span class="at">suggestedMin</span> <span class="op">=</span> <span class="dv">-50</span></span>
+<span id="cb6-158"><a href="#cb6-158"></a>chart1<span class="op">.</span><span class="at">options</span><span class="op">.</span><span class="at">scales</span><span class="op">.</span><span class="at">yAxes</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">ticks</span><span class="op">.</span><span class="at">suggestedMax</span> <span class="op">=</span> <span class="dv">150</span></span>
+<span id="cb6-159"><a href="#cb6-159"></a>chart1<span class="op">.</span><span class="at">data</span><span class="op">.</span><span class="at">datasets</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">fill</span> <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb6-160"><a href="#cb6-160"></a></span>
+<span id="cb6-161"><a href="#cb6-161"></a><span class="kw">var</span> chart2 <span class="op">=</span> createChart(ctx2<span class="op">,</span> <span class="st">&#39;bar&#39;</span><span class="op">,</span> <span class="st">&#39;Analog Inputs&#39;</span>)</span>
+<span id="cb6-162"><a href="#cb6-162"></a>chart2<span class="op">.</span><span class="at">options</span><span class="op">.</span><span class="at">scales</span><span class="op">.</span><span class="at">yAxes</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">ticks</span><span class="op">.</span><span class="at">min</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-163"><a href="#cb6-163"></a>chart2<span class="op">.</span><span class="at">options</span><span class="op">.</span><span class="at">scales</span><span class="op">.</span><span class="at">yAxes</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">ticks</span><span class="op">.</span><span class="at">max</span> <span class="op">=</span> <span class="dv">1024</span></span>
+<span id="cb6-164"><a href="#cb6-164"></a>chart2<span class="op">.</span><span class="at">options</span><span class="op">.</span><span class="at">scales</span><span class="op">.</span><span class="at">yAxes</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">ticks</span><span class="op">.</span><span class="at">stepSize</span> <span class="op">=</span> <span class="dv">128</span></span>
+<span id="cb6-165"><a href="#cb6-165"></a></span>
+<span id="cb6-166"><a href="#cb6-166"></a><span class="kw">var</span> chart3 <span class="op">=</span> createChart(ctx3<span class="op">,</span> <span class="st">&#39;bar&#39;</span><span class="op">,</span> <span class="st">&#39;Digital Inputs&#39;</span>)</span>
+<span id="cb6-167"><a href="#cb6-167"></a>chart3<span class="op">.</span><span class="at">options</span><span class="op">.</span><span class="at">scales</span><span class="op">.</span><span class="at">yAxes</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">ticks</span><span class="op">.</span><span class="at">min</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-168"><a href="#cb6-168"></a>chart3<span class="op">.</span><span class="at">options</span><span class="op">.</span><span class="at">scales</span><span class="op">.</span><span class="at">yAxes</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">ticks</span><span class="op">.</span><span class="at">max</span> <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-169"><a href="#cb6-169"></a>chart3<span class="op">.</span><span class="at">options</span><span class="op">.</span><span class="at">scales</span><span class="op">.</span><span class="at">yAxes</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">ticks</span><span class="op">.</span><span class="at">stepSize</span> <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-170"><a href="#cb6-170"></a></span>
+<span id="cb6-171"><a href="#cb6-171"></a></span>
+<span id="cb6-172"><a href="#cb6-172"></a><span class="op">&lt;/</span>script<span class="op">&gt;</span></span>
+<span id="cb6-173"><a href="#cb6-173"></a><span class="op">&lt;/</span>html<span class="op">&gt;</span></span></code></pre></div>
+<h1 class="unnumbered" id="quellenverzeichnis">Quellenverzeichnis</h1>
+<div id="refs" class="references hanging-indent" role="doc-bibliography">
+<div id="ref-lernset">
+<p>[1] <em>Lernset Nr.8 mit UNO Controller - Kit für Arduino</em>. URL <a href="https://www.funduinoshop.com/epages/78096195.sf/de_DE/?ObjectPath=/Shops/78096195/Products/01-U8">https://www.funduinoshop.com/epages/78096195.sf/de_DE/?ObjectPath=/Shops/78096195/Products/01-U8</a></p>
+</div>
+<div id="ref-bartmannArduino">
+<p>[2] <span class="smallcaps">Bartmann, Erik</span>: <em>Mit Arduino die elektronische Welt entdecken</em>. 3. Aufl. : Bombini-Verlag, 2017 — ISBN <a href="https://worldcat.org/isbn/978-3-946496-00-7">978-3-946496-00-7</a></p>
+</div>
+<div id="ref-bartmannESP8266">
+<p>[3] <span class="smallcaps">Bartmann, Erik</span>: <em>Das ESP8266-Praxisbuch: Mit NodeMCU und ESPlorer</em> : Elektor Verlag, 2016 — ISBN <a href="https://worldcat.org/isbn/978-3-89576-321-2">978-3-89576-321-2</a></p>
+</div>
+<div id="ref-bartmannESP32">
+<p>[4] <span class="smallcaps">Bartmann, Erik</span>: <em>Das ESP32-Praxisbuch: Programmieren mit der Arduino-IDE</em> : Elektor Verlag, 2018 — ISBN <a href="https://worldcat.org/isbn/978-3-89576-333-5">978-3-89576-333-5</a></p>
+</div>
+<div id="ref-temperatureDashboard">
+<p>[5] <span class="smallcaps">Andrew Shvayka, Igor Khanenko, <span style="font-variant:normal;">Igor Kulikov</span></span>: <em>Temperature Dashboard Using Arduino UNO, ESP8266 And MQTT</em>. URL <a href="https://www.hackster.io/thingsboard/temperature-dashboard-using-arduino-uno-esp8266-and-mqtt-5e26eb">https://www.hackster.io/thingsboard/temperature-dashboard-using-arduino-uno-esp8266-and-mqtt-5e26eb</a></p>
+</div>
+<div id="ref-websocketcommunication">
+<p>[6] <em>WebSocket communication with an ESP8266 or Arduino in Python. Test with the ws4py library on Raspberry Pi</em>. URL <a href="https://diyprojects.io/websocket-communication-esp8266-arduino-python-test-ws4py-library-raspberry-pi/#.Xq6bKagzaUk">https://diyprojects.io/websocket-communication-esp8266-arduino-python-test-ws4py-library-raspberry-pi/#.Xq6bKagzaUk</a></p>
+</div>
+<div id="ref-vscode">
+<p>[7] Visual Studio Code.</p>
+</div>
+<div id="ref-intellisense">
+<p>[8] C/C++ IntelliSense, debugging, and code browsing.</p>
+</div>
+<div id="ref-arduinoCli">
+<p>[9] Arduino CLI.</p>
+</div>
+<div id="ref-gitForWindows">
+<p>[10] Git for Windows.</p>
+</div>
+<div id="ref-tortoiseGit">
+<p>[11] TortoiseGit.</p>
+</div>
+<div id="ref-websockets">
+<p>[12] Simple to use, blazing fast and thoroughly tested WebSocket client and server for Node.js.</p>
+</div>
+<div id="ref-express">
+<p>[13] Express Schnelles, offenes, unkompliziertes Web-Framework für Node.js.</p>
+</div>
+<div id="ref-chartjs">
+<p>[14] Simple yet flexible JavaScript charting for designers &amp; developers.</p>
+</div>
+<div id="ref-serialPort">
+<p>[15] Node SerialPort.</p>
+</div>
+<div id="ref-sprachreferenz">
+<p>[16] <em>Sprach-Referenz</em></p>
+</div>
+<div id="ref-codeReferenz">
+<p>[17] <em>Arduino Befehlsübersicht</em></p>
+</div>
+<div id="ref-arduinoCheatSheet">
+<p>[18] <em>Arduino Programming Cheat Sheet</em></p>
+</div>
+<div id="ref-avrlibc">
+<p>[19] <em>AVR Libc</em></p>
+</div>
+<div id="ref-arduinoLanguage">
+<p>[20] <em>C++ vs. The Arduino Language?</em> URL <a href="https://arduino.stackexchange.com/questions/816/c-vs-the-arduino-language">https://arduino.stackexchange.com/questions/816/c-vs-the-arduino-language</a></p>
+</div>
+<div id="ref-heapFragmentation">
+<p>[21] <em>What is Heap Fragmentation?</em> URL <a href="https://cpp4arduino.com/2018/11/06/what-is-heap-fragmentation.html">https://cpp4arduino.com/2018/11/06/what-is-heap-fragmentation.html</a></p>
+</div>
+<div id="ref-heapFragmentation2">
+<p>[22] <span class="smallcaps">Walls, Colin</span>: <em>Dynamic Memory Allocation and Fragmentation in C and C++</em>. URL <a href="https://www.design-reuse.com/articles/25090/dynamic-memory-allocation-fragmentation-c.html">https://www.design-reuse.com/articles/25090/dynamic-memory-allocation-fragmentation-c.html</a></p>
+</div>
+<div id="ref-arduinoStrings">
+<p>[23] <em>The Evils of Arduino Strings</em>. URL <a href="https://majenko.co.uk/blog/evils-arduino-strings">https://majenko.co.uk/blog/evils-arduino-strings</a></p>
+</div>
+</div>
+</body>
+</html>
