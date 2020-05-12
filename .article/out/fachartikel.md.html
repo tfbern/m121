@@ -55,121 +55,122 @@ SOFTWARE.
 <article class="markdown-body">
 <header>
 <h1 class="title">Steuerung eines Arduino Uno Mikrokontrollers via WebSocket</h1>
-<p class="author">Samuel Hess</p>
-<p class="date">11. Mai 2020</p>
+<p align="center" class="author">Samuel Hess</p>
+<p align="center" class="date">12. Mai 2020</p>
 </header>
 <hr>
 <nav id="TOC">
 <h1 class="toc-title">Inhaltsverzeichnis</h1>
 <ul>
-<li><a href="#abstract">Abstract</a>
+<li><a href="#abstract"><span class="toc-section-number">1</span> Abstract</a>
 <ul>
-<li><a href="#einleitung">Einleitung</a></li>
+<li><a href="#einleitung"><span class="toc-section-number">1.1</span> Einleitung</a></li>
 </ul></li>
-<li><a href="#fragestellung">Fragestellung</a>
+<li><a href="#fragestellung"><span class="toc-section-number">2</span> Fragestellung</a>
 <ul>
-<li><a href="#motivation">Motivation</a></li>
-<li><a href="#literatur-review">Literatur-Review</a>
+<li><a href="#motivation"><span class="toc-section-number">2.1</span> Motivation</a></li>
+<li><a href="#literatur-review"><span class="toc-section-number">2.2</span> Literatur-Review</a>
 <ul>
-<li><a href="#arduino-mit-integriertem-wlan">Arduino mit integriertem WLAN</a></li>
-<li><a href="#wlan-erweiterung">WLAN Erweiterung</a></li>
-<li><a href="#serial-gateway">Serial Gateway</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#experimenteller-teil">Experimenteller Teil</a>
-<ul>
-<li><a href="#informationsquellen">Informationsquellen</a></li>
-<li><a href="#prinzipskizze">Prinzipskizze</a></li>
-<li><a href="#hardware">Hardware</a>
-<ul>
-<li><a href="#anschluss-der-sensoren">Anschluss der Sensoren</a></li>
-</ul></li>
-<li><a href="#software">Software</a>
-<ul>
-<li><a href="#entwicklungsumgebung">Entwicklungsumgebung</a></li>
-<li><a href="#node-libraries">Node Libraries</a></li>
-<li><a href="#arduino-libraries">Arduino Libraries</a></li>
-<li><a href="#arduino-sketch">Arduino Sketch</a></li>
-<li><a href="#serial-gateway-1">Serial Gateway</a></li>
-<li><a href="#websocket-server">WebSocket Server</a></li>
-<li><a href="#web-gui">Web GUI</a></li>
+<li><a href="#arduino-mit-integriertem-wlan"><span class="toc-section-number">2.2.1</span> Arduino mit integriertem WLAN</a></li>
+<li><a href="#wlan-erweiterung"><span class="toc-section-number">2.2.2</span> WLAN Erweiterung</a></li>
+<li><a href="#serial-gateway"><span class="toc-section-number">2.2.3</span> Serial Gateway</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#resultate">Resultate</a></li>
-<li><a href="#diskussion">Diskussion</a></li>
-<li><a href="#zusammenfassung">Zusammenfassung</a></li>
-<li><a href="#danksagung">Danksagung</a></li>
-<li><a href="#interessenskonflikte">Interessenskonflikte</a></li>
+<li><a href="#experimenteller-teil"><span class="toc-section-number">3</span> Experimenteller Teil</a>
+<ul>
+<li><a href="#informationsquellen"><span class="toc-section-number">3.1</span> Informationsquellen</a></li>
+<li><a href="#prinzipskizze"><span class="toc-section-number">3.2</span> Prinzipskizze</a></li>
+<li><a href="#hardware"><span class="toc-section-number">3.3</span> Hardware</a>
+<ul>
+<li><a href="#anschluss-der-sensoren"><span class="toc-section-number">3.3.1</span> Anschluss der Sensoren</a></li>
+</ul></li>
+<li><a href="#software"><span class="toc-section-number">3.4</span> Software</a>
+<ul>
+<li><a href="#entwicklungsumgebung"><span class="toc-section-number">3.4.1</span> Entwicklungsumgebung</a></li>
+<li><a href="#node-libraries"><span class="toc-section-number">3.4.2</span> Node Libraries</a></li>
+<li><a href="#arduino-libraries"><span class="toc-section-number">3.4.3</span> Arduino Libraries</a></li>
+<li><a href="#arduino-sketch"><span class="toc-section-number">3.4.4</span> Arduino Sketch</a></li>
+<li><a href="#serial-gateway-1"><span class="toc-section-number">3.4.5</span> Serial Gateway</a></li>
+<li><a href="#websocket-server"><span class="toc-section-number">3.4.6</span> WebSocket Server</a></li>
+<li><a href="#web-gui"><span class="toc-section-number">3.4.7</span> Web GUI</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#resultate"><span class="toc-section-number">4</span> Resultate</a></li>
+<li><a href="#diskussion"><span class="toc-section-number">5</span> Diskussion</a></li>
+<li><a href="#zusammenfassung"><span class="toc-section-number">6</span> Zusammenfassung</a></li>
+<li><a href="#danksagung"><span class="toc-section-number">7</span> Danksagung</a></li>
+<li><a href="#interessenskonflikte"><span class="toc-section-number">8</span> Interessenskonflikte</a></li>
 </ul>
 </nav>
 <hr>
-<h1 id="abstract">Abstract</h1>
+<h1 data-number="1" id="abstract"><span class="header-section-number">1</span> Abstract</h1>
 <p>In der vorliegenden Arbeit wurde untersucht, wie ein Arduino Uno über eine WebSocket-Verbindung gesteuert werden kann, während dieser im Sekundentakt Statusmeldungen versendet.</p>
 <p>Der verwendete Funduino Uno R3 <span class="citation" data-cites="lernset">[<a href="#ref-lernset" role="doc-biblioref">1</a>]</span> verfügt über keine WLAN-Schnittstelle. Daher erfolgt die WebSocket-Kommunikation extern auf einem Gateway. Als Gateway wird ein Windows-PC verwendet. Arduino und Gateway sind per USB verbunden und kommunizieren über eine virtuelle serielle Schnittstelle.</p>
 <p>Das Ergebnis zeigt, dass eine Steuerung eines Arduinos per WebSocket problemlos möglich ist. Die eingehenden Nachrichten müssen auf dem Arduino geparst werden. Dieses Parding ist einfacher, wenn das verwendete Austauschformt schlank gehalten wird. Deshalb wurde anstelle von JSON das URL Format verwendet.</p>
-<h2 id="einleitung">Einleitung</h2>
+<h2 data-number="1.1" id="einleitung"><span class="header-section-number">1.1</span> Einleitung</h2>
 <p>In diesem Kapitel wird die Motivation erläutert und genaue Fragesellung definiert. Dann folgt eine kleine Übersichtsarbeit mit dazugehöriger Literaturrecherche.</p>
-<h1 id="fragestellung">Fragestellung</h1>
+<h1 data-number="2" id="fragestellung"><span class="header-section-number">2</span> Fragestellung</h1>
 <p>Welche Möglichkeiten gibt es, einen Arduino Uno via Websocket zu steuern?</p>
 <p>Während einer explorativen Online-Suche wurden einzelne Lösungen gefunden. Eine systematische Zusammenstellung der Möglichkeiten fehlt jedoch.</p>
-<h2 id="motivation">Motivation</h2>
+<h2 data-number="2.1" id="motivation"><span class="header-section-number">2.1</span> Motivation</h2>
 <p>Die Motivation für die vorliegende Arbeit ist die Beantwortung der nachfolgenden Fragestellung. Weiter soll der Artikel interessierten Lesern als Einstiegslektüre diesen.</p>
-<h2 id="literatur-review">Literatur-Review</h2>
-<p>Zum Thema existiert diverse Fachliteratur unter anderem von Erik Bartmann<span class="citation" data-cites="bartmannArduino">[<a href="#ref-bartmannArduino" role="doc-biblioref">2</a>]</span><span class="citation" data-cites="bartmannESP8266">[<a href="#ref-bartmannESP8266" role="doc-biblioref">3</a>]</span><span class="citation" data-cites="bartmannESP32">[<a href="#ref-bartmannESP32" role="doc-biblioref">4</a>]</span>.</p>
-<h3 id="arduino-mit-integriertem-wlan">Arduino mit integriertem WLAN</h3>
+<h2 data-number="2.2" id="literatur-review"><span class="header-section-number">2.2</span> Literatur-Review</h2>
+<p>Zum Thema existiert diverse Fachliteratur unter anderem von Erik Bartmann <span class="citation" data-cites="bartmannArduino">[<a href="#ref-bartmannArduino" role="doc-biblioref">2</a>]</span> <span class="citation" data-cites="bartmannESP8266">[<a href="#ref-bartmannESP8266" role="doc-biblioref">3</a>]</span> <span class="citation" data-cites="bartmannESP32">[<a href="#ref-bartmannESP32" role="doc-biblioref">4</a>]</span>.</p>
+<h3 data-number="2.2.1" id="arduino-mit-integriertem-wlan"><span class="header-section-number">2.2.1</span> Arduino mit integriertem WLAN</h3>
 <p>Der Arduino Uno hat keine eingebaute WLAN Schnittstelle. Es gibt jedoch andere Arduino Modelle mit integriertem WLAN, wie z.B. der Arduino MKR1000.</p>
-<h3 id="wlan-erweiterung">WLAN Erweiterung</h3>
-<p>Mehrere Autoren berichten<span class="citation" data-cites="temperatureDashboard">[<a href="#ref-temperatureDashboard" role="doc-biblioref">5</a>]</span><span class="citation" data-cites="websocketcommunication">[<a href="#ref-websocketcommunication" role="doc-biblioref">6</a>]</span>, wie der Arduino mit dem dem WLAN Modul ESP8266 erweitert werden kann.</p>
-<h3 id="serial-gateway">Serial Gateway</h3>
+<h3 data-number="2.2.2" id="wlan-erweiterung"><span class="header-section-number">2.2.2</span> WLAN Erweiterung</h3>
+<p>Mehrere Autoren berichten <span class="citation" data-cites="temperatureDashboard">[<a href="#ref-temperatureDashboard" role="doc-biblioref">5</a>]</span> <span class="citation" data-cites="websocketcommunication">[<a href="#ref-websocketcommunication" role="doc-biblioref">6</a>]</span>, wie der Arduino mit dem dem WLAN Modul ESP8266 erweitert werden kann.</p>
+<h3 data-number="2.2.3" id="serial-gateway"><span class="header-section-number">2.2.3</span> Serial Gateway</h3>
 <p>Eine weitere Möglichkeit, ist behelfsweise einen PC als Serial Gateway einzusetzen. Mangels kurzfristig verfügbarer Hardware wollen wir diese Option verfolgen.</p>
-<h1 id="experimenteller-teil">Experimenteller Teil</h1>
-<h2 id="informationsquellen">Informationsquellen</h2>
+<h1 data-number="3" id="experimenteller-teil"><span class="header-section-number">3</span> Experimenteller Teil</h1>
+<h2 data-number="3.1" id="informationsquellen"><span class="header-section-number">3.1</span> Informationsquellen</h2>
 <p>Als Informationsquellen sind die Datenblätter zur jweiligen Hardware sowie die Manuals zu den einsesetzten Softwarekomponenten zu nennen.</p>
-<h2 id="prinzipskizze">Prinzipskizze</h2>
-<h2 id="hardware">Hardware</h2>
-<p>Verwendet wurde das Lernset Nr. 8 von Funduino<span class="citation" data-cites="lernset">[<a href="#ref-lernset" role="doc-biblioref">1</a>]</span>. Darin enthalten ist ein Funduino Uno. Weiter benötigen wir den Temparatursensor TMP36 und den Fotowiderstand.</p>
-<h3 id="anschluss-der-sensoren">Anschluss der Sensoren</h3>
-<h2 id="software">Software</h2>
-<h3 id="entwicklungsumgebung">Entwicklungsumgebung</h3>
+<h2 data-number="3.2" id="prinzipskizze"><span class="header-section-number">3.2</span> Prinzipskizze</h2>
+<h2 data-number="3.3" id="hardware"><span class="header-section-number">3.3</span> Hardware</h2>
+<p>Verwendet wurde das Lernset Nr. 8 von Funduino <span class="citation" data-cites="lernset">[<a href="#ref-lernset" role="doc-biblioref">1</a>]</span>. Darin enthalten ist ein Funduino Uno. Weiter benötigen wir den Temparatursensor TMP36 und den Fotowiderstand.</p>
+<h3 data-number="3.3.1" id="anschluss-der-sensoren"><span class="header-section-number">3.3.1</span> Anschluss der Sensoren</h3>
+<h2 data-number="3.4" id="software"><span class="header-section-number">3.4</span> Software</h2>
+<h3 data-number="3.4.1" id="entwicklungsumgebung"><span class="header-section-number">3.4.1</span> Entwicklungsumgebung</h3>
 <p>Zur Entwicklung wurde folgende Software eingesetzt.</p>
 <ul>
-<li><p>Visual Studio Code<span class="citation" data-cites="vscode">[<a href="#ref-vscode" role="doc-biblioref">7</a>]</span> mit der Erweiterung C/C++ IntelliSense<span class="citation" data-cites="intellisense">[<a href="#ref-intellisense" role="doc-biblioref">8</a>]</span></p></li>
-<li><p>Arduino CLI<span class="citation" data-cites="arduinoCli">[<a href="#ref-arduinoCli" role="doc-biblioref">9</a>]</span></p></li>
-<li><p>Git for Windows<span class="citation" data-cites="gitForWindows">[<a href="#ref-gitForWindows" role="doc-biblioref">10</a>]</span> und TortoiseGit<span class="citation" data-cites="tortoiseGit">[<a href="#ref-tortoiseGit" role="doc-biblioref">11</a>]</span></p></li>
+<li>Visual Studio Code <span class="citation" data-cites="vscode">[<a href="#ref-vscode" role="doc-biblioref">7</a>]</span> mit der Erweiterung C/C++ IntelliSense <span class="citation" data-cites="intellisense">[<a href="#ref-intellisense" role="doc-biblioref">8</a>]</span></li>
+<li>Arduino CLI <span class="citation" data-cites="arduinoCli">[<a href="#ref-arduinoCli" role="doc-biblioref">9</a>]</span></li>
+<li>Git for Windows <span class="citation" data-cites="gitForWindows">[<a href="#ref-gitForWindows" role="doc-biblioref">10</a>]</span> und TortoiseGit <span class="citation" data-cites="tortoiseGit">[<a href="#ref-tortoiseGit" role="doc-biblioref">11</a>]</span></li>
 </ul>
 <p>Nicht verwendet wurde die Arduino IDE. Windows verwendet den Standardtreiber <em>usbser.sys</em> für den virtuellen COM Port.</p>
-<h3 id="node-libraries">Node Libraries</h3>
+<h3 data-number="3.4.2" id="node-libraries"><span class="header-section-number">3.4.2</span> Node Libraries</h3>
 <p>Weiter wurde folgende NPM Packages eingesetzt:</p>
 <ul>
-<li><p>WebSockets <span class="citation" data-cites="websockets">[<a href="#ref-websockets" role="doc-biblioref">12</a>]</span></p></li>
-<li><p>Express <span class="citation" data-cites="express">[<a href="#ref-express" role="doc-biblioref">13</a>]</span></p></li>
-<li><p>Chart.js <span class="citation" data-cites="chartjs">[<a href="#ref-chartjs" role="doc-biblioref">14</a>]</span></p></li>
-<li><p>SerialPort <span class="citation" data-cites="serialPort">[<a href="#ref-serialPort" role="doc-biblioref">15</a>]</span></p></li>
+<li>WebSockets <span class="citation" data-cites="websockets">[<a href="#ref-websockets" role="doc-biblioref">12</a>]</span></li>
+<li>Express <span class="citation" data-cites="express">[<a href="#ref-express" role="doc-biblioref">13</a>]</span></li>
+<li>Chart.js <span class="citation" data-cites="chartjs">[<a href="#ref-chartjs" role="doc-biblioref">14</a>]</span></li>
+<li>SerialPort <span class="citation" data-cites="serialPort">[<a href="#ref-serialPort" role="doc-biblioref">15</a>]</span></li>
 </ul>
-<h3 id="arduino-libraries">Arduino Libraries</h3>
+<h3 data-number="3.4.3" id="arduino-libraries"><span class="header-section-number">3.4.3</span> Arduino Libraries</h3>
 <p>Weiter wurde folgende Arduino Libraries eingesetzt:</p>
 <ul>
-<li><p>Arduino Library (Arduino.h) <span class="citation" data-cites="sprachreferenz">[<a href="#ref-sprachreferenz" role="doc-biblioref">16</a>]</span><span class="citation" data-cites="codeReferenz">[<a href="#ref-codeReferenz" role="doc-biblioref">17</a>]</span><span class="citation" data-cites="arduinoCheatSheet">[<a href="#ref-arduinoCheatSheet" role="doc-biblioref">18</a>]</span></p></li>
-<li><p>AVR Libc <span class="citation" data-cites="avrlibc">[<a href="#ref-avrlibc" role="doc-biblioref">19</a>]</span></p></li>
+<li>Arduino Library (Arduino.h) <span class="citation" data-cites="sprachreferenz">[<a href="#ref-sprachreferenz" role="doc-biblioref">16</a>]</span> <span class="citation" data-cites="codeReferenz">[<a href="#ref-codeReferenz" role="doc-biblioref">17</a>]</span> <span class="citation" data-cites="arduinoCheatSheet">[<a href="#ref-arduinoCheatSheet" role="doc-biblioref">18</a>]</span><br />
+</li>
+<li>AVR Libc <span class="citation" data-cites="avrlibc">[<a href="#ref-avrlibc" role="doc-biblioref">19</a>]</span></li>
 </ul>
-<h3 id="arduino-sketch">Arduino Sketch</h3>
-<p>Zunächst müssen wir klären, in welcher Programmiersprache die Arduino Sketches geschrieben werden. Nachdem man sich die Build-Umgebung genauer unter die Lupe genommen hat, wird klar, dass keine eigene Arduino-Sprache existert<span class="citation" data-cites="arduinoLanguage">[<a href="#ref-arduinoLanguage" role="doc-biblioref">20</a>]</span>. Im Hintergrund wird aus dem Sketch eine C++ Datei erstellt und mit <em>avr-g++</em> kompiliert.</p>
-<p>Die Problematik der Heap-Fragmentierung wird von mehreren Autoren aufgeworfen und diskutiert <span class="citation" data-cites="heapFragmentation">[<a href="#ref-heapFragmentation" role="doc-biblioref">21</a>]</span> <span class="citation" data-cites="heapFragmentation2">[<a href="#ref-heapFragmentation2" role="doc-biblioref">22</a>]</span>. Matt ist der Meinung, dass man deshalb auf die String Klasse in der Arduino Library gänzlich verzichten soll<span class="citation" data-cites="arduinoStrings">[<a href="#ref-arduinoStrings" role="doc-biblioref">23</a>]</span>. In der Konsequenz müsste man die Stringfunktion aus der Standard C Library<span class="citation" data-cites="avrlibc">[<a href="#ref-avrlibc" role="doc-biblioref">19</a>]</span> verwerden und in C programmieren. Ich sehe dies nicht ganz so eng und setze die Arduino String Klasse trotzdem, jedoch mit Zurückhaltung ein. Ich befolge Matt’s Rat, die Variablen by Reference zu übergeben<span class="citation" data-cites="arduinoStrings">[<a href="#ref-arduinoStrings" role="doc-biblioref">23</a>]</span>.</p>
-<p>Der Quellcode befindet sich im Anhang .</p>
-<h3 id="serial-gateway-1">Serial Gateway</h3>
-<p>Der Quellcode befindet sich im Anhang .</p>
-<h3 id="websocket-server">WebSocket Server</h3>
-<p>Der Quellcode befindet sich im Anhang .</p>
-<h3 id="web-gui">Web GUI</h3>
-<p>Der Quellcode befindet sich im Anhang .</p>
-<h1 id="resultate">Resultate</h1>
+<h3 data-number="3.4.4" id="arduino-sketch"><span class="header-section-number">3.4.4</span> Arduino Sketch</h3>
+<p>Zunächst müssen wir klären, in welcher Programmiersprache die Arduino Sketches geschrieben werden. Nachdem man sich die Build-Umgebung genauer unter die Lupe genommen hat, wird klar, dass keine eigene Arduino-Sprache existiert<span class="citation" data-cites="arduinoLanguage">[<a href="#ref-arduinoLanguage" role="doc-biblioref">20</a>]</span>. Im Hintergrund wird aus dem Sketch eine C++ Datei erstellt und mit <em>avr-g++</em> kompiliert.</p>
+<p>Die Problematik der Heap-Fragmentierung wird von mehreren Autoren aufgeworfen und diskutiert <span class="citation" data-cites="heapFragmentation">[<a href="#ref-heapFragmentation" role="doc-biblioref">21</a>]</span><span class="citation" data-cites="heapFragmentation2">[<a href="#ref-heapFragmentation2" role="doc-biblioref">22</a>]</span>. Matt ist der Meinung, dass man deshalb auf die String Klasse in der Arduino Library gänzlich verzichten soll <span class="citation" data-cites="arduinoStrings">[<a href="#ref-arduinoStrings" role="doc-biblioref">23</a>]</span>. In der Konsequenz müsste man die Stringfunktion aus der Standard C Library <span class="citation" data-cites="avrlibc">[<a href="#ref-avrlibc" role="doc-biblioref">19</a>]</span> verwenden und in C programmieren. Ich sehe dies nicht ganz so eng und setze die Arduino String Klasse trotzdem, jedoch mit Zurückhaltung ein. Ich befolge Matt’s Rat, die Variablen by Reference zu übergeben <span class="citation" data-cites="arduinoStrings">[<a href="#ref-arduinoStrings" role="doc-biblioref">23</a>]</span>.</p>
+<p>Der Quellcode befindet sich im Ordner Arduino. Darin befinden sich verschiedene Sketech, darunter <a href="../arduino/genericReadWrite/genericReadWrite.ino">genericReadWrte</a></p>
+<h3 data-number="3.4.5" id="serial-gateway-1"><span class="header-section-number">3.4.5</span> Serial Gateway</h3>
+<p>Der Quellcode befindet sich im Ordner <a href="../gateway/gateway.js">Gateway</a>.</p>
+<h3 data-number="3.4.6" id="websocket-server"><span class="header-section-number">3.4.6</span> WebSocket Server</h3>
+<p>Der Quellcode befindet sich im Ordner <a href="../websocketserver/websocketserver.js">WebSocketServer</a>.</p>
+<h3 data-number="3.4.7" id="web-gui"><span class="header-section-number">3.4.7</span> Web GUI</h3>
+<p>Der Quellcode befindet sich im Ordner <a href="../client/index.html">Client</a>.</p>
+<h1 data-number="4" id="resultate"><span class="header-section-number">4</span> Resultate</h1>
 <p>Es hat sich gezeigt, dass ein Seriell-zu-Websocket-Gatway unter Node.js einfach zu implementieren ist. Über diesen Umweg kann der Arduino Uno ans Internet angebunden werden.</p>
-<h1 id="diskussion">Diskussion</h1>
-<h1 id="zusammenfassung">Zusammenfassung</h1>
+<h1 data-number="5" id="diskussion"><span class="header-section-number">5</span> Diskussion</h1>
+<h1 data-number="6" id="zusammenfassung"><span class="header-section-number">6</span> Zusammenfassung</h1>
 <p>Statt des Arduino Uno könnte ein Arduino MKR1000 verwendet werden. Dieser könnte kann auch an die Arduino Clound angebunden werden. Ein weitere Option ist die Beschaffung einer WLAN Erweiterung wie das Modul ESP8266.</p>
-<h1 id="danksagung">Danksagung</h1>
+<h1 data-number="7" id="danksagung"><span class="header-section-number">7</span> Danksagung</h1>
 <p>Ich danke den Lernenden der Klasse BINF2017A für die Zusammenarbeit.</p>
-<h1 id="interessenskonflikte">Interessenskonflikte</h1>
+<h1 data-number="8" id="interessenskonflikte"><span class="header-section-number">8</span> Interessenskonflikte</h1>
 <p>Das Projekt wurde im Rahmen des Beruffachschulunterrichts durchgeführt und erhielt keine externde Finanzierung. Demnach bestehen keien Interessenkonflikte.</p>
 <div id="refs" class="references hanging-indent" role="doc-bibliography">
 <div id="ref-lernset">
@@ -191,43 +192,43 @@ SOFTWARE.
 <p>[6] <em>WebSocket communication with an ESP8266 or Arduino in Python. Test with the ws4py library on Raspberry Pi</em>. URL <a href="https://diyprojects.io/websocket-communication-esp8266-arduino-python-test-ws4py-library-raspberry-pi/#.Xq6bKagzaUk">https://diyprojects.io/websocket-communication-esp8266-arduino-python-test-ws4py-library-raspberry-pi/#.Xq6bKagzaUk</a></p>
 </div>
 <div id="ref-vscode">
-<p>[7] Visual Studio Code.</p>
+<p>[7] <em>Visual Studio Code</em>. URL <a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
 </div>
 <div id="ref-intellisense">
-<p>[8] C/C++ IntelliSense, debugging, and code browsing.</p>
+<p>[8] <em>C/C++ IntelliSense, debugging, and code browsing.</em> URL <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools">https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools</a></p>
 </div>
 <div id="ref-arduinoCli">
-<p>[9] Arduino CLI.</p>
+<p>[9] <em>Arduino CLI</em>. URL <a href="https://github.com/arduino/arduino-cli">https://github.com/arduino/arduino-cli</a></p>
 </div>
 <div id="ref-gitForWindows">
-<p>[10] Git for Windows.</p>
+<p>[10] <em>Git for Windows</em>. URL <a href="https://gitforwindows.org">https://gitforwindows.org</a></p>
 </div>
 <div id="ref-tortoiseGit">
-<p>[11] TortoiseGit.</p>
+<p>[11] <em>TortoiseGit</em>. URL <a href="https://tortoisegit.org">https://tortoisegit.org</a></p>
 </div>
 <div id="ref-websockets">
-<p>[12] Simple to use, blazing fast and thoroughly tested WebSocket client and server for Node.js.</p>
+<p>[12] <em>Simple to use, blazing fast and thoroughly tested WebSocket client and server for Node.js</em>. URL <a href="https://github.com/websockets/ws">https://github.com/websockets/ws</a></p>
 </div>
 <div id="ref-express">
-<p>[13] Express Schnelles, offenes, unkompliziertes Web-Framework für Node.js.</p>
+<p>[13] <em>Express Schnelles, offenes, unkompliziertes Web-Framework für Node.js</em>. URL <a href="https://expressjs.com">https://expressjs.com</a></p>
 </div>
 <div id="ref-chartjs">
-<p>[14] Simple yet flexible JavaScript charting for designers &amp; developers.</p>
+<p>[14] <em>Simple yet flexible JavaScript charting for designers &amp; developers</em>. URL <a href="https://www.chartjs.org">https://www.chartjs.org</a></p>
 </div>
 <div id="ref-serialPort">
-<p>[15] Node SerialPort.</p>
+<p>[15] <em>Node SerialPort</em>. URL <a href="https://serialport.io">https://serialport.io</a></p>
 </div>
 <div id="ref-sprachreferenz">
-<p>[16] <em>Sprach-Referenz</em></p>
+<p>[16] <em>Sprach-Referenz</em>. URL <a href="https://www.arduino.cc/reference/de/">https://www.arduino.cc/reference/de/</a></p>
 </div>
 <div id="ref-codeReferenz">
-<p>[17] <em>Arduino Befehlsübersicht</em></p>
+<p>[17] <em>Arduino Befehlsübersicht</em>. URL <a href="https://www.arduinoforum.de/code-referenz">https://www.arduinoforum.de/code-referenz</a></p>
 </div>
 <div id="ref-arduinoCheatSheet">
-<p>[18] <em>Arduino Programming Cheat Sheet</em></p>
+<p>[18] <em>Arduino Programming Cheat Sheet</em>. URL <a href="https://github.com/liffiton/Arduino-Cheat-Sheet">https://github.com/liffiton/Arduino-Cheat-Sheet</a></p>
 </div>
 <div id="ref-avrlibc">
-<p>[19] <em>AVR Libc</em></p>
+<p>[19] <em>AVR Libc</em>. URL <a href="https://www.nongnu.org/avr-libc/">https://www.nongnu.org/avr-libc/</a></p>
 </div>
 <div id="ref-arduinoLanguage">
 <p>[20] <em>C++ vs. The Arduino Language?</em> URL <a href="https://arduino.stackexchange.com/questions/816/c-vs-the-arduino-language">https://arduino.stackexchange.com/questions/816/c-vs-the-arduino-language</a></p>
@@ -240,39 +241,6 @@ SOFTWARE.
 </div>
 <div id="ref-arduinoStrings">
 <p>[23] <em>The Evils of Arduino Strings</em>. URL <a href="https://majenko.co.uk/blog/evils-arduino-strings">https://majenko.co.uk/blog/evils-arduino-strings</a></p>
-</div>
-<div id="ref-literaturverzeichnis">
-<p>[24] <em>LaTeX: Literaturverzeichnis erstellen - so klappt’s</em>. URL <a href="https://www.heise.de/tipps-tricks/LaTeX-Literaturverzeichnis-erstellen-so-klappt-s-4401420.html#%C3%9Cberschrift_1">https://www.heise.de/tipps-tricks/LaTeX-Literaturverzeichnis-erstellen-so-klappt-s-4401420.html#%C3%9Cberschrift_1</a></p>
-</div>
-<div id="ref-inhaltsverzeichnis">
-<p>[25] <em>LaTeX: Inhaltsverzeichnis anlegen - so geht’s</em>. URL <a href="https://www.heise.de/tipps-tricks/LaTeX-Inhaltsverzeichnis-anlegen-so-geht-s-4401672.html">https://www.heise.de/tipps-tricks/LaTeX-Inhaltsverzeichnis-anlegen-so-geht-s-4401672.html</a></p>
-</div>
-<div id="ref-arduino">
-<p>[26] <em>Arduino</em>. URL <a href="https://www.arduino.cc/">https://www.arduino.cc/</a></p>
-</div>
-<div id="ref-funduino">
-<p>[27] <em>Kits und Anleitungen für Arduino</em> : Funduino Anleitungen</p>
-</div>
-<div id="ref-howtocprogramstoredinram">
-<p>[28] <em>How C Program Stored in RAM</em>. URL <a href="https://arduino.stackexchange.com/questions/816/c-vs-the-arduino-language">https://arduino.stackexchange.com/questions/816/c-vs-the-arduino-language</a></p>
-</div>
-<div id="ref-speicherinembeddedsystems">
-<p>[29] <em>Speicher in Embedded Systems</em>. URL <a href="http://dodo.fb06.fh-muenchen.de/hermann/esII/es2-vl123-v12.pdf">http://dodo.fb06.fh-muenchen.de/hermann/esII/es2-vl123-v12.pdf</a></p>
-</div>
-<div id="ref-buildinexamples">
-<p>[30] <em>builtInExamples</em>. URL <a href="https://www.arduino.cc/en/Tutorial/BuiltInExamples">https://www.arduino.cc/en/Tutorial/BuiltInExamples</a></p>
-</div>
-<div id="ref-texlive">
-<p>[31] TeX Live.</p>
-</div>
-<div id="ref-latexWorkshop">
-<p>[32] <span class="smallcaps">Yu, James</span>: LaTeX Workshop.</p>
-</div>
-<div id="ref-cProgramInRam">
-<p>[33] <em>How C Program Stored in RAM?</em> URL <a href="http://www.vishalchovatiya.com/how-c-program-stored-in-ram-memory">http://www.vishalchovatiya.com/how-c-program-stored-in-ram-memory</a></p>
-</div>
-<div id="ref-noDelay">
-<p>[34] <em>Blink Without Delay</em>. URL <a href="https://www.arduino.cc/en/tutorial/BlinkWithoutDelay">https://www.arduino.cc/en/tutorial/BlinkWithoutDelay</a></p>
 </div>
 </div>
 </article>

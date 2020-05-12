@@ -22,6 +22,7 @@ if ($outFormat -eq 'gfm') {
   $outFile = "$($inFile.split('.')[0]).gfm.md"
   Write-Host "creating $outFile" 
   pandoc `
+  -N `
   -F pandoc-citeproc `
   -V toc-title:"Inhaltsverzeichnis" `
   --csl din-1505-2-numeric.csl `
@@ -37,6 +38,7 @@ if ($outFormat -eq 'gfm') {
 if ($outFormat -eq 'html') {
   Write-Host "creating $outFile" 
   pandoc `
+  -N `
   -F pandoc-citeproc `
   -V toc-title:"Inhaltsverzeichnis" `
   --csl din-1505-2-numeric.csl `
@@ -53,6 +55,7 @@ if ($outFormat -eq 'html') {
 if ($outFormat -eq 'docx') {
   Write-Host "creating $outFile" 
   pandoc `
+  -N `
   -F pandoc-citeproc `
   --csl din-1505-2-numeric.csl `
   --toc `
@@ -67,6 +70,7 @@ if ($outFormat -eq 'docx') {
 if ($outFormat -eq 'latex') {
   Write-Host "creating $outFile" 
   pandoc `
+  -N `
   -F pandoc-citeproc `
   -V toc-title:"Inhaltsverzeichnis" `
   --csl din-1505-2-numeric.csl `
@@ -82,6 +86,7 @@ if ($outFormat -eq 'latex') {
 if ($outFormat -eq 'pdf') {
   Write-Host "creating $outFile" 
   pandoc `
+  -N `
   --biblatex `
   --pdf-engine latexmk `
   --toc `

@@ -1,30 +1,51 @@
-  - [Abstract](#abstract)
-      - [Einleitung](#einleitung)
-  - [Fragestellung](#fragestellung)
-      - [Motivation](#motivation)
-      - [Literatur-Review](#literatur-review)
-          - [Arduino mit integriertem
-            WLAN](#arduino-mit-integriertem-wlan)
-          - [WLAN Erweiterung](#wlan-erweiterung)
-          - [Serial Gateway](#serial-gateway)
-  - [Experimenteller Teil](#experimenteller-teil)
-      - [Informationsquellen](#informationsquellen)
-      - [Prinzipskizze](#prinzipskizze)
-      - [Hardware](#hardware)
-          - [Anschluss der Sensoren](#anschluss-der-sensoren)
-      - [Software](#software)
-          - [Entwicklungsumgebung](#entwicklungsumgebung)
-          - [Node Libraries](#node-libraries)
-          - [Arduino Libraries](#arduino-libraries)
-          - [Arduino Sketch](#arduino-sketch)
-          - [Serial Gateway](#serial-gateway-1)
-          - [WebSocket Server](#websocket-server)
-          - [Web GUI](#web-gui)
-  - [Resultate](#resultate)
-  - [Diskussion](#diskussion)
-  - [Zusammenfassung](#zusammenfassung)
-  - [Danksagung](#danksagung)
-  - [Interessenskonflikte](#interessenskonflikte)
+  - [<span class="toc-section-number">1</span> Abstract](#abstract)
+      - [<span class="toc-section-number">1.1</span>
+        Einleitung](#einleitung)
+  - [<span class="toc-section-number">2</span>
+    Fragestellung](#fragestellung)
+      - [<span class="toc-section-number">2.1</span>
+        Motivation](#motivation)
+      - [<span class="toc-section-number">2.2</span>
+        Literatur-Review](#literatur-review)
+          - [<span class="toc-section-number">2.2.1</span> Arduino mit
+            integriertem WLAN](#arduino-mit-integriertem-wlan)
+          - [<span class="toc-section-number">2.2.2</span> WLAN
+            Erweiterung](#wlan-erweiterung)
+          - [<span class="toc-section-number">2.2.3</span> Serial
+            Gateway](#serial-gateway)
+  - [<span class="toc-section-number">3</span> Experimenteller
+    Teil](#experimenteller-teil)
+      - [<span class="toc-section-number">3.1</span>
+        Informationsquellen](#informationsquellen)
+      - [<span class="toc-section-number">3.2</span>
+        Prinzipskizze](#prinzipskizze)
+      - [<span class="toc-section-number">3.3</span>
+        Hardware](#hardware)
+          - [<span class="toc-section-number">3.3.1</span> Anschluss der
+            Sensoren](#anschluss-der-sensoren)
+      - [<span class="toc-section-number">3.4</span>
+        Software](#software)
+          - [<span class="toc-section-number">3.4.1</span>
+            Entwicklungsumgebung](#entwicklungsumgebung)
+          - [<span class="toc-section-number">3.4.2</span> Node
+            Libraries](#node-libraries)
+          - [<span class="toc-section-number">3.4.3</span> Arduino
+            Libraries](#arduino-libraries)
+          - [<span class="toc-section-number">3.4.4</span> Arduino
+            Sketch](#arduino-sketch)
+          - [<span class="toc-section-number">3.4.5</span> Serial
+            Gateway](#serial-gateway-1)
+          - [<span class="toc-section-number">3.4.6</span> WebSocket
+            Server](#websocket-server)
+          - [<span class="toc-section-number">3.4.7</span> Web
+            GUI](#web-gui)
+  - [<span class="toc-section-number">4</span> Resultate](#resultate)
+  - [<span class="toc-section-number">5</span> Diskussion](#diskussion)
+  - [<span class="toc-section-number">6</span>
+    Zusammenfassung](#zusammenfassung)
+  - [<span class="toc-section-number">7</span> Danksagung](#danksagung)
+  - [<span class="toc-section-number">8</span>
+    Interessenskonflikte](#interessenskonflikte)
 
 # Abstract
 
@@ -32,7 +53,7 @@ In der vorliegenden Arbeit wurde untersucht, wie ein Arduino Uno über
 eine WebSocket-Verbindung gesteuert werden kann, während dieser im
 Sekundentakt Statusmeldungen versendet.
 
-Der verwendete Funduino Uno R3 \[[1](#ref-lernset)\] verfügt über keine
+Der verwendete Funduino Uno R3\[[1](#ref-lernset)\] verfügt über keine
 WLAN-Schnittstelle. Daher erfolgt die WebSocket-Kommunikation extern auf
 einem Gateway. Als Gateway wird ein Windows-PC verwendet. Arduino und
 Gateway sind per USB verbunden und kommunizieren über eine virtuelle
@@ -113,9 +134,7 @@ Zur Entwicklung wurde folgende Software eingesetzt.
 
   - Visual Studio Code\[[7](#ref-vscode)\] mit der Erweiterung C/C++
     IntelliSense\[[8](#ref-intellisense)\]
-
   - Arduino CLI\[[9](#ref-arduinoCli)\]
-
   - Git for Windows\[[10](#ref-gitForWindows)\] und
     TortoiseGit\[[11](#ref-tortoiseGit)\]
 
@@ -126,22 +145,18 @@ Standardtreiber *usbser.sys* für den virtuellen COM Port.
 
 Weiter wurde folgende NPM Packages eingesetzt:
 
-  - WebSockets \[[12](#ref-websockets)\]
-
-  - Express \[[13](#ref-express)\]
-
-  - Chart.js \[[14](#ref-chartjs)\]
-
-  - SerialPort \[[15](#ref-serialPort)\]
+  - WebSockets\[[12](#ref-websockets)\]
+  - Express\[[13](#ref-express)\]
+  - Chart.js\[[14](#ref-chartjs)\]
+  - SerialPort\[[15](#ref-serialPort)\]
 
 ### Arduino Libraries
 
 Weiter wurde folgende Arduino Libraries eingesetzt:
 
   - Arduino Library (Arduino.h)
-    \[[16](#ref-sprachreferenz)\]\[[17](#ref-codeReferenz)\]\[[18](#ref-arduinoCheatSheet)\]
-
-  - AVR Libc \[[19](#ref-avrlibc)\]
+    \[[16](#ref-sprachreferenz)\]\[[17](#ref-codeReferenz)\]\[[18](#ref-arduinoCheatSheet)\]  
+  - AVR Libc\[[19](#ref-avrlibc)\]
 
 ### Arduino Sketch
 
@@ -153,29 +168,29 @@ wird aus dem Sketch eine C++ Datei erstellt und mit *avr-g++*
 kompiliert.
 
 Die Problematik der Heap-Fragmentierung wird von mehreren Autoren
-aufgeworfen und diskutiert \[[21](#ref-heapFragmentation)\]
-\[[22](#ref-heapFragmentation2)\]. Matt ist der Meinung, dass man
-deshalb auf die String Klasse in der Arduino Library gänzlich verzichten
-soll\[[23](#ref-arduinoStrings)\]. In der Konsequenz müsste man die
-Stringfunktion aus der Standard C Library\[[19](#ref-avrlibc)\]
-verwerden und in C programmieren. Ich sehe dies nicht ganz so eng und
-setze die Arduino String Klasse trotzdem, jedoch mit Zurückhaltung ein.
-Ich befolge Matt’s Rat, die Variablen by Reference zu
-übergeben\[[23](#ref-arduinoStrings)\].
+aufgeworfen und
+diskutiert\[[21](#ref-heapFragmentation)\]\[[22](#ref-heapFragmentation2)\].
+Matt ist der Meinung, dass man deshalb auf die String Klasse in der
+Arduino Library gänzlich verzichten soll\[[23](#ref-arduinoStrings)\].
+In der Konsequenz müsste man die Stringfunktion aus der Standard C
+Library\[[19](#ref-avrlibc)\] verwerden und in C programmieren. Ich sehe
+dies nicht ganz so eng und setze die Arduino String Klasse trotzdem,
+jedoch mit Zurückhaltung ein. Ich befolge Matt’s Rat, die Variablen by
+Reference zu übergeben\[[23](#ref-arduinoStrings)\].
 
-Der Quellcode befindet sich im Anhang .
+Der Quellcode befindet sich im Anhang.
 
 ### Serial Gateway
 
-Der Quellcode befindet sich im Anhang .
+Der Quellcode befindet sich im Anhang.
 
 ### WebSocket Server
 
-Der Quellcode befindet sich im Anhang .
+Der Quellcode befindet sich im Anhang.
 
 ### Web GUI
 
-Der Quellcode befindet sich im Anhang .
+Der Quellcode befindet sich im Anhang.
 
 # Resultate
 
@@ -255,82 +270,85 @@ Test with the ws4py library on Raspberry Pi*. URL
 
 <div id="ref-vscode">
 
-\[7\] Visual Studio Code.
+\[7\] *Visual Studio Code*. URL <https://code.visualstudio.com/>
 
 </div>
 
 <div id="ref-intellisense">
 
-\[8\] C/C++ IntelliSense, debugging, and code browsing.
+\[8\] *C/C++ IntelliSense, debugging, and code browsing.* URL
+<https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools>
 
 </div>
 
 <div id="ref-arduinoCli">
 
-\[9\] Arduino CLI.
+\[9\] *Arduino CLI*. URL <https://github.com/arduino/arduino-cli>
 
 </div>
 
 <div id="ref-gitForWindows">
 
-\[10\] Git for Windows.
+\[10\] *Git for Windows*. URL <https://gitforwindows.org>
 
 </div>
 
 <div id="ref-tortoiseGit">
 
-\[11\] TortoiseGit.
+\[11\] *TortoiseGit*. URL <https://tortoisegit.org>
 
 </div>
 
 <div id="ref-websockets">
 
-\[12\] Simple to use, blazing fast and thoroughly tested WebSocket
-client and server for Node.js.
+\[12\] *Simple to use, blazing fast and thoroughly tested WebSocket
+client and server for Node.js*. URL <https://github.com/websockets/ws>
 
 </div>
 
 <div id="ref-express">
 
-\[13\] Express Schnelles, offenes, unkompliziertes Web-Framework für
-Node.js.
+\[13\] *Express Schnelles, offenes, unkompliziertes Web-Framework für
+Node.js*. URL <https://expressjs.com>
 
 </div>
 
 <div id="ref-chartjs">
 
-\[14\] Simple yet flexible JavaScript charting for designers &
-developers.
+\[14\] *Simple yet flexible JavaScript charting for designers &
+developers*. URL <https://www.chartjs.org>
 
 </div>
 
 <div id="ref-serialPort">
 
-\[15\] Node SerialPort.
+\[15\] *Node SerialPort*. URL <https://serialport.io>
 
 </div>
 
 <div id="ref-sprachreferenz">
 
-\[16\] *Sprach-Referenz*
+\[16\] *Sprach-Referenz*. URL <https://www.arduino.cc/reference/de/>
 
 </div>
 
 <div id="ref-codeReferenz">
 
-\[17\] *Arduino Befehlsübersicht*
+\[17\] *Arduino Befehlsübersicht*. URL
+<https://www.arduinoforum.de/code-referenz>
 
 </div>
 
 <div id="ref-arduinoCheatSheet">
 
-\[18\] *Arduino Programming Cheat Sheet*
+\[18\] *Arduino Programming Cheat Sheet*. URL
+<https://github.com/liffiton/Arduino-Cheat-Sheet>
 
 </div>
 
 <div id="ref-avrlibc">
 
-\[19\] *AVR Libc*
+\[19\] *AVR Libc*. URL <https://www.nongnu.org/avr-libc/>
 
 </div>
 
@@ -385,7 +403,7 @@ Allocation and Fragmentation in C and C++*. URL
 
 <div id="ref-funduino">
 
-\[27\] *Kits und Anleitungen für Arduino* : Funduino Anleitungen
+\[27\] *Kits und Anleitungen für Arduino*. URL <https://funduino.de>
 
 </div>
 
@@ -412,13 +430,14 @@ Allocation and Fragmentation in C and C++*. URL
 
 <div id="ref-texlive">
 
-\[31\] TeX Live.
+\[31\] *TeX Live*. URL <https://www.tug.org/texlive/>
 
 </div>
 
 <div id="ref-latexWorkshop">
 
-\[32\] <span class="smallcaps">Yu, James</span>: LaTeX Workshop.
+\[32\] <span class="smallcaps">Yu, James</span>: *LaTeX Workshop*. URL
+<https://github.com/James-Yu/LaTeX-Workshop>
 
 </div>
 
