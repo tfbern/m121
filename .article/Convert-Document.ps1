@@ -7,7 +7,7 @@ PS> Convert-Document -outFormat gfm
 #>
 
 Param(
-  [string]$inFile = 'fachartikel.markdown.md',
+  [string]$inFile = 'fachartikel.md',
   [string]$outFormat = 'commonmark',
   [string]$outDir = "out"
 )
