@@ -8,8 +8,8 @@ PS> Convert-Document -outFormat gfm
 
 Param(
   [string]$inFile = 'fachartikel.markdown.md',
-  [string]$outFormat = 'html',
-  [string]$outdir = "out"
+  [string]$outFormat = 'commonmark',
+  [string]$outDir = "out"
 )
 
 $outFileBaseName = $inFile.split('.')[0]
@@ -23,15 +23,15 @@ if ($outFormat -eq 'latex') {
   $outFile = "$outFileBaseName.tex"
 }
 
-if (-Not (Test-Path $outdir)) {
-  $null = New-Item -Name $outdir -ItemType "directory"
+if (-Not (Test-Path $outDir)) {
+  $null = New-Item -Name $outDir -ItemType "directory"
 }
 
 $command = 'pandoc'
 $command += " $inFile"
 $command += ' --from markdown'
 $command += " --to $outFormat"
-$command += " --output $outdir/$outFile"
+$command += " --output $outDir/$outFile"
 $command += ' --number-sections'
 $command += ' --toc'
 $command += ' --toc-depth=2'
@@ -54,7 +54,7 @@ if ($outFormat -eq 'html') {
 }
 
 Write-Host "creating $outFile" 
-# Write-Host $command
+Write-Host $command
 Invoke-Expression -Command $command
 
 
