@@ -62,14 +62,12 @@ SOFTWARE.
 <nav id="TOC">
 <h1 class="toc-title">Inhaltsverzeichnis</h1>
 <ul>
-<li><a href="#abstract"><span class="toc-section-number">1</span> Abstract</a>
+<li><a href="#abstract"><span class="toc-section-number">1</span> Abstract</a></li>
+<li><a href="#einleitung"><span class="toc-section-number">2</span> Einleitung</a>
 <ul>
-<li><a href="#einleitung"><span class="toc-section-number">1.1</span> Einleitung</a></li>
-</ul></li>
-<li><a href="#fragestellung"><span class="toc-section-number">2</span> Fragestellung</a>
-<ul>
-<li><a href="#motivation"><span class="toc-section-number">2.1</span> Motivation</a></li>
-<li><a href="#literatur-review"><span class="toc-section-number">2.2</span> Literatur-Review</a></li>
+<li><a href="#fragestellung"><span class="toc-section-number">2.1</span> Fragestellung</a></li>
+<li><a href="#motivation"><span class="toc-section-number">2.2</span> Motivation</a></li>
+<li><a href="#literatur-review"><span class="toc-section-number">2.3</span> Literatur-Review</a></li>
 </ul></li>
 <li><a href="#experimenteller-teil"><span class="toc-section-number">3</span> Experimenteller Teil</a>
 <ul>
@@ -91,20 +89,20 @@ SOFTWARE.
 <p>In der vorliegenden Arbeit wurde untersucht, wie ein Arduino Uno über eine WebSocket-Verbindung gesteuert werden kann, während dieser im Sekundentakt Statusmeldungen versendet.</p>
 <p>Der verwendete Funduino Uno R3 <span class="citation" data-cites="lernset">[<a href="#ref-lernset" role="doc-biblioref">1</a>]</span> verfügt über keine WLAN-Schnittstelle. Daher erfolgt die WebSocket-Kommunikation extern auf einem Gateway. Als Gateway wird ein Windows-PC verwendet. Arduino und Gateway sind per USB verbunden und kommunizieren über eine virtuelle serielle Schnittstelle.</p>
 <p>Das Ergebnis zeigt, dass eine Steuerung eines Arduinos per WebSocket problemlos möglich ist. Die eingehenden Nachrichten müssen auf dem Arduino geparst werden. Dieses Parding ist einfacher, wenn das verwendete Austauschformt schlank gehalten wird. Deshalb wurde anstelle von JSON das URL Format verwendet.</p>
-<h2 data-number="1.1" id="einleitung"><span class="header-section-number">1.1</span> Einleitung</h2>
+<h1 data-number="2" id="einleitung"><span class="header-section-number">2</span> Einleitung</h1>
 <p>In diesem Kapitel wird die Motivation erläutert und genaue Fragesellung definiert. Dann folgt eine kleine Übersichtsarbeit mit dazugehöriger Literaturrecherche.</p>
-<h1 data-number="2" id="fragestellung"><span class="header-section-number">2</span> Fragestellung</h1>
+<h2 data-number="2.1" id="fragestellung"><span class="header-section-number">2.1</span> Fragestellung</h2>
 <p>Welche Möglichkeiten gibt es, einen Arduino Uno via Websocket zu steuern?</p>
 <p>Während einer explorativen Online-Suche wurden einzelne Lösungen gefunden. Eine systematische Zusammenstellung der Möglichkeiten fehlt jedoch.</p>
-<h2 data-number="2.1" id="motivation"><span class="header-section-number">2.1</span> Motivation</h2>
+<h2 data-number="2.2" id="motivation"><span class="header-section-number">2.2</span> Motivation</h2>
 <p>Die Motivation für die vorliegende Arbeit ist die Beantwortung der nachfolgenden Fragestellung. Weiter soll der Artikel interessierten Lesern als Einstiegslektüre diesen.</p>
-<h2 data-number="2.2" id="literatur-review"><span class="header-section-number">2.2</span> Literatur-Review</h2>
+<h2 data-number="2.3" id="literatur-review"><span class="header-section-number">2.3</span> Literatur-Review</h2>
 <p>Zum Thema existiert diverse Fachliteratur unter anderem von Erik Bartmann <span class="citation" data-cites="bartmannArduino">[<a href="#ref-bartmannArduino" role="doc-biblioref">2</a>]</span> <span class="citation" data-cites="bartmannESP8266">[<a href="#ref-bartmannESP8266" role="doc-biblioref">3</a>]</span> <span class="citation" data-cites="bartmannESP32">[<a href="#ref-bartmannESP32" role="doc-biblioref">4</a>]</span>.</p>
-<h3 data-number="2.2.1" id="arduino-mit-integriertem-wlan"><span class="header-section-number">2.2.1</span> Arduino mit integriertem WLAN</h3>
+<h3 data-number="2.3.1" id="arduino-mit-integriertem-wlan"><span class="header-section-number">2.3.1</span> Arduino mit integriertem WLAN</h3>
 <p>Der Arduino Uno hat keine eingebaute WLAN Schnittstelle. Es gibt jedoch andere Arduino Modelle mit integriertem WLAN, wie z.B. der Arduino MKR1000.</p>
-<h3 data-number="2.2.2" id="wlan-erweiterung"><span class="header-section-number">2.2.2</span> WLAN Erweiterung</h3>
+<h3 data-number="2.3.2" id="wlan-erweiterung"><span class="header-section-number">2.3.2</span> WLAN Erweiterung</h3>
 <p>Mehrere Autoren berichten <span class="citation" data-cites="temperatureDashboard">[<a href="#ref-temperatureDashboard" role="doc-biblioref">5</a>]</span> <span class="citation" data-cites="websocketcommunication">[<a href="#ref-websocketcommunication" role="doc-biblioref">6</a>]</span>, wie der Arduino mit dem dem WLAN Modul ESP8266 erweitert werden kann.</p>
-<h3 data-number="2.2.3" id="serial-gateway"><span class="header-section-number">2.2.3</span> Serial Gateway</h3>
+<h3 data-number="2.3.3" id="serial-gateway"><span class="header-section-number">2.3.3</span> Serial Gateway</h3>
 <p>Eine weitere Möglichkeit, ist behelfsweise einen PC als Serial Gateway einzusetzen. Mangels kurzfristig verfügbarer Hardware wollen wir diese Option verfolgen.</p>
 <h1 data-number="3" id="experimenteller-teil"><span class="header-section-number">3</span> Experimenteller Teil</h1>
 <h2 data-number="3.1" id="informationsquellen"><span class="header-section-number">3.1</span> Informationsquellen</h2>

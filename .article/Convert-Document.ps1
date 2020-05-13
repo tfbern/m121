@@ -7,102 +7,55 @@ PS> Convert-Document -outFormat gfm
 #>
 
 Param(
-  [string]$inFile = 'fachartikel.md',
+  [string]$inFile = 'fachartikel.markdown.md',
   [string]$outFormat = 'html',
   [string]$outdir = "out"
 )
 
 $outFileBaseName = $inFile.split('.')[0]
-$outFile = "$inFile.$outFormat"
+$outFile = "$outFileBaseName.$outFormat"
+# add .md file extension for all markdown formats
+if ($outFormat -in 'commonmark','gfm','markdown','markdown_github','markdown_mmd','markdown_phpextra','markdown_strict') {
+  $outFile += ".md"
+}
+# set file extension to .tex for latex files
+if ($outFormat -eq 'latex') {
+  $outFile = "$outFileBaseName.tex"
+}
 
 if (-Not (Test-Path $outdir)) {
   $null = New-Item -Name $outdir -ItemType "directory"
 }
 
-if ($outFormat -eq 'gfm') {
-  $outFile = "$outFileBaseName.gfm.md"
-  Write-Host "creating $outFile" 
-  pandoc `
-  -N `
-  -F pandoc-citeproc `
-  -V toc-title:"Inhaltsverzeichnis" `
-  --csl din-1505-2-numeric.csl `
-  --toc `
-  --toc-depth=2 `
-  --metadata link-citations=true `
-  -s `
-  --from markdown `
-  --to $outFormat `
-  -o $outdir/$outFile  `
-  $inFile
+$command = 'pandoc'
+$command += " $inFile"
+$command += ' --from markdown'
+$command += " --to $outFormat"
+$command += " --output $outdir/$outFile"
+$command += ' --number-sections'
+$command += ' --toc'
+$command += ' --toc-depth=2'
+$command += ' --standalone'
+$command += ' -V toc-title=Inhaltsverzeichnis'
+# $command += ' --metadata link-citations=true'
+
+# use pandoc-citeproc for all formats except pdf
+if ($outFormat -ne 'pdf') {
+  $command += ' -F pandoc-citeproc'
+  # $command += ' --csl din-1505-2-numeric.csl'
+} else {
+  $command += ' --biblatex'
+  $command += ' --pdf-engine latexmk'
 }
 
+# use gitlab html template for html output
 if ($outFormat -eq 'html') {
-  Write-Host "creating $outFile" 
-  pandoc `
-  -N `
-  -F pandoc-citeproc `
-  -V toc-title:"Inhaltsverzeichnis" `
-  --csl din-1505-2-numeric.csl `
-  --template github.html `
-  --toc `
-  --toc-depth=2 `
-  --metadata link-citations=true `
-  -s `
-  --from markdown `
-  --to $outFormat `
-  -o $outdir/$outFile  `
-  $inFile
+  $command += ' --template github.html'
 }
 
-if ($outFormat -eq 'docx') {
-  Write-Host "creating $outFile" 
-  pandoc `
-  -N `
-  -F pandoc-citeproc `
-  --csl din-1505-2-numeric.csl `
-  --toc `
-  --toc-depth=2 `
-  --metadata link-citations=true `
-  -s `
-  --from markdown `
-  --to $outFormat `
-  -o $outdir/$outFile  `
-  $inFile
-}
-
-if ($outFormat -eq 'latex') {
-  $outFile = "$outFileBaseName.md.tex"
-  Write-Host "creating $outFile" 
-  pandoc `
-  -N `
-  -F pandoc-citeproc `
-  -V toc-title:"Inhaltsverzeichnis" `
-  --csl din-1505-2-numeric.csl `
-  --toc `
-  --toc-depth=2 `
-  --metadata link-citations=true `
-  -s `
-  --from markdown `
-  --to $outFormat `
-  -o $outdir/$outFile  `
-  $inFile
-}
-
-if ($outFormat -eq 'pdf') {
-  Write-Host "creating $outFile" 
-  pandoc `
-  -N `
-  --biblatex `
-  --pdf-engine latexmk `
-  --toc `
-  --toc-depth=2 `
-  -s `
-  --from markdown `
-  --to $outFormat `
-  -o $outdir/$outFile  `
-  $inFile
-}
+Write-Host "creating $outFile" 
+# Write-Host $command
+Invoke-Expression -Command $command
 
 
 

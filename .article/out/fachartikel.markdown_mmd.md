@@ -1,31 +1,44 @@
-  - [<span class="toc-section-number">1</span> Abstract](#abstract)
-  - [<span class="toc-section-number">2</span> Einleitung](#einleitung)
-      - [<span class="toc-section-number">2.1</span>
-        Fragestellung](#fragestellung)
-      - [<span class="toc-section-number">2.2</span>
-        Motivation](#motivation)
-      - [<span class="toc-section-number">2.3</span>
-        Literatur-Review](#literatur-review)
-  - [<span class="toc-section-number">3</span> Experimenteller
-    Teil](#experimenteller-teil)
-      - [<span class="toc-section-number">3.1</span>
-        Informationsquellen](#informationsquellen)
-      - [<span class="toc-section-number">3.2</span>
-        Prinzipskizze](#prinzipskizze)
-      - [<span class="toc-section-number">3.3</span>
-        Hardware](#hardware)
-      - [<span class="toc-section-number">3.4</span>
-        Software](#software)
-  - [<span class="toc-section-number">4</span> Resultate](#resultate)
-  - [<span class="toc-section-number">5</span> Diskussion](#diskussion)
-  - [<span class="toc-section-number">6</span>
-    Zusammenfassung](#zusammenfassung)
-  - [<span class="toc-section-number">7</span> Danksagung](#danksagung)
-  - [<span class="toc-section-number">8</span>
-    Interessenskonflikte](#interessenskonflikte)
-  - [Quellenverzeichnis](#quellenverzeichnis)
+author: Samuel Hess
+bibliography: quellen.bib
+classoption: a4paper; 12pt
+csl: din-1505-2-numeric.csl
+date: 12. Mai 2020
+documentclass: scrartcl
+lang: de
+link-citations: true
+subject: ICT Modul 121 - Steuerungsaufgaben bearbeiten
+title: Steuerung eines Arduino Uno Mikrokontrollers via WebSocket
+urlcolor: blue
 
-# Abstract
+-   [<span class="toc-section-number">1</span> Abstract](#abstract)
+-   [<span class="toc-section-number">2</span> Einleitung](#einleitung)
+    -   [<span class="toc-section-number">2.1</span>
+        Fragestellung](#fragestellung)
+    -   [<span class="toc-section-number">2.2</span>
+        Motivation](#motivation)
+    -   [<span class="toc-section-number">2.3</span>
+        Literatur-Review](#literatur-review)
+-   [<span class="toc-section-number">3</span> Experimenteller
+    Teil](#experimenteller-teil)
+    -   [<span class="toc-section-number">3.1</span>
+        Informationsquellen](#informationsquellen)
+    -   [<span class="toc-section-number">3.2</span>
+        Prinzipskizze](#prinzipskizze)
+    -   [<span class="toc-section-number">3.3</span>
+        Hardware](#hardware)
+    -   [<span class="toc-section-number">3.4</span>
+        Software](#software)
+-   [<span class="toc-section-number">4</span> Resultate](#resultate)
+-   [<span class="toc-section-number">5</span> Diskussion](#diskussion)
+-   [<span class="toc-section-number">6</span>
+    Zusammenfassung](#zusammenfassung)
+-   [<span class="toc-section-number">7</span> Danksagung](#danksagung)
+-   [<span class="toc-section-number">8</span>
+    Interessenskonflikte](#interessenskonflikte)
+-   [Quellenverzeichnis](#quellenverzeichnis)
+
+Abstract
+========
 
 In der vorliegenden Arbeit wurde untersucht, wie ein Arduino Uno über
 eine WebSocket-Verbindung gesteuert werden kann, während dieser im
@@ -43,13 +56,15 @@ Arduino geparst werden. Dieses Parding ist einfacher, wenn das
 verwendete Austauschformt schlank gehalten wird. Deshalb wurde anstelle
 von JSON das URL Format verwendet.
 
-# Einleitung
+Einleitung
+==========
 
 In diesem Kapitel wird die Motivation erläutert und genaue Fragesellung
 definiert. Dann folgt eine kleine Übersichtsarbeit mit dazugehöriger
 Literaturrecherche.
 
-## Fragestellung
+Fragestellung
+-------------
 
 Welche Möglichkeiten gibt es, einen Arduino Uno via Websocket zu
 steuern?
@@ -58,13 +73,15 @@ Während einer explorativen Online-Suche wurden einzelne Lösungen
 gefunden. Eine systematische Zusammenstellung der Möglichkeiten fehlt
 jedoch.
 
-## Motivation
+Motivation
+----------
 
 Die Motivation für die vorliegende Arbeit ist die Beantwortung der
 nachfolgenden Fragestellung. Weiter soll der Artikel interessierten
 Lesern als Einstiegslektüre diesen.
 
-## Literatur-Review
+Literatur-Review
+----------------
 
 Zum Thema existiert diverse Fachliteratur unter anderem von Erik
 Bartmann \[[2](#ref-bartmannArduino)\] \[[3](#ref-bartmannESP8266)\]
@@ -88,18 +105,22 @@ Eine weitere Möglichkeit, ist behelfsweise einen PC als Serial Gateway
 einzusetzen. Mangels kurzfristig verfügbarer Hardware wollen wir diese
 Option verfolgen.
 
-# Experimenteller Teil
+Experimenteller Teil
+====================
 
-## Informationsquellen
+Informationsquellen
+-------------------
 
 Als Informationsquellen sind die Datenblätter zur jweiligen Hardware
 sowie die Manuals zu den einsesetzten Softwarekomponenten zu nennen.
 
-## Prinzipskizze
+Prinzipskizze
+-------------
 
 ![Prinzipskizze](img/prinzipskizze.png)
 
-## Hardware
+Hardware
+--------
 
 Verwendet wurde das Lernset Nr. 8 von Funduino \[[1](#ref-lernset)\].
 Darin enthalten ist ein Funduino Uno. Weiter benötigen wir den
@@ -109,16 +130,17 @@ Temparatursensor TMP36 und den Fotowiderstand.
 
 ![Anschluss der Sensoren](img/anschluss.png)
 
-## Software
+Software
+--------
 
 ### Entwicklungsumgebung
 
 Zur Entwicklung wurde folgende Software eingesetzt.
 
-  - Visual Studio Code \[[7](#ref-vscode)\] mit der Erweiterung C/C++
+-   Visual Studio Code \[[7](#ref-vscode)\] mit der Erweiterung C/C++
     IntelliSense \[[8](#ref-intellisense)\]
-  - Arduino CLI \[[9](#ref-arduinoCli)\]
-  - Git for Windows \[[10](#ref-gitForWindows)\] und TortoiseGit
+-   Arduino CLI \[[9](#ref-arduinoCli)\]
+-   Git for Windows \[[10](#ref-gitForWindows)\] und TortoiseGit
     \[[11](#ref-tortoiseGit)\]
 
 Nicht verwendet wurde die Arduino IDE. Windows verwendet den
@@ -128,18 +150,18 @@ Standardtreiber *usbser.sys* für den virtuellen COM Port.
 
 Weiter wurde folgende NPM Packages eingesetzt:
 
-  - WebSockets \[[12](#ref-websockets)\]
-  - Express \[[13](#ref-express)\]
-  - Chart.js \[[14](#ref-chartjs)\]
-  - SerialPort \[[15](#ref-serialPort)\]
+-   WebSockets \[[12](#ref-websockets)\]
+-   Express \[[13](#ref-express)\]
+-   Chart.js \[[14](#ref-chartjs)\]
+-   SerialPort \[[15](#ref-serialPort)\]
 
 ### Arduino Libraries
 
 Weiter wurde folgende Arduino Libraries eingesetzt:
 
-  - Arduino Library (Arduino.h) \[[16](#ref-sprachreferenz)\]
+-   Arduino Library (Arduino.h) \[[16](#ref-sprachreferenz)\]
     \[[17](#ref-codeReferenz)\] \[[18](#ref-arduinoCheatSheet)\]  
-  - AVR Libc \[[19](#ref-avrlibc)\]
+-   AVR Libc \[[19](#ref-avrlibc)\]
 
 ### Arduino Sketch
 
@@ -179,43 +201,49 @@ Der Quellcode befindet sich im Ordner
 
 Der Quellcode befindet sich im Ordner [Client](../../client/index.html).
 
-# Resultate
+Resultate
+=========
 
 Es hat sich gezeigt, dass ein Seriell-zu-Websocket-Gatway unter Node.js
 einfach zu implementieren ist. Über diesen Umweg kann der Arduino Uno
 ans Internet angebunden werden.
 
-# Diskussion
+Diskussion
+==========
 
-# Zusammenfassung
+Zusammenfassung
+===============
 
 Statt des Arduino Uno könnte ein Arduino MKR1000 verwendet werden.
 Dieser könnte kann auch an die Arduino Clound angebunden werden. Ein
 weitere Option ist die Beschaffung einer WLAN Erweiterung wie das Modul
 ESP8266.
 
-# Danksagung
+Danksagung
+==========
 
 Ich danke den Lernenden der Klasse BINF2017A für die Zusammenarbeit.
 
-# Interessenskonflikte
+Interessenskonflikte
+====================
 
 Das Projekt wurde im Rahmen des Beruffachschulunterrichts durchgeführt
 und erhielt keine externde Finanzierung. Demnach bestehen keien
 Interessenkonflikte.
 
-# Quellenverzeichnis
+Quellenverzeichnis [quellenverzeichnis]
+==================
 
-<div id="refs" class="references hanging-indent">
+<div id="refs" class="references hanging-indent" markdown="1">
 
-<div id="ref-lernset">
+<div id="ref-lernset" markdown="1">
 
 \[1\] *Lernset Nr.8 mit UNO Controller - Kit für Arduino*. URL
 <https://www.funduinoshop.com/epages/78096195.sf/de_DE/?ObjectPath=/Shops/78096195/Products/01-U8>
 
 </div>
 
-<div id="ref-bartmannArduino">
+<div id="ref-bartmannArduino" markdown="1">
 
 \[2\] <span class="smallcaps">Bartmann, Erik</span>: *Mit Arduino die
 elektronische Welt entdecken*. 3. Aufl. : Bombini-Verlag, 2017
@@ -223,7 +251,7 @@ elektronische Welt entdecken*. 3. Aufl. : Bombini-Verlag, 2017
 
 </div>
 
-<div id="ref-bartmannESP8266">
+<div id="ref-bartmannESP8266" markdown="1">
 
 \[3\] <span class="smallcaps">Bartmann, Erik</span>: *Das
 ESP8266-Praxisbuch: Mit NodeMCU und ESPlorer* : Elektor Verlag, 2016
@@ -231,7 +259,7 @@ ESP8266-Praxisbuch: Mit NodeMCU und ESPlorer* : Elektor Verlag, 2016
 
 </div>
 
-<div id="ref-bartmannESP32">
+<div id="ref-bartmannESP32" markdown="1">
 
 \[4\] <span class="smallcaps">Bartmann, Erik</span>: *Das
 ESP32-Praxisbuch: Programmieren mit der Arduino-IDE* : Elektor Verlag,
@@ -240,16 +268,16 @@ ESP32-Praxisbuch: Programmieren mit der Arduino-IDE* : Elektor Verlag,
 
 </div>
 
-<div id="ref-temperatureDashboard">
+<div id="ref-temperatureDashboard" markdown="1">
 
-\[5\] <span class="smallcaps">Andrew Shvayka, Igor Khanenko,
-<span class="csl-no-smallcaps">Igor Kulikov</span></span>: *Temperature
+\[5\] <span class="smallcaps">Andrew Shvayka, Igor Khanenko, <span
+class="csl-no-smallcaps">Igor Kulikov</span></span>: *Temperature
 Dashboard Using Arduino UNO, ESP8266 And MQTT*. URL
 <https://www.hackster.io/thingsboard/temperature-dashboard-using-arduino-uno-esp8266-and-mqtt-5e26eb>
 
 </div>
 
-<div id="ref-websocketcommunication">
+<div id="ref-websocketcommunication" markdown="1">
 
 \[6\] *WebSocket communication with an ESP8266 or Arduino in Python.
 Test with the ws4py library on Raspberry Pi*. URL
@@ -257,105 +285,105 @@ Test with the ws4py library on Raspberry Pi*. URL
 
 </div>
 
-<div id="ref-vscode">
+<div id="ref-vscode" markdown="1">
 
 \[7\] *Visual Studio Code*. URL <https://code.visualstudio.com/>
 
 </div>
 
-<div id="ref-intellisense">
+<div id="ref-intellisense" markdown="1">
 
 \[8\] *C/C++ IntelliSense, debugging, and code browsing.* URL
 <https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools>
 
 </div>
 
-<div id="ref-arduinoCli">
+<div id="ref-arduinoCli" markdown="1">
 
 \[9\] *Arduino CLI*. URL <https://github.com/arduino/arduino-cli>
 
 </div>
 
-<div id="ref-gitForWindows">
+<div id="ref-gitForWindows" markdown="1">
 
 \[10\] *Git for Windows*. URL <https://gitforwindows.org>
 
 </div>
 
-<div id="ref-tortoiseGit">
+<div id="ref-tortoiseGit" markdown="1">
 
 \[11\] *TortoiseGit*. URL <https://tortoisegit.org>
 
 </div>
 
-<div id="ref-websockets">
+<div id="ref-websockets" markdown="1">
 
 \[12\] *Simple to use, blazing fast and thoroughly tested WebSocket
 client and server for Node.js*. URL <https://github.com/websockets/ws>
 
 </div>
 
-<div id="ref-express">
+<div id="ref-express" markdown="1">
 
 \[13\] *Express Schnelles, offenes, unkompliziertes Web-Framework für
 Node.js*. URL <https://expressjs.com>
 
 </div>
 
-<div id="ref-chartjs">
+<div id="ref-chartjs" markdown="1">
 
 \[14\] *Simple yet flexible JavaScript charting for designers &
 developers*. URL <https://www.chartjs.org>
 
 </div>
 
-<div id="ref-serialPort">
+<div id="ref-serialPort" markdown="1">
 
 \[15\] *Node SerialPort*. URL <https://serialport.io>
 
 </div>
 
-<div id="ref-sprachreferenz">
+<div id="ref-sprachreferenz" markdown="1">
 
 \[16\] *Sprach-Referenz*. URL <https://www.arduino.cc/reference/de/>
 
 </div>
 
-<div id="ref-codeReferenz">
+<div id="ref-codeReferenz" markdown="1">
 
 \[17\] *Arduino Befehlsübersicht*. URL
 <https://www.arduinoforum.de/code-referenz>
 
 </div>
 
-<div id="ref-arduinoCheatSheet">
+<div id="ref-arduinoCheatSheet" markdown="1">
 
 \[18\] *Arduino Programming Cheat Sheet*. URL
 <https://github.com/liffiton/Arduino-Cheat-Sheet>
 
 </div>
 
-<div id="ref-avrlibc">
+<div id="ref-avrlibc" markdown="1">
 
 \[19\] *AVR Libc*. URL <https://www.nongnu.org/avr-libc/>
 
 </div>
 
-<div id="ref-arduinoLanguage">
+<div id="ref-arduinoLanguage" markdown="1">
 
 \[20\] *C++ vs. The Arduino Language?* URL
 <https://arduino.stackexchange.com/questions/816/c-vs-the-arduino-language>
 
 </div>
 
-<div id="ref-heapFragmentation">
+<div id="ref-heapFragmentation" markdown="1">
 
 \[21\] *What is Heap Fragmentation?* URL
 <https://cpp4arduino.com/2018/11/06/what-is-heap-fragmentation.html>
 
 </div>
 
-<div id="ref-heapFragmentation2">
+<div id="ref-heapFragmentation2" markdown="1">
 
 \[22\] <span class="smallcaps">Walls, Colin</span>: *Dynamic Memory
 Allocation and Fragmentation in C and C++*. URL
@@ -363,7 +391,7 @@ Allocation and Fragmentation in C and C++*. URL
 
 </div>
 
-<div id="ref-arduinoStrings">
+<div id="ref-arduinoStrings" markdown="1">
 
 \[23\] *The Evils of Arduino Strings*. URL
 <https://majenko.co.uk/blog/evils-arduino-strings>
