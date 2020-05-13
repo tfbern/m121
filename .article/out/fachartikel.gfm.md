@@ -164,20 +164,21 @@ Reference zu übergeben \[[23](#ref-arduinoStrings)\].
 
 Der Quellcode befindet sich im Ordner Arduino. Darin befinden sich
 verschiedene Sketech, darunter
-[genericReadWrte](../arduino/genericReadWrite/genericReadWrite.ino)
+[genericReadWrite](../../arduino/genericReadWrite/genericReadWrite.ino)
 
 ### Serial Gateway
 
-Der Quellcode befindet sich im Ordner [Gateway](../gateway/gateway.js).
+Der Quellcode befindet sich im Ordner
+[Gateway](../../gateway/gateway.js).
 
 ### WebSocket Server
 
 Der Quellcode befindet sich im Ordner
-[WebSocketServer](../websocketserver/websocketserver.js).
+[WebSocketServer](../../websocketserver/websocketserver.js).
 
 ### Web GUI
 
-Der Quellcode befindet sich im Ordner [Client](../client/index.html).
+Der Quellcode befindet sich im Ordner [Client](../../client/index.html).
 
 # Resultate
 

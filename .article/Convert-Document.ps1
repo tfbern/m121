@@ -12,6 +12,7 @@ Param(
   [string]$outdir = "out"
 )
 
+$outFileBaseName = $inFile.split('.')[0]
 $outFile = "$inFile.$outFormat"
 
 if (-Not (Test-Path $outdir)) {
@@ -19,7 +20,7 @@ if (-Not (Test-Path $outdir)) {
 }
 
 if ($outFormat -eq 'gfm') {
-  $outFile = "$($inFile.split('.')[0]).gfm.md"
+  $outFile = "$outFileBaseName.gfm.md"
   Write-Host "creating $outFile" 
   pandoc `
   -N `
@@ -71,6 +72,7 @@ if ($outFormat -eq 'docx') {
 }
 
 if ($outFormat -eq 'latex') {
+  $outFile = "$outFileBaseName.md.tex"
   Write-Host "creating $outFile" 
   pandoc `
   -N `

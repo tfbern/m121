@@ -130,16 +130,16 @@ Zurückhaltung ein. Ich befolge Matt's Rat, die Variablen by Reference zu
 übergeben [@arduinoStrings].
 
 Der Quellcode befindet sich im Ordner Arduino. Darin befinden sich verschiedene
-Sketech, darunter [genericReadWrte](../arduino/genericReadWrite/genericReadWrite.ino)
+Sketech, darunter [genericReadWrite](../../arduino/genericReadWrite/genericReadWrite.ino)
 
 ### Serial Gateway
-Der Quellcode befindet sich im Ordner [Gateway](../gateway/gateway.js).
+Der Quellcode befindet sich im Ordner [Gateway](../../gateway/gateway.js).
 
 ### WebSocket Server
-Der Quellcode befindet sich im Ordner [WebSocketServer](../websocketserver/websocketserver.js).
+Der Quellcode befindet sich im Ordner [WebSocketServer](../../websocketserver/websocketserver.js).
 
 ### Web GUI
-Der Quellcode befindet sich im Ordner [Client](../client/index.html).
+Der Quellcode befindet sich im Ordner [Client](../../client/index.html).
 
 # Resultate
 Es hat sich gezeigt, dass ein Seriell-zu-Websocket-Gatway unter Node.js
