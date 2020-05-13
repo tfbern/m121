@@ -2,17 +2,19 @@
 ## Dokumente
 
 - [Fachartikel als Markdown](out/fachartikel.gfm.md)
-- [Fachartikel als HTML](http://htmlpreview.github.io/?https://github.com/tfbern/m121/blob/master/.article/out/fachartikel.md.html)
-- [Fachartikel als Word](out/fachartikel.md.docx)
-- [Fachartikel als PDF](out/fachartikel.md.pdf)
+- [Fachartikel als HTML](http://htmlpreview.github.io/?https://github.com/tfbern/m121/blob/master/.article/out/fachartikel.html)
+- [Fachartikel als Word](out/fachartikel.docx)
+- [Fachartikel als PDF](out/fachartikel.pdf)
 
 ## Erstellung
 ### Schreiben
 
-1. Text schreiben in Pandoc Markdown Format: *fachartikel.md*
+1. Text schreiben in Pandoc Markdown Format: *fachartikel.markdown.md*
 2. Quellen im BibTeX Format erfassen in: *quellen.bib*
 
 ### Konvertieren
+Auf dem System muss *pandoc* installiert sein. Für die Erstellung von PDFs muss zusätzlich *latexmk* und *pdfmake* installiert sein, 
+sprich am besten ein ganzes LaTeX System wie Tex Live.
 
 1. GFM Markdown Version erstellen: `.\Convert-Document -outFormat gfm`
 2. HTML Version erstellen: `.\Convert-Document -outFormat html`
