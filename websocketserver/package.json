@@ -14,6 +14,6 @@
   "author": "Samuel Hess",
   "license": "ISC",
   "dependencies": {
-    "ws": "^7.2.2"
+    "ws": "^7.4.6"
   }
 }
