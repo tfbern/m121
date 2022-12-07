@@ -14,7 +14,7 @@
   "author": "Samuel Hess",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "serialport": "^8.0.7",
     "ws": "^7.2.2"
   }
